@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Visibility Index — AIに見える企業か、見えない企業か</title>
+<meta name="description" content="ChatGPT・Perplexity・Geminiなどの生成AIがあなたの企業を正確に紹介できるか。AI可視性スコアで業界の実態を明らかにします。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:    #c8a96e;
+  --gold-lt: #e2c99a;
+  --black:   #0a0a0a;
+  --ink:     #111111;
+  --dim:     #1c1c1c;
+  --muted:   #2e2e2e;
+  --text:    #e8e4dc;
+  --text-2:  #a09880;
+  --text-3:  #5a5448;
+  --red:     #c94a3a;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  border-bottom: 1px solid rgba(200,169,110,0.1);
+  backdrop-filter: blur(20px);
+  background: rgba(10,10,10,0.85);
+}
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: .25em;
+  color: var(--gold); text-decoration: none; text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  font-size: 12px; letter-spacing: .1em;
+  color: var(--text-2); text-decoration: none; transition: color .2s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: .15em;
+  color: var(--black) !important;
+  background: var(--gold);
+  padding: 8px 20px;
+  text-decoration: none;
+  transition: background .2s !important;
+}
+.nav-cta:hover { background: var(--gold-lt) !important; }
+
+/* HERO */
+.hero {
+  position: relative; min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 140px 48px 80px; overflow: hidden;
+}
+.hero-bg-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-bg-glow {
+  position: absolute; width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
+  top: -100px; right: -100px; pointer-events: none;
+}
+.hero-eyebrow {
+  position: relative; z-index: 1;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: .3em; color: var(--gold); text-transform: uppercase;
+  margin-bottom: 32px; display: flex; align-items: center; gap: 16px;
+}
+.hero-eyebrow::before {
+  content: ''; display: inline-block; width: 40px; height: 1px; background: var(--gold);
+}
+.hero-title {
+  position: relative; z-index: 1;
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(42px, 7vw, 88px);
+  line-height: 1.1; font-weight: 600; letter-spacing: -.02em;
+  max-width: 900px; margin-bottom: 40px;
+}
+.hero-title em {
+  font-style: normal; color: var(--gold); position: relative;
+}
+.hero-title em::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px;
+  background: var(--gold); opacity: .4;
+}
+.hero-sub {
+  position: relative; z-index: 1;
+  font-size: 16px; line-height: 1.8; color: var(--text-2);
+  max-width: 560px; margin-bottom: 56px; font-weight: 300;
+}
+.hero-actions {
+  position: relative; z-index: 1;
+  display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+}
+.btn-primary {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: .15em; color: var(--black);
+  background: var(--gold); padding: 16px 36px; text-decoration: none;
+  transition: all .25s; display: inline-block;
+}
+.btn-primary:hover {
+  background: var(--gold-lt); transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(200,169,110,0.25);
+}
+.btn-secondary {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: .15em; color: var(--gold);
+  border: 1px solid rgba(200,169,110,0.4); padding: 16px 36px;
+  text-decoration: none; transition: all .25s; display: inline-block;
+}
+.btn-secondary:hover { border-color: var(--gold); background: rgba(200,169,110,0.06); }
+.btn-ghost {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: .15em; color: var(--text-2);
+  padding: 16px 0; text-decoration: none; transition: color .2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-ghost:hover { color: var(--gold); }
+
+/* TICKER */
+.ticker-wrap {
+  border-top: 1px solid rgba(200,169,110,0.15);
+  border-bottom: 1px solid rgba(200,169,110,0.15);
+  background: var(--dim); overflow: hidden; padding: 14px 0;
+}
+.ticker { display: flex; gap: 60px; white-space: nowrap; animation: ticker 28s linear infinite; }
+.ticker-item {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .2em;
+  color: var(--text-3); text-transform: uppercase;
+  display: flex; align-items: center; gap: 20px;
+}
+.ticker-item span { color: var(--gold); }
+@keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* SECTION */
+section { position: relative; z-index: 1; }
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .35em;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::before {
+  content: ''; display: inline-block; width: 24px; height: 1px; background: var(--gold);
+}
+.section-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(28px, 4vw, 48px); font-weight: 600; line-height: 1.2; margin-bottom: 20px;
+}
+
+/* PROBLEM */
+.problem { padding: 120px 48px; background: var(--ink); }
+.problem-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.problem-text p { font-size: 16px; line-height: 1.9; color: var(--text-2); margin-bottom: 20px; }
+.problem-visual { background: var(--dim); border: 1px solid rgba(200,169,110,0.12); padding: 36px; }
+.chat-bubble {
+  background: var(--muted); border-radius: 0 12px 12px 12px;
+  padding: 16px 20px; margin-bottom: 12px; font-size: 14px;
+  line-height: 1.7; color: var(--text-2); border-left: 2px solid var(--red);
+}
+.chat-bubble.good { border-left-color: var(--gold); }
+.chat-label {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .2em;
+  color: var(--text-3); text-transform: uppercase; margin-bottom: 8px;
+}
+.chat-label.ai { color: var(--gold); }
+
+/* HOW */
+.how { padding: 120px 48px; }
+.how-inner { max-width: 1100px; margin: 0 auto; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 60px; }
+.step {
+  background: var(--dim); padding: 48px 36px;
+  border-top: 2px solid transparent; transition: border-color .3s;
+}
+.step:hover { border-top-color: var(--gold); }
+.step-num {
+  font-family: 'DM Mono', monospace; font-size: 48px; font-weight: 300;
+  color: rgba(200,169,110,0.15); line-height: 1; margin-bottom: 24px; display: block;
+}
+.step h3 { font-family: 'Shippori Mincho', serif; font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+.step p { font-size: 14px; line-height: 1.8; color: var(--text-2); }
+
+/* SCORES */
+.scores { padding: 120px 48px; background: var(--ink); }
+.scores-inner { max-width: 1100px; margin: 0 auto; }
+.score-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 60px; }
+.score-card { background: var(--dim); padding: 40px 36px; position: relative; }
+.score-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+  opacity: 0; transition: opacity .3s;
+}
+.score-card:hover::before { opacity: 1; }
+.score-range { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .2em; color: var(--gold); margin-bottom: 16px; }
+.score-card h3 { font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 600; margin-bottom: 12px; }
+.score-card p { font-size: 14px; line-height: 1.8; color: var(--text-2); }
+.score-bar-wrap { margin-top: 20px; background: var(--muted); height: 3px; }
+.score-bar { height: 3px; background: var(--gold); transition: width 1s ease; }
+
+/* USE CASES */
+.use-cases { padding: 120px 48px; }
+.use-cases-inner { max-width: 1100px; margin: 0 auto; }
+.case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+.case-card {
+  border: 1px solid rgba(200,169,110,0.12); padding: 36px;
+  transition: border-color .3s, background .3s;
+}
+.case-card:hover { border-color: rgba(200,169,110,0.35); background: rgba(200,169,110,0.03); }
+.case-icon { font-size: 28px; margin-bottom: 20px; display: block; }
+.case-card h3 { font-family: 'Shippori Mincho', serif; font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+.case-card p { font-size: 13px; line-height: 1.8; color: var(--text-2); }
+
+/* SAMPLE */
+.sample { padding: 120px 48px; background: var(--ink); }
+.sample-inner { max-width: 900px; margin: 0 auto; }
+.ranking-table { margin-top: 60px; border: 1px solid rgba(200,169,110,0.12); overflow: hidden; }
+.ranking-row {
+  display: grid; grid-template-columns: 60px 1fr 120px;
+  align-items: center; border-bottom: 1px solid rgba(200,169,110,0.08);
+  padding: 20px 28px; transition: background .2s;
+}
+.ranking-row:last-child { border-bottom: none; }
+.ranking-row:hover { background: rgba(200,169,110,0.04); }
+.ranking-row.header {
+  background: var(--dim); font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: .2em; color: var(--text-3); text-transform: uppercase;
+}
+.rank-num { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 300; color: var(--gold); }
+.rank-name { font-size: 15px; font-weight: 500; }
+.rank-cat { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+.rank-score-wrap { text-align: right; }
+.rank-score { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--gold); }
+.rank-score-bar { height: 2px; background: var(--muted); margin-top: 6px; border-radius: 1px; overflow: hidden; }
+.rank-score-bar-fill { height: 100%; background: var(--gold); border-radius: 1px; }
+.blur-row .rank-name { filter: blur(6px); user-select: none; }
+.blur-row .rank-score { filter: blur(6px); user-select: none; }
+.sample-cta {
+  text-align: center; margin-top: 40px; padding: 32px;
+  border: 1px dashed rgba(200,169,110,0.2);
+}
+.sample-cta p { font-size: 14px; color: var(--text-2); margin-bottom: 24px; }
+.sample-cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* PRICING */
+.pricing { padding: 120px 48px; }
+.pricing-inner { max-width: 900px; margin: 0 auto; }
+.price-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 60px; }
+.price-card { background: var(--dim); padding: 48px 40px; position: relative; display: flex; flex-direction: column; }
+.price-card.featured { background: var(--muted); border: 1px solid rgba(200,169,110,0.3); }
+.price-badge {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .2em;
+  color: var(--black); background: var(--gold); padding: 4px 12px; text-transform: uppercase;
+  position: absolute; top: -1px; right: 32px;
+}
+.price-name { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: .2em; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+.price-amount { font-family: 'Shippori Mincho', serif; font-size: 48px; font-weight: 600; line-height: 1; margin-bottom: 8px; }
+.price-unit { font-size: 14px; color: var(--text-2); margin-bottom: 32px; }
+.price-features { list-style: none; flex: 1; margin-bottom: 40px; }
+.price-features li {
+  font-size: 14px; line-height: 1.7; color: var(--text-2);
+  padding: 8px 0; border-bottom: 1px solid rgba(200,169,110,0.06);
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.price-features li::before { content: '—'; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+.price-btns { display: flex; flex-direction: column; gap: 10px; }
+
+/* CONTACT */
+.contact { padding: 120px 48px; background: var(--ink); }
+.contact-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+.contact-inner .section-title { margin-bottom: 16px; }
+.contact-inner p { font-size: 15px; color: var(--text-2); line-height: 1.8; margin-bottom: 48px; }
+.contact-form {
+  background: var(--dim); border: 1px solid rgba(200,169,110,0.12);
+  padding: 48px; text-align: left;
+}
+.form-group { margin-bottom: 24px; }
+.form-group label {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .2em;
+  color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 8px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%; background: var(--muted);
+  border: 1px solid rgba(200,169,110,0.15); color: var(--text);
+  padding: 12px 16px; font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px; font-weight: 300; outline: none;
+  transition: border-color .2s;
+}
+.form-group input:focus,
+.form-group select,
+.form-group textarea:focus { border-color: rgba(200,169,110,0.5); }
+.form-group select { appearance: none; cursor: pointer; }
+.form-group textarea { resize: vertical; min-height: 120px; }
+.form-submit {
+  font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: .15em;
+  color: var(--black); background: var(--gold);
+  border: none; padding: 16px 40px; cursor: pointer;
+  transition: all .25s; width: 100%;
+}
+.form-submit:hover { background: var(--gold-lt); }
+
+/* FAQ */
+.faq { padding: 120px 48px; }
+.faq-inner { max-width: 720px; margin: 0 auto; }
+.faq-item { border-bottom: 1px solid rgba(200,169,110,0.1); padding: 32px 0; }
+.faq-q {
+  font-family: 'Shippori Mincho', serif; font-size: 18px; font-weight: 600;
+  margin-bottom: 16px; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;
+}
+.faq-q::after {
+  content: '+'; font-family: 'DM Mono', monospace; color: var(--gold);
+  font-size: 20px; flex-shrink: 0; line-height: 1.2; transition: transform .3s;
+}
+.faq-item.open .faq-q::after { transform: rotate(45deg); }
+.faq-a { font-size: 14px; line-height: 1.9; color: var(--text-2); display: none; }
+.faq-item.open .faq-a { display: block; }
+
+/* CTA FOOTER */
+.cta-footer {
+  padding: 120px 48px; text-align: center; position: relative; overflow: hidden;
+}
+.cta-footer::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200,169,110,0.08) 0%, transparent 70%);
+}
+.cta-footer h2 {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(32px, 5vw, 64px); font-weight: 600;
+  margin-bottom: 24px; position: relative; z-index: 1;
+}
+.cta-footer p { font-size: 16px; color: var(--text-2); margin-bottom: 48px; position: relative; z-index: 1; }
+.cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+
+footer {
+  border-top: 1px solid rgba(200,169,110,0.1); padding: 40px 48px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+}
+.footer-logo { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .25em; color: var(--gold); text-transform: uppercase; }
+.footer-links { display: flex; gap: 32px; }
+.footer-links a { font-size: 12px; color: var(--text-3); text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: var(--gold); }
+.footer-copy { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-3); }
+
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .hero, .problem, .how, .scores, .use-cases, .sample, .pricing, .contact, .faq, .cta-footer { padding-left: 24px; padding-right: 24px; }
+  .problem-inner { grid-template-columns: 1fr; gap: 48px; }
+  .steps, .score-grid, .case-grid, .price-cards { grid-template-columns: 1fr; }
+  footer { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ▼▼▼ 変更箇所: メールアドレスはここだけ変更してください ▼▼▼ -->
+<script>const CONTACT_EMAIL = "babiinya.cyobaba@protonmail.com";</script>
+<!-- ▲▲▲ -->
+
+<nav>
+  <a class="nav-logo" href="#">AI Visibility Index</a>
+  <div class="nav-links">
+    <a href="#how">仕組み</a>
+    <a href="#scores">スコア</a>
+    <a href="#sample">サンプル</a>
+    <a href="#pricing">料金</a>
+    <a href="#contact">お問い合わせ</a>
+    <a class="nav-cta" href="pricing.html">購入する</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-bg-glow"></div>
+  <div class="hero-eyebrow">AI可視性診断レポート</div>
+  <h1 class="hero-title">AIに<em>見える</em>企業か、<br>見えない企業か。</h1>
+  <p class="hero-sub">
+    ChatGPT・Perplexity・Geminiが業界をランキングするとき、
+    あなたの企業は正確に紹介されていますか？
+    AI可視性スコアで、競合との差を数値化します。
+  </p>
+  <div class="hero-actions">
+    <a href="pricing.html" class="btn-primary">レポートを購入する</a>
+    <a href="#contact" class="btn-secondary">お問い合わせ</a>
+    <a href="#sample" class="btn-ghost">サンプルを見る →</a>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">ホテル業界 <span>調査完了</span></span>
+    <span class="ticker-item">レストラン業界 <span>調査完了</span></span>
+    <span class="ticker-item">EC業界 <span>調査完了</span></span>
+    <span class="ticker-item">大手企業 <span>調査完了</span></span>
+    <span class="ticker-item">JSON-LD保有率 <span>業界平均 34%</span></span>
+    <span class="ticker-item">AI露出リスク企業 <span>62%</span></span>
+    <span class="ticker-item">ホテル業界 <span>調査完了</span></span>
+    <span class="ticker-item">レストラン業界 <span>調査完了</span></span>
+    <span class="ticker-item">EC業界 <span>調査完了</span></span>
+    <span class="ticker-item">大手企業 <span>調査完了</span></span>
+    <span class="ticker-item">JSON-LD保有率 <span>業界平均 34%</span></span>
+    <span class="ticker-item">AI露出リスク企業 <span>62%</span></span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="problem-inner">
+    <div class="problem-text fade-in">
+      <div class="section-label">課題</div>
+      <h2 class="section-title">生成AIは今、<br>誰かに代わって<br>企業を推薦している</h2>
+      <p>「東京でおすすめのホテルは？」「予算10万円の高級旅館は？」—ユーザーは今、検索ではなくAIに聞くようになっています。</p>
+      <p>そのとき、AIが参照するのは企業サイトに埋め込まれた構造化データです。データが整備されていない企業は、推薦リストから外れてしまいます。</p>
+      <p>これは単なる技術的な問題ではありません。<strong>集客の機会損失</strong>です。</p>
+    </div>
+    <div class="problem-visual fade-in">
+      <div class="chat-label ai">AIの回答（構造化データあり）</div>
+      <div class="chat-bubble good">帝国ホテル東京は1890年創業の老舗高級ホテルです。客室数は931室、東京都千代田区に位置し、チェックインは15:00からです。レストランは17店舗を有し、フレンチ・日本料理など多彩です。</div>
+      <div style="height:20px"></div>
+      <div class="chat-label">AIの回答（構造化データなし）</div>
+      <div class="chat-bubble">〇〇旅館については詳細な情報が確認できませんでした。公式サイトをご確認ください。</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="fade-in">
+      <div class="section-label">仕組み</div>
+      <h2 class="section-title">3ステップで<br>業界全体をスキャン</h2>
+    </div>
+    <div class="steps">
+      <div class="step fade-in">
+        <span class="step-num">01</span>
+        <h3>業界・競合を選択</h3>
+        <p>ホテル・レストラン・ECなど業界を選択。知名度・高級・リスク順など抽出基準も指定できます。</p>
+      </div>
+      <div class="step fade-in">
+        <span class="step-num">02</span>
+        <h3>AIスキャンを実行</h3>
+        <p>各企業のWebサイトを自動取得・解析。meta情報・JSON-LD・スキーマ型・フィールド充実度を5軸で採点します。</p>
+      </div>
+      <div class="step fade-in">
+        <span class="step-num">03</span>
+        <h3>レポートを生成・活用</h3>
+        <p>業界ランキングHTMLと企業別PDFレポートを即時生成。提案資料・公開ページとして活用できます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCORES -->
+<section class="scores" id="scores">
+  <div class="scores-inner">
+    <div class="fade-in">
+      <div class="section-label">評価基準</div>
+      <h2 class="section-title">5軸・100点満点の<br>スコアリング</h2>
+    </div>
+    <div class="score-grid">
+      <div class="score-card fade-in">
+        <div class="score-range">0 — 30点</div>
+        <h3>基本メタ</h3>
+        <p>noindex・meta description・canonical・OGPタグなど、検索エンジンとAIへの基本情報を評価。欠けているとAIはそのページを「存在しないもの」として扱います。</p>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:30%"></div></div>
+      </div>
+      <div class="score-card fade-in">
+        <div class="score-range">0 — 20点</div>
+        <h3>JSON-LD保有</h3>
+        <p>企業名・住所・営業時間などをAIが読める形式（JSON-LD）で記述しているかを評価。あるとAIが企業情報を正確に把握し回答に反映できます。</p>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:20%"></div></div>
+      </div>
+      <div class="score-card fade-in">
+        <div class="score-range">0 — 30点</div>
+        <h3>スキーマ型</h3>
+        <p>JSON-LDの中でHotel・Restaurant・Productなど業界に適したスキーマ型が設定されているかを評価。種類の網羅性と業界適合性を採点します。</p>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:30%"></div></div>
+      </div>
+      <div class="score-card fade-in">
+        <div class="score-range">0 — 20点</div>
+        <h3>フィールド充実度</h3>
+        <p>スキーマの中に実際の値（住所・電話番号・料金・画像URLなど）がどれだけ埋まっているかを評価。定義だけあって中身が空では意味がありません。</p>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:20%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="use-cases" id="usecase">
+  <div class="use-cases-inner">
+    <div class="fade-in">
+      <div class="section-label">活用例</div>
+      <h2 class="section-title">誰が使うのか</h2>
+    </div>
+    <div class="case-grid">
+      <div class="case-card fade-in">
+        <span class="case-icon">🏨</span>
+        <h3>ホテル・旅館の広報担当</h3>
+        <p>競合他社との比較レポートを経営層に提示。AI時代の集客投資を正当化するデータとして活用。</p>
+      </div>
+      <div class="case-card fade-in">
+        <span class="case-icon">💼</span>
+        <h3>Webコンサルタント・代理店</h3>
+        <p>顧客への提案資料として業界ランキングを提示。スコア改善のPDCAサイクルに組み込む。</p>
+      </div>
+      <div class="case-card fade-in">
+        <span class="case-icon">📊</span>
+        <h3>マーケティングリサーチャー</h3>
+        <p>業界のAI対応状況を定点観測。市場調査レポートのデータソースとして活用。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAMPLE -->
+<section class="sample" id="sample">
+  <div class="sample-inner">
+    <div class="fade-in">
+      <div class="section-label">サンプル</div>
+      <h2 class="section-title">ホテル業界<br>AI可視性ランキング</h2>
+      <p style="color:var(--text-2);font-size:14px;margin-top:12px">※ サンプルデータです。スコアはデモ用です。</p>
+    </div>
+    <div class="ranking-table fade-in">
+      <div class="ranking-row header">
+        <div>順位</div><div>企業名</div><div>スコア</div>
+      </div>
+      <div class="ranking-row">
+        <div class="rank-num">1</div>
+        <div><div class="rank-name">ザ・リッツ・カールトン東京</div><div class="rank-cat">外資系高級 / 東京</div></div>
+        <div class="rank-score-wrap"><div class="rank-score">87</div><div class="rank-score-bar"><div class="rank-score-bar-fill" style="width:87%"></div></div></div>
+      </div>
+      <div class="ranking-row">
+        <div class="rank-num">2</div>
+        <div><div class="rank-name">パーク ハイアット 東京</div><div class="rank-cat">外資系高級 / 東京</div></div>
+        <div class="rank-score-wrap"><div class="rank-score">82</div><div class="rank-score-bar"><div class="rank-score-bar-fill" style="width:82%"></div></div></div>
+      </div>
+      <div class="ranking-row">
+        <div class="rank-num">3</div>
+        <div><div class="rank-name">星のや京都</div><div class="rank-cat">星野リゾート / 京都</div></div>
+        <div class="rank-score-wrap"><div class="rank-score">76</div><div class="rank-score-bar"><div class="rank-score-bar-fill" style="width:76%"></div></div></div>
+      </div>
+      <div class="ranking-row blur-row">
+        <div class="rank-num">4</div>
+        <div><div class="rank-name">●●●●●●●●</div><div class="rank-cat">日系高級 / 東京</div></div>
+        <div class="rank-score-wrap"><div class="rank-score">71</div><div class="rank-score-bar"><div class="rank-score-bar-fill" style="width:71%"></div></div></div>
+      </div>
+      <div class="ranking-row blur-row">
+        <div class="rank-num">5</div>
+        <div><div class="rank-name">●●●●●●●</div><div class="rank-cat">外資系高級 / 京都</div></div>
+        <div class="rank-score-wrap"><div class="rank-score">68</div><div class="rank-score-bar"><div class="rank-score-bar-fill" style="width:68%"></div></div></div>
+      </div>
+    </div>
+    <div class="sample-cta fade-in">
+      <p>全件のランキングと各企業の詳細PDFレポートは購入後にご覧いただけます</p>
+      <div class="sample-cta-btns">
+        <a href="pricing.html" class="btn-primary">レポートを購入する</a>
+        <a href="#contact" class="btn-secondary">まずは相談する</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="fade-in">
+      <div class="section-label">料金</div>
+      <h2 class="section-title">シンプルな料金体系</h2>
+    </div>
+    <div class="price-cards">
+      <div class="price-card fade-in">
+        <div class="price-name">スポットレポート</div>
+        <div class="price-amount">¥9,800</div>
+        <div class="price-unit">1社・1回</div>
+        <ul class="price-features">
+          <li>指定1社のAI可視性スコア診断</li>
+          <li>5軸詳細スコア（PDF形式）</li>
+          <li>改善ポイントの提示</li>
+          <li>即時ダウンロード</li>
+        </ul>
+        <div class="price-btns">
+          <a href="pricing.html" class="btn-secondary" style="text-align:center">購入する</a>
+          <a href="#contact" class="btn-ghost" style="text-align:center;padding:8px 0">お問い合わせ</a>
+        </div>
+      </div>
+      <div class="price-card featured fade-in">
+        <div class="price-badge">人気</div>
+        <div class="price-name">業界ランキングレポート</div>
+        <div class="price-amount">¥49,800</div>
+        <div class="price-unit">業界1カテゴリ・最大20社</div>
+        <ul class="price-features">
+          <li>業界ランキングHTML（公開用）</li>
+          <li>全社の個別PDFレポート</li>
+          <li>業界平均スコア・分析サマリー</li>
+          <li>カスタム抽出基準・件数指定</li>
+          <li>即時ダウンロード</li>
+        </ul>
+        <div class="price-btns">
+          <a href="pricing.html" class="btn-primary" style="text-align:center">購入する</a>
+          <a href="#contact" class="btn-ghost" style="text-align:center;padding:8px 0">お問い合わせ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="fade-in">
+      <div class="section-label" style="justify-content:center">お問い合わせ</div>
+      <h2 class="section-title">まずはお気軽に<br>ご相談ください</h2>
+      <p>業界・調査対象・ご予算に応じてカスタム対応いたします。<br>通常1営業日以内にご返信いたします。</p>
+    </div>
+    <div class="contact-form fade-in">
+      <div class="form-group">
+        <label>お名前</label>
+        <input type="text" id="f-name" placeholder="山田 太郎">
+      </div>
+      <div class="form-group">
+        <label>メールアドレス</label>
+        <input type="email" id="f-email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>ご興味のあるサービス</label>
+        <select id="f-service">
+          <option value="">選択してください</option>
+          <option>スポットレポート（¥9,800）</option>
+          <option>業界ランキングレポート（¥49,800）</option>
+          <option>カスタム調査（要相談）</option>
+          <option>その他・まずは相談したい</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>メッセージ（任意）</label>
+        <textarea id="f-message" placeholder="調査したい業界や競合、ご質問などをご記入ください"></textarea>
+      </div>
+      <button class="form-submit" onclick="sendContact()">送信する →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="fade-in">
+      <div class="section-label">よくある質問</div>
+      <h2 class="section-title">FAQ</h2>
+    </div>
+    <div style="margin-top:60px">
+      <div class="faq-item fade-in">
+        <div class="faq-q">スコアはどのように計算されますか？</div>
+        <div class="faq-a">各企業の公式Webサイトを自動取得し、meta情報・JSON-LD構造化データ・スキーマ型・フィールド充実度の4軸を解析して100点満点で採点します。AIが企業情報を読み取れるかどうかを客観的に数値化した指標です。</div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q">診断に使用するデータはリアルタイムですか？</div>
+        <div class="faq-a">はい。スキャン実行時点での各企業Webサイトのデータをリアルタイムで取得・解析します。サイトが更新されれば次回のスキャンに反映されます。</div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q">どの業界に対応していますか？</div>
+        <div class="faq-a">現在、ホテル・旅館、レストラン・飲食、ECサイト、大手企業（コーポレートサイト）、汎用（メディア・不動産・求人等）の5業界に対応しています。</div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q">購入後はすぐにダウンロードできますか？</div>
+        <div class="faq-a">はい。決済完了後、ランキングHTMLおよびPDFレポートを即時ダウンロードいただけます。スキャン〜レポート生成まで通常数分以内に完了します。</div>
+      </div>
+      <div class="faq-item fade-in">
+        <div class="faq-q">診断対象の企業に通知されますか？</div>
+        <div class="faq-a">通知されません。診断は各企業の公開Webサイトへのアクセスのみで行うため、診断対象の企業には一切通知されません。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FOOTER -->
+<section class="cta-footer">
+  <h2>業界の実態を、<br>今すぐ数値で確認する</h2>
+  <p>競合がAIに見えているとき、あなたの企業は見えていますか？</p>
+  <div class="cta-btns">
+    <a href="pricing.html" class="btn-primary">レポートを購入する</a>
+    <a href="#contact" class="btn-secondary">まずは相談する</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">AI Visibility Index</div>
+  <div class="footer-links">
+    <a href="#how">仕組み</a>
+    <a href="#scores">スコア</a>
+    <a href="#faq">FAQ</a>
+    <a href="pricing.html">料金</a>
+    <a href="#contact">お問い合わせ</a>
+  </div>
+  <div class="footer-copy">© 2025 AI Visibility Index</div>
+</footer>
+
+<script>
+// ▼▼▼ メールアドレスは上部の CONTACT_EMAIL のみ変更してください ▼▼▼
+
+// お問い合わせフォーム送信（mailtoリンクで開く）
+function sendContact() {
+  const name    = document.getElementById('f-name').value.trim();
+  const email   = document.getElementById('f-email').value.trim();
+  const service = document.getElementById('f-service').value;
+  const message = document.getElementById('f-message').value.trim();
+  if (!name || !email) { alert('お名前とメールアドレスは必須です'); return; }
+  const subject = encodeURIComponent('[AI Visibility Index] お問い合わせ: ' + (service || 'その他'));
+  const body = encodeURIComponent(
+    'お名前: ' + name + '\n' +
+    'メール: ' + email + '\n' +
+    'サービス: ' + (service || '未選択') + '\n\n' +
+    'メッセージ:\n' + (message || '（なし）')
+  );
+  window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + subject + '&body=' + body;
+}
+
+// Fade-in
+const observer = new IntersectionObserver(
+  entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }),
+  { threshold: 0.1 }
+);
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// FAQ
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+});
+
+// Score bar animation
+const scoreObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.querySelectorAll('.score-bar').forEach(bar => {
+        const w = bar.style.width; bar.style.width = '0';
+        setTimeout(() => { bar.style.width = w; }, 100);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.scores-inner').forEach(el => scoreObs.observe(el));
+</script>
+</body>
+</html>

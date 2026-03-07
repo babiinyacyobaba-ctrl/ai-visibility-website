@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>レポート購入 | AI Visibility Index</title>
+<meta name="description" content="AI可視性診断レポートを購入する。業界ランキング・企業別PDFレポートを即時ダウンロード。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:    #c8a96e;
+  --gold-lt: #e2c99a;
+  --black:   #0a0a0a;
+  --ink:     #111111;
+  --dim:     #1c1c1c;
+  --muted:   #2e2e2e;
+  --text:    #e8e4dc;
+  --text-2:  #a09880;
+  --text-3:  #5a5448;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  border-bottom: 1px solid rgba(200,169,110,0.1);
+  backdrop-filter: blur(20px);
+  background: rgba(10,10,10,0.85);
+}
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: .25em;
+  color: var(--gold); text-decoration: none; text-transform: uppercase;
+}
+.nav-back {
+  font-size: 12px; color: var(--text-2);
+  text-decoration: none; letter-spacing: .05em;
+  transition: color .2s;
+}
+.nav-back:hover { color: var(--gold); }
+
+.page-header {
+  position: relative; z-index: 1;
+  padding: 160px 48px 80px;
+  text-align: center;
+  border-bottom: 1px solid rgba(200,169,110,0.08);
+}
+.page-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: .3em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 24px;
+}
+.page-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 600; line-height: 1.1;
+}
+
+.plans {
+  position: relative; z-index: 1;
+  max-width: 1000px; margin: 0 auto;
+  padding: 80px 48px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.plan {
+  background: var(--dim);
+  padding: 48px 36px;
+  position: relative;
+  display: flex; flex-direction: column;
+}
+.plan.featured {
+  background: var(--muted);
+  border: 1px solid rgba(200,169,110,0.25);
+  margin: -16px 0;
+  z-index: 2;
+}
+.plan-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: .2em;
+  color: var(--black); background: var(--gold);
+  padding: 4px 12px; text-transform: uppercase;
+  position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+  white-space: nowrap;
+}
+.plan-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: .2em; color: var(--gold);
+  text-transform: uppercase; margin-bottom: 20px;
+}
+.plan-price {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 44px; font-weight: 600; line-height: 1;
+  margin-bottom: 6px;
+}
+.plan-unit { font-size: 13px; color: var(--text-2); margin-bottom: 32px; }
+.plan-desc { font-size: 13px; color: var(--text-2); line-height: 1.7; margin-bottom: 28px; }
+.plan-features { list-style: none; flex: 1; margin-bottom: 36px; }
+.plan-features li {
+  font-size: 13px; line-height: 1.7; color: var(--text-2);
+  padding: 8px 0; border-bottom: 1px solid rgba(200,169,110,0.06);
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.plan-features li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+
+.btn-plan {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: .15em;
+  padding: 14px 24px; text-align: center;
+  text-decoration: none; display: block;
+  transition: all .25s;
+}
+.btn-plan-outline {
+  color: var(--gold); border: 1px solid rgba(200,169,110,0.4);
+}
+.btn-plan-outline:hover {
+  border-color: var(--gold); background: rgba(200,169,110,0.06);
+}
+.btn-plan-fill {
+  color: var(--black); background: var(--gold);
+}
+.btn-plan-fill:hover { background: var(--gold-lt); }
+
+.note {
+  position: relative; z-index: 1;
+  max-width: 700px; margin: 0 auto;
+  padding: 0 48px 80px;
+  text-align: center;
+}
+.note p { font-size: 13px; color: var(--text-3); line-height: 1.8; }
+
+.what-you-get {
+  position: relative; z-index: 1;
+  background: var(--ink);
+  padding: 80px 48px;
+}
+.what-inner { max-width: 900px; margin: 0 auto; }
+.what-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 28px; font-weight: 600;
+  margin-bottom: 48px; text-align: center;
+}
+.deliverables {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.deliverable {
+  background: var(--dim); padding: 32px;
+  border-left: 2px solid rgba(200,169,110,0.3);
+}
+.deliverable h4 {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 17px; font-weight: 600; margin-bottom: 10px;
+}
+.deliverable p { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+footer {
+  border-top: 1px solid rgba(200,169,110,0.1);
+  padding: 32px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
+  position: relative; z-index: 1;
+}
+.footer-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: .25em;
+  color: var(--gold); text-transform: uppercase;
+}
+.footer-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: var(--text-3);
+}
+
+@media (max-width: 800px) {
+  nav { padding: 16px 24px; }
+  .page-header { padding: 120px 24px 60px; }
+  .plans { grid-template-columns: 1fr; padding: 48px 24px; }
+  .plan.featured { margin: 0; }
+  .deliverables { grid-template-columns: 1fr; }
+  .what-you-get, .note { padding-left: 24px; padding-right: 24px; }
+  footer { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">AI Visibility Index</a>
+  <a class="nav-back" href="index.html">← トップに戻る</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-eyebrow">レポート購入</div>
+  <h1 class="page-title">業界のAI可視性を、<br>今すぐ数値で把握する</h1>
+</div>
+
+<div class="plans">
+
+  <!-- スポット -->
+  <div class="plan">
+    <div class="plan-name">スポット診断</div>
+    <div class="plan-price">¥9,800</div>
+    <div class="plan-unit">1社・1回</div>
+    <div class="plan-desc">特定の1社を即時診断。競合調査や自社チェックに。</div>
+    <ul class="plan-features">
+      <li>指定1社のAI可視性スコア診断</li>
+      <li>5軸詳細スコア（PDF形式）</li>
+      <li>改善ポイントの提示</li>
+      <li>即時ダウンロード</li>
+    </ul>
+    <a href="#" class="btn-plan btn-plan-outline" onclick="alert('Stripe決済リンクをここに設定してください')">購入する →</a>
+  </div>
+
+  <!-- 業界ランキング（人気） -->
+  <div class="plan featured">
+    <div class="plan-badge">人気</div>
+    <div class="plan-name">業界ランキング</div>
+    <div class="plan-price">¥49,800</div>
+    <div class="plan-unit">1業界・最大20社</div>
+    <div class="plan-desc">業界全体のランキングと全社PDFレポートのセット。コンサル提案・営業資料に。</div>
+    <ul class="plan-features">
+      <li>業界ランキングHTML（公開用）</li>
+      <li>全社の個別PDFレポート</li>
+      <li>業界平均スコア・分析サマリー</li>
+      <li>カスタム抽出基準・件数指定</li>
+      <li>即時ダウンロード</li>
+    </ul>
+    <a href="#" class="btn-plan btn-plan-fill" onclick="alert('Stripe決済リンクをここに設定してください')">購入する →</a>
+  </div>
+
+  <!-- カスタム -->
+  <div class="plan">
+    <div class="plan-name">カスタム調査</div>
+    <div class="plan-price">要相談</div>
+    <div class="plan-unit">複数業界・定期調査</div>
+    <div class="plan-desc">複数業界の横断比較や定期モニタリングなど、カスタム対応いたします。</div>
+    <ul class="plan-features">
+      <li>複数業界の横断ランキング</li>
+      <li>定期スキャン（月次・週次）</li>
+      <li>ホワイトラベル対応</li>
+      <li>CSVデータ提供</li>
+    </ul>
+    <a href="mailto:your@email.com" class="btn-plan btn-plan-outline">お問い合わせ →</a>
+  </div>
+
+</div>
+
+<div class="note">
+  <p>決済はStripeを使用しています。クレジットカード・デビットカードがご利用いただけます。<br>
+  購入後、ダウンロードリンクを即時発行いたします。領収書はStripeから自動送付されます。</p>
+</div>
+
+<div class="what-you-get">
+  <div class="what-inner">
+    <h2 class="what-title">購入後に受け取るもの</h2>
+    <div class="deliverables">
+      <div class="deliverable">
+        <h4>業界ランキングHTML</h4>
+        <p>上位企業のランキングを公開用HTMLで提供。Cloudflare PagesやGitHub PagesにアップロードするだけでWebページとして公開できます。</p>
+      </div>
+      <div class="deliverable">
+        <h4>企業別PDFレポート</h4>
+        <p>各企業のスコア・チェック結果・改善ポイントをまとめたPDF。顧客への提案資料としてそのまま使用できます。</p>
+      </div>
+      <div class="deliverable">
+        <h4>5軸詳細スコア</h4>
+        <p>総合スコア・基本メタ・JSON-LD・スキーマ型・フィールド充実度の5軸を数値で明示。競合との差を一目で把握できます。</p>
+      </div>
+      <div class="deliverable">
+        <h4>業界平均・分析サマリー</h4>
+        <p>スキャンした企業群の平均スコア・JSON-LD保有率・最高/最低スコアなど統計サマリーを付属。業界全体の傾向把握に。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">AI Visibility Index</div>
+  <a href="index.html" style="font-size:12px;color:var(--text-3);text-decoration:none">← トップに戻る</a>
+  <div class="footer-copy">© 2025 AI Visibility Index</div>
+</footer>
+
+</body>
+</html>
