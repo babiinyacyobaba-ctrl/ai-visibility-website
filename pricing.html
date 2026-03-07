@@ -300,9 +300,28 @@ footer {
 <script>
 // config.js で定義した STRIPE_LINKS と CONTACT_EMAIL を使ってボタンを設定する
 (function () {
-  document.getElementById('btn-spot').href    = STRIPE_LINKS.spot;
-  document.getElementById('btn-ranking').href = STRIPE_LINKS.ranking;
-  document.getElementById('btn-custom').href  = 'mailto:' + CONTACT_EMAIL;
+  function isPlaceholder(url) {
+    return !url || url.includes('REPLACE_WITH');
+  }
+
+  function setupPaymentButton(id, url) {
+    var btn = document.getElementById(id);
+    if (isPlaceholder(url)) {
+      btn.href = '#';
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        alert('決済リンクは現在準備中です。\nお問い合わせ: ' + CONTACT_EMAIL);
+      });
+      btn.style.opacity = '0.5';
+      btn.style.cursor  = 'not-allowed';
+    } else {
+      btn.href = url;
+    }
+  }
+
+  setupPaymentButton('btn-spot',    STRIPE_LINKS.spot);
+  setupPaymentButton('btn-ranking', STRIPE_LINKS.ranking);
+  document.getElementById('btn-custom').href = 'mailto:' + CONTACT_EMAIL;
 })();
 </script>
 
