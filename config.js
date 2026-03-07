@@ -11,10 +11,10 @@
 
 const STRIPE_LINKS = {
   // スポット診断 ¥9,800
-  spot: "https://buy.stripe.com/REPLACE_WITH_SPOT_LINK",
+  spot: "https://buy.stripe.com/3cIbJ14DKdkn6IGcV1aR201",
 
   // 業界ランキング ¥49,800
-  ranking: "https://buy.stripe.com/REPLACE_WITH_RANKING_LINK",
+  ranking: "https://buy.stripe.com/28E14n3zGcgjeb8dZ5aR200",
 };
 
 // お問い合わせ先メールアドレス（カスタム調査プランで使用）
