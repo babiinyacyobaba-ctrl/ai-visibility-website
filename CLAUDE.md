@@ -15,6 +15,7 @@ This file provides guidance for AI assistants (Claude and others) working in thi
 ai-visibility-website/
 ├── CLAUDE.md        ← this file
 ├── README.md        ← minimal placeholder
+├── config.js        ← Stripe Payment Link URLs and shared constants
 ├── index.html       ← main landing/marketing page (778 lines)
 └── pricing.html     ← dedicated pricing/purchase page (300 lines)
 ```
@@ -96,6 +97,24 @@ There is no hot-reload, compilation, linting, or testing pipeline.
 - When adding new sections to `index.html`, follow the existing pattern: section wrapper → `.section-title` heading → content.
 - Maintain the dark/gold color scheme when adding new UI elements.
 - New FAQ items follow the `.faq-item` → `.faq-question` → `.faq-answer` pattern.
+
+## Configuration (`config.js`)
+
+`config.js` is loaded by `pricing.html` before the closing `</body>` tag and defines:
+
+```js
+const STRIPE_LINKS = {
+  spot:    "https://buy.stripe.com/...",   // スポット診断 ¥9,800
+  ranking: "https://buy.stripe.com/...",   // 業界ランキング ¥49,800
+};
+const CONTACT_EMAIL = "babiinya.cyobaba@protonmail.com";
+```
+
+**To update payment links**: Replace the placeholder URLs in `config.js` with real
+Stripe Payment Link URLs from the [Stripe Dashboard](https://dashboard.stripe.com/payment-links).
+No changes to `pricing.html` are needed.
+
+> Do NOT put Stripe secret keys here — Payment Link URLs are safe to expose publicly.
 
 ## Planned / Not Yet Implemented
 
