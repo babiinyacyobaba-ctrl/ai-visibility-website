@@ -11,7 +11,11 @@
 
 const STRIPE_LINKS = {
   // スポット診断 ¥9,800
-  spot: "https://buy.stripe.com/3cIbJ14DKdkn6IGcV1aR201",
+// Prod
+  //  spot: "https://buy.stripe.com/3cIbJ14DKdkn6IGcV1aR201",
+// Test
+  spot: "https://buy.stripe.com/test_eVq00jb9eeVRaUh6oF3ZK00",
+  
 
   // 業界ランキング ¥49,800
   ranking: "https://buy.stripe.com/28E14n3zGcgjeb8dZ5aR200",
