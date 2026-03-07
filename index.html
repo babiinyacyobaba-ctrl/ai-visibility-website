@@ -730,23 +730,49 @@ footer {
 </footer>
 
 <script>
-// ▼▼▼ メールアドレスは上部の CONTACT_EMAIL のみ変更してください ▼▼▼
+// ▼▼▼ Formspree のフォームIDをここに入力してください ▼▼▼
+// https://formspree.io/ で無料登録後、フォームを作成して取得したIDを設定
+const FORMSPREE_ID = 'YOUR_FORM_ID';
 
-// お問い合わせフォーム送信（mailtoリンクで開く）
-function sendContact() {
+// お問い合わせフォーム送信（Formspree経由でブラウザから直接送信）
+async function sendContact() {
   const name    = document.getElementById('f-name').value.trim();
   const email   = document.getElementById('f-email').value.trim();
   const service = document.getElementById('f-service').value;
   const message = document.getElementById('f-message').value.trim();
   if (!name || !email) { alert('お名前とメールアドレスは必須です'); return; }
-  const subject = encodeURIComponent('[AI Visibility Index] お問い合わせ: ' + (service || 'その他'));
-  const body = encodeURIComponent(
-    'お名前: ' + name + '\n' +
-    'メール: ' + email + '\n' +
-    'サービス: ' + (service || '未選択') + '\n\n' +
-    'メッセージ:\n' + (message || '（なし）')
-  );
-  window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + subject + '&body=' + body;
+
+  const btn = document.querySelector('.form-submit');
+  btn.disabled = true;
+  btn.textContent = '送信中...';
+
+  try {
+    const res = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        service: service || '未選択',
+        message: message || '（なし）'
+      })
+    });
+
+    if (res.ok) {
+      document.querySelector('.contact-form').innerHTML =
+        '<div style="text-align:center;padding:48px 0">' +
+        '<p style="font-family:\'DM Mono\',monospace;color:var(--gold);font-size:20px;letter-spacing:.05em">✓ 送信完了</p>' +
+        '<p style="color:var(--text-2);margin-top:16px;line-height:1.8">お問い合わせありがとうございます。<br>通常1営業日以内にご返信いたします。</p>' +
+        '</div>';
+    } else {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || '送信に失敗しました');
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = '送信する →';
+    alert('送信に失敗しました。時間をおいて再度お試しください。\n' + e.message);
+  }
 }
 
 // Fade-in
