@@ -27,10 +27,24 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["Organization", "LocalBusiness"],
   "name": "AI Visibility Index",
   "url": "https://ai-visibility-website.pages.dev/",
   "description": "企業のAI可視性を診断・スコアリングするサービス。構造化データ、メタ情報、スキーマ実装を分析し、生成AIへの露出度を評価します。",
+  "logo": "https://ai-visibility-website.pages.dev/favicon.ico",
+  "foundingDate": "2024",
+  "areaServed": "JP",
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "value": 1
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "JP"
+  },
+  "sameAs": [
+    "https://ai-visibility-website.pages.dev/"
+  ],
   "contactPoint": {
     "@type": "ContactPoint",
     "email": "babiinya.cyobaba@protonmail.com",
@@ -65,6 +79,86 @@
       "priceCurrency": "JPY"
     }
   ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "ホーム",
+      "item": "https://ai-visibility-website.pages.dev/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "料金プラン",
+      "item": "https://ai-visibility-website.pages.dev/pricing.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "スコアはどのように計算されますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "各企業の公式Webサイトを自動取得し、meta情報・JSON-LD構造化データ・スキーマ型・フィールド充実度の4軸を解析して100点満点で採点します。AIが企業情報を読み取れるかどうかを客観的に数値化した指標です。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "診断に使用するデータはリアルタイムですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい。スキャン実行時点での各企業Webサイトのデータをリアルタイムで取得・解析します。サイトが更新されれば次回のスキャンに反映されます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "どの業界に対応していますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "現在、ホテル・旅館、レストラン・飲食、ECサイト、大手企業（コーポレートサイト）、汎用（メディア・不動産・求人等）の5業界に対応しています。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "購入後はすぐにダウンロードできますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい。決済完了後、ランキングHTMLおよびPDFレポートを即時ダウンロードいただけます。スキャン〜レポート生成まで通常数分以内に完了します。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "診断対象の企業に通知されますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "通知されません。診断は各企業の公開Webサイトへのアクセスのみで行うため、診断対象の企業には一切通知されません。"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "AI Visibility Index 運営者",
+  "email": "babiinya.cyobaba@protonmail.com",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "AI Visibility Index"
+  }
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
