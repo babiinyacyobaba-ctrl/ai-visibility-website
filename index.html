@@ -213,6 +213,7 @@ nav {
   font-family: 'DM Mono', monospace;
   font-size: 11px; letter-spacing: .25em;
   color: var(--gold); text-decoration: none; text-transform: uppercase;
+  display: flex; align-items: center; gap: 10px;
 }
 .nav-links { display: flex; gap: 32px; align-items: center; }
 .nav-links a {
@@ -555,7 +556,10 @@ footer {
 <!-- ▲▲▲ -->
 
 <nav>
-  <a class="nav-logo" href="#">AI Visibility Index</a>
+  <a class="nav-logo" href="#">
+    <img src="/logo.png" alt="AVI" height="32" style="border-radius:4px;">
+    AI Visibility Index
+  </a>
   <div class="nav-links">
     <a href="#how">仕組み</a>
     <a href="#scores">スコア</a>
