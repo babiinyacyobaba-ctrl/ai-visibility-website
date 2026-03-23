@@ -539,9 +539,36 @@ footer {
 .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+/* HAMBURGER */
+.nav-hamburger {
+  display: none; flex-direction: column; justify-content: center;
+  gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; z-index: 101;
+}
+.nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--gold); transition: all .3s; }
+/* MOBILE NAV */
+.nav-mobile {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,10,10,0.97); z-index: 100;
+  flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+}
+.nav-mobile.open { display: flex; }
+.nav-mobile a {
+  font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: .2em;
+  color: var(--text-2); text-decoration: none; text-transform: uppercase; transition: color .2s;
+}
+.nav-mobile a:hover { color: var(--gold); }
+.nav-mobile .nav-cta { color: var(--black) !important; background: var(--gold); padding: 12px 36px; }
+.nav-mobile .nav-cta:hover { background: var(--gold-lt) !important; }
+.nav-close {
+  position: absolute; top: 24px; right: 24px;
+  background: none; border: none; color: var(--gold);
+  font-size: 28px; line-height: 1; cursor: pointer; font-family: 'DM Mono', monospace;
+}
+
 @media (max-width: 900px) {
   nav { padding: 16px 24px; }
   .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
   .hero, .problem, .how, .scores, .use-cases, .sample, .pricing, .contact, .faq, .cta-footer { padding-left: 24px; padding-right: 24px; }
   .problem-inner { grid-template-columns: 1fr; gap: 48px; }
   .steps, .score-grid, .case-grid, .price-cards { grid-template-columns: 1fr; }
@@ -552,12 +579,12 @@ footer {
 <body>
 
 <!-- ▼▼▼ 変更箇所: メールアドレスはここだけ変更してください ▼▼▼ -->
-<script>const CONTACT_EMAIL = "babiinya.cyobaba@protonmail.com";</script>
+<script>const CONTACT_EMAIL = atob('YmFiaWlueWEuY3lvYmFiYUBwcm90b25tYWlsLmNvbQ==');</script>
 <!-- ▲▲▲ -->
 
 <nav>
   <a class="nav-logo" href="#">
-    <img src="/logo.png" alt="AVI" height="32" style="border-radius:4px;">
+    <img src="/logo.png" alt="AVI" height="32">
     AI Visibility Index
   </a>
   <div class="nav-links">
@@ -568,7 +595,19 @@ footer {
     <a href="#contact">お問い合わせ</a>
     <a class="nav-cta" href="pricing.html">購入する</a>
   </div>
+  <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="メニューを開く">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-mobile" id="nav-mobile">
+  <button class="nav-close" onclick="toggleMobileNav()" aria-label="閉じる">✕</button>
+  <a href="#how" onclick="toggleMobileNav()">仕組み</a>
+  <a href="#scores" onclick="toggleMobileNav()">スコア</a>
+  <a href="#sample" onclick="toggleMobileNav()">サンプル</a>
+  <a href="#pricing" onclick="toggleMobileNav()">料金</a>
+  <a href="#contact" onclick="toggleMobileNav()">お問い合わせ</a>
+  <a class="nav-cta" href="pricing.html">購入する</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -919,6 +958,10 @@ function sendContact() {
     'メッセージ:\n' + (message || '（なし）')
   );
   window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + subject + '&body=' + body;
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = 'メーラーが開きます...';
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent = '送信する →'; btn.disabled = false; }, 3000);
 }
 
 // Fade-in
@@ -927,6 +970,11 @@ const observer = new IntersectionObserver(
   { threshold: 0.1 }
 );
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Mobile nav toggle
+function toggleMobileNav() {
+  document.getElementById('nav-mobile').classList.toggle('open');
+}
 
 // FAQ
 document.querySelectorAll('.faq-q').forEach(q => {
