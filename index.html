@@ -466,6 +466,13 @@ section { position: relative; z-index: 1; }
 .price-features li::before { content: '—'; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
 .price-btns { display: flex; flex-direction: column; gap: 10px; }
 
+/* FREE SCAN */
+.free-scan { padding: 120px 48px; background: var(--surface); }
+.free-scan-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+.free-scan-inner .section-title { margin-bottom: 16px; }
+.free-scan-inner > .fade-in > p { font-size: 15px; color: var(--text-2); line-height: 1.8; margin-bottom: 48px; }
+.free-scan-note { font-size: 12px; color: var(--text-3); margin-top: 16px; text-align: center; line-height: 1.8; }
+
 /* CONTACT */
 .contact { padding: 120px 48px; background: var(--ink); }
 .contact-inner { max-width: 700px; margin: 0 auto; text-align: center; }
@@ -601,6 +608,7 @@ footer {
     <a href="#scores">スコア</a>
     <a href="#sample">サンプル</a>
     <a href="#pricing">料金</a>
+    <a href="#free-scan">無料診断</a>
     <a href="#contact">お問い合わせ</a>
     <a class="nav-cta" href="pricing.html">購入する</a>
   </div>
@@ -630,8 +638,8 @@ footer {
     AI可視性スコアで、競合との差を数値化します。
   </p>
   <div class="hero-actions">
-    <a href="pricing.html" class="btn-primary">レポートを購入する</a>
-    <a href="#contact" class="btn-secondary">お問い合わせ</a>
+    <a href="#free-scan" class="btn-primary">1社無料で診断する</a>
+    <a href="pricing.html" class="btn-secondary">レポートを購入する</a>
     <a href="#sample" class="btn-ghost">サンプルを見る →</a>
   </div>
 </section>
@@ -856,6 +864,55 @@ footer {
   </div>
 </section>
 
+<!-- FREE SCAN -->
+<section class="free-scan" id="free-scan">
+  <div class="free-scan-inner">
+    <div class="fade-in">
+      <div class="section-label" style="justify-content:center">無料診断</div>
+      <h2 class="section-title">1社無料で<br>AIスコアを診断します</h2>
+      <p>御社サイトのAI可視性スコアを無料で診断し、PDFレポートをお送りします。<br>法人・個人事業主様限定。1企業1回まで。通常1営業日以内にご返信いたします。</p>
+    </div>
+    <div class="contact-form fade-in">
+      <div class="form-group">
+        <label>企業名・サービス名 <span style="color:var(--gold)">*</span></label>
+        <input type="text" id="fs-company" placeholder="株式会社〇〇">
+      </div>
+      <div class="form-group">
+        <label>WebサイトURL <span style="color:var(--gold)">*</span></label>
+        <input type="url" id="fs-url" placeholder="https://example.co.jp">
+      </div>
+      <div class="form-group">
+        <label>業界 <span style="color:var(--gold)">*</span></label>
+        <select id="fs-industry">
+          <option value="">選択してください</option>
+          <option>ホテル・旅館</option>
+          <option>レストラン・飲食</option>
+          <option>医療・クリニック</option>
+          <option>ECサイト</option>
+          <option>企業・コーポレート</option>
+          <option>不動産</option>
+          <option>金融・保険</option>
+          <option>教育・スクール</option>
+          <option>美容・サロン</option>
+          <option>その他</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>お名前 <span style="color:var(--gold)">*</span></label>
+        <input type="text" id="fs-name" placeholder="山田 太郎">
+      </div>
+      <div class="form-group">
+        <label>メールアドレス <span style="color:var(--gold)">*</span>
+          <span style="font-size:11px;color:var(--text-3);font-weight:normal;text-transform:none;letter-spacing:0;margin-left:8px">法人メール推奨</span>
+        </label>
+        <input type="email" id="fs-email" placeholder="your@company.co.jp">
+      </div>
+      <button class="form-submit" onclick="sendScanRequest()">無料診断を申し込む →</button>
+      <p class="free-scan-note">※ 同一企業様は1回限り。スコア診断PDFを1営業日以内にお送りします。<br>Gmail等のフリーメールでのお申し込みはお断りする場合があります。</p>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="contact-inner">
@@ -955,6 +1012,34 @@ footer {
 
 <script>
 // ▼▼▼ メールアドレスは上部の CONTACT_EMAIL のみ変更してください ▼▼▼
+
+// 無料診断申し込み送信
+function sendScanRequest() {
+  const company  = document.getElementById('fs-company').value.trim();
+  const url      = document.getElementById('fs-url').value.trim();
+  const industry = document.getElementById('fs-industry').value;
+  const name     = document.getElementById('fs-name').value.trim();
+  const email    = document.getElementById('fs-email').value.trim();
+  if (!company || !url || !industry || !name || !email) {
+    alert('すべての項目を入力してください');
+    return;
+  }
+  let domain = url;
+  try { domain = new URL(url).hostname.replace('www.', ''); } catch(e) {}
+  const subject = encodeURIComponent('[無料診断依頼] ' + domain + ' / ' + company);
+  const body = encodeURIComponent(
+    '企業名: ' + company + '\n' +
+    'URL: ' + url + '\n' +
+    '業界: ' + industry + '\n' +
+    'お名前: ' + name + '\n' +
+    'メール: ' + email
+  );
+  window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + subject + '&body=' + body;
+  const btn = document.querySelector('.form-submit[onclick="sendScanRequest()"]');
+  btn.textContent = 'メーラーが開きます...';
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent = '無料診断を申し込む →'; btn.disabled = false; }, 3000);
+}
 
 // お問い合わせフォーム送信（mailtoリンクで開く）
 function sendContact() {
