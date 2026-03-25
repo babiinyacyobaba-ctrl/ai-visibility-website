@@ -51,14 +51,12 @@
   ],
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "babiinya.cyobaba@protonmail.com",
     "contactType": "customer service",
     "availableLanguage": "Japanese"
   },
   "employee": {
     "@type": "Person",
-    "name": "AI Visibility Index 運営者",
-    "email": "babiinya.cyobaba@protonmail.com"
+    "name": "AI Visibility Index 運営者"
   }
 }
 </script>
@@ -595,7 +593,7 @@ footer {
 <body>
 
 <!-- ▼▼▼ 変更箇所: メールアドレスはここだけ変更してください ▼▼▼ -->
-<script>const CONTACT_EMAIL = atob('YmFiaWlueWEuY3lvYmFiYUBwcm90b25tYWlsLmNvbQ==');</script>
+<script>const CONTACT_EMAIL = atob('YWktdmlzaWJpbGl0eS1pbmRleEBwcm90b25tYWlsLmNvbQ==');</script>
 <!-- ▲▲▲ -->
 
 <nav>
@@ -1024,6 +1022,10 @@ function sendScanRequest() {
     alert('すべての項目を入力してください');
     return;
   }
+  if (!/^https?:\/\//i.test(url)) {
+    alert('URLは http:// または https:// から始めてください');
+    return;
+  }
   let domain = url;
   try { domain = new URL(url).hostname.replace('www.', ''); } catch(e) {}
   const subject = encodeURIComponent('[無料診断依頼] ' + domain + ' / ' + company);
@@ -1056,7 +1058,7 @@ function sendContact() {
     'メッセージ:\n' + (message || '（なし）')
   );
   window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + subject + '&body=' + body;
-  const btn = document.querySelector('.form-submit');
+  const btn = document.querySelector('.form-submit[onclick="sendContact()"]');
   btn.textContent = 'メーラーが開きます...';
   btn.disabled = true;
   setTimeout(() => { btn.textContent = '送信する →'; btn.disabled = false; }, 3000);
