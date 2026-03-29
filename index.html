@@ -169,7 +169,6 @@
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "AI Visibility Index 運営者",
-  "email": "babiinya.cyobaba@protonmail.com",
   "worksFor": {
     "@type": "Organization",
     "name": "AI Visibility Index"
@@ -178,8 +177,8 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet"></noscript>
 <style>
 :root {
   --gold:    #c8a96e;
@@ -598,7 +597,10 @@ footer {
 
 <nav>
   <a class="nav-logo" href="#">
-    <img src="/logo.png" alt="AVI" width="32" height="32" fetchpriority="high">
+    <picture>
+      <source srcset="/logo.webp" type="image/webp">
+      <img src="/logo.png" alt="AVI" width="32" height="32" fetchpriority="high">
+    </picture>
     AI Visibility Index
   </a>
   <div class="nav-links">
