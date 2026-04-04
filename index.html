@@ -141,10 +141,10 @@
     },
     {
       "@type": "Question",
-      "name": "購入後はすぐにダウンロードできますか？",
+      "name": "Starter β はすぐに使い始められますか？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "はい。決済完了後、ランキングHTMLおよびPDFレポートを即時ダウンロードいただけます。スキャン〜レポート生成まで通常数分以内に完了します。"
+        "text": "現在は先行案内受付中です。提供開始順にご連絡し、決済案内と利用開始手順を個別にご案内します。正式な即時申込フローは準備中です。"
       }
     },
     {
@@ -856,8 +856,8 @@ footer {
 <section class="free-scan" id="free-scan">
   <div class="free-scan-inner">
     <div class="campaign-card fade-in">
-      <div class="campaign-badge">Limited Campaign</div>
-      <h2 class="section-title">先着20社限定で<br>無料診断を実施中</h2>
+      <div class="campaign-badge" id="campaign-badge">Limited Campaign</div>
+      <h2 class="section-title" id="campaign-title">先着20社限定で<br>無料診断を実施中</h2>
       <p>今は初速が重要な時期なので、期間限定で 1URL の無料診断を受け付けます。まずは自社サイトの状態を把握し、情報品質と可視性の改善余地を確認できます。</p>
       <ul class="campaign-points">
         <li>総合スコア</li>
@@ -865,8 +865,8 @@ footer {
         <li>改善ポイント上位3件</li>
         <li>業界平均との差分の簡易表示</li>
       </ul>
-      <p>無料診断は入口商品です。継続的に改善したい場合は、Starter プランで週次診断と推移管理へ移行できます。</p>
-      <div class="campaign-note">対象は事業者限定、1ドメイン1回までです。特定のAIサービスでの掲載、引用、順位、集客成果を保証するものではありません。</div>
+      <p>無料診断は入口商品です。継続的に改善したい場合は、Starter β の先行案内を通じて週次診断と推移管理へ移行できます。</p>
+      <div class="campaign-note" id="campaign-note">対象確認後の受付確定順で先着20社をカウントします。対象は事業者限定、1ドメイン1回までです。特定のAIサービスでの掲載、引用、順位、集客成果を保証するものではありません。</div>
     </div>
     <div class="contact-form fade-in">
       <div class="form-group">
@@ -922,7 +922,7 @@ footer {
       <div class="price-card fade-in">
         <div class="price-name">Free診断</div>
         <div class="price-amount">¥0</div>
-        <div class="price-unit">1社・1URL・先着20社</div>
+        <div class="price-unit" id="free-plan-unit">1社・1URL・先着20社</div>
         <ul class="price-features">
           <li>総合スコア</li>
           <li>4軸の概要</li>
@@ -1028,8 +1028,8 @@ footer {
         <div class="faq-a">現在、ホテル・旅館、レストラン・飲食、ECサイト、大手企業（コーポレートサイト）、汎用（メディア・不動産・求人等）の5業界に対応しています。</div>
       </div>
       <div class="faq-item fade-in">
-        <div class="faq-q">購入後はすぐにダウンロードできますか？</div>
-        <div class="faq-a">はい。決済完了後、ランキングHTMLおよびPDFレポートを即時ダウンロードいただけます。スキャン〜レポート生成まで通常数分以内に完了します。</div>
+        <div class="faq-q">Starter β はすぐに使い始められますか？</div>
+        <div class="faq-a">現在は先行案内受付中です。提供開始順にご連絡し、決済案内と利用開始手順を個別にご案内します。正式な即時申込フローは準備中です。</div>
       </div>
       <div class="faq-item fade-in">
         <div class="faq-q">診断対象の企業に通知されますか？</div>
@@ -1075,6 +1075,33 @@ footer {
 <script>
 function isConfiguredForm(formConfig) {
   return formConfig && formConfig.url && !formConfig.url.includes('REPLACE_WITH');
+}
+
+function renderCampaignState() {
+  if (typeof FREE_SCAN_CAMPAIGN === 'undefined') return;
+  const remaining = Math.max((FREE_SCAN_CAMPAIGN.limit || 0) - (FREE_SCAN_CAMPAIGN.acceptedCount || 0), 0);
+  const title = document.getElementById('campaign-title');
+  const note = document.getElementById('campaign-note');
+  const unit = document.getElementById('free-plan-unit');
+  if (!title || !note || !unit) return;
+
+  if (FREE_SCAN_CAMPAIGN.status === 'closed' || remaining === 0) {
+    title.innerHTML = '無料診断の受付枠は<br>いったん終了しました';
+    note.textContent = '対象確認後の受付確定順で先着20社をカウントしていました。現在は waitlist または個別相談で受け付けています。';
+    unit.textContent = 'waitlist 受付中';
+    return;
+  }
+
+  if (FREE_SCAN_CAMPAIGN.status === 'waitlist') {
+    title.innerHTML = '無料診断の本枠は終了、<br>waitlist を受付中';
+    note.textContent = '対象確認後の受付確定順で先着20社をカウントしました。現在は waitlist をご案内しています。';
+    unit.textContent = 'waitlist 受付中';
+    return;
+  }
+
+  title.innerHTML = '先着20社限定で<br>無料診断を実施中';
+  note.textContent = '対象確認後の受付確定順で先着20社をカウントします。対象は事業者限定、1ドメイン1回までです。特定のAIサービスでの掲載、引用、順位、集客成果を保証するものではありません。';
+  unit.textContent = '1社・1URL・残り ' + remaining + '枠';
 }
 
 function escapeHtml(value) {
@@ -1243,6 +1270,7 @@ const scoreObs = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.3 });
 document.querySelectorAll('.scores-inner').forEach(el => scoreObs.observe(el));
+renderCampaignState();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f5be82665aa344939482d544f2c8985a"}'></script><!-- End Cloudflare Web Analytics -->
 </body>

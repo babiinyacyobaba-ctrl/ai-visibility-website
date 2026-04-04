@@ -23,3 +23,9 @@ const LEAD_FORMS = {
     method: "POST",
   },
 };
+
+const FREE_SCAN_CAMPAIGN = {
+  limit: 20,
+  acceptedCount: 0,
+  status: "active", // active | waitlist | closed
+};
