@@ -451,6 +451,38 @@ section { position: relative; z-index: 1; }
 .sample-cta p { font-size: 14px; color: var(--text-2); margin-bottom: 24px; }
 .sample-cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
+/* FREE SCAN */
+.free-scan { padding: 120px 48px; background: var(--ink); }
+.free-scan-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.campaign-card {
+  background: linear-gradient(180deg, rgba(200,169,110,0.12), rgba(200,169,110,0.03));
+  border: 1px solid rgba(200,169,110,0.18);
+  padding: 40px;
+}
+.campaign-badge {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--black);
+  background: var(--gold);
+  padding: 6px 12px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.campaign-card p { font-size: 15px; color: var(--text-2); line-height: 1.9; margin-bottom: 20px; }
+.campaign-points { list-style: none; margin: 28px 0 32px; }
+.campaign-points li {
+  font-size: 14px;
+  color: var(--text-2);
+  padding: 8px 0;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.campaign-points li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+.campaign-note { font-size: 12px; color: var(--text-3); line-height: 1.8; margin-top: 16px; }
+
 /* PRICING */
 .pricing { padding: 120px 48px; }
 .pricing-inner { max-width: 900px; margin: 0 auto; }
@@ -586,9 +618,9 @@ footer {
   nav { padding: 16px 24px; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
-  .hero, .problem, .how, .scores, .use-cases, .sample, .pricing, .contact, .faq, .cta-footer { padding-left: 24px; padding-right: 24px; }
+  .hero, .problem, .how, .scores, .use-cases, .sample, .free-scan, .pricing, .contact, .faq, .cta-footer { padding-left: 24px; padding-right: 24px; }
   .problem-inner { grid-template-columns: 1fr; gap: 48px; }
-  .steps, .score-grid, .case-grid, .price-cards { grid-template-columns: 1fr; }
+  .steps, .score-grid, .case-grid, .free-scan-inner, .price-cards { grid-template-columns: 1fr; }
   footer { padding: 24px; }
 }
 </style>
@@ -608,9 +640,10 @@ footer {
     <a href="#how">仕組み</a>
     <a href="#scores">スコア</a>
     <a href="#sample">サンプル</a>
+    <a href="#free-scan">無料診断</a>
     <a href="#pricing">料金</a>
     <a href="#contact">お問い合わせ</a>
-    <a class="nav-cta" href="pricing.html">購入する</a>
+    <a class="nav-cta" href="#free-scan">無料診断</a>
   </div>
   <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="メニューを開く">
     <span></span><span></span><span></span>
@@ -621,9 +654,10 @@ footer {
   <a href="#how" onclick="toggleMobileNav()">仕組み</a>
   <a href="#scores" onclick="toggleMobileNav()">スコア</a>
   <a href="#sample" onclick="toggleMobileNav()">サンプル</a>
+  <a href="#free-scan" onclick="toggleMobileNav()">無料診断</a>
   <a href="#pricing" onclick="toggleMobileNav()">料金</a>
   <a href="#contact" onclick="toggleMobileNav()">お問い合わせ</a>
-  <a class="nav-cta" href="pricing.html">購入する</a>
+  <a class="nav-cta" href="#free-scan">無料診断</a>
 </div>
 
 <!-- HERO -->
@@ -638,8 +672,8 @@ footer {
     情報品質と可視性に関わる改善余地を可視化します。
   </p>
   <div class="hero-actions">
-    <a href="pricing.html" class="btn-primary">レポートを購入する</a>
-    <a href="#contact" class="btn-secondary">お問い合わせ</a>
+    <a href="#free-scan" class="btn-primary">無料診断を申し込む</a>
+    <a href="pricing.html" class="btn-secondary">料金を見る</a>
     <a href="#sample" class="btn-ghost">サンプルを見る →</a>
   </div>
 </section>
@@ -820,6 +854,60 @@ footer {
   </div>
 </section>
 
+<!-- FREE SCAN -->
+<section class="free-scan" id="free-scan">
+  <div class="free-scan-inner">
+    <div class="campaign-card fade-in">
+      <div class="campaign-badge">Limited Campaign</div>
+      <h2 class="section-title">先着20社限定で<br>無料診断を実施中</h2>
+      <p>今は初速が重要な時期なので、期間限定で 1URL の無料診断を受け付けます。まずは自社サイトの状態を把握し、情報品質と可視性の改善余地を確認できます。</p>
+      <ul class="campaign-points">
+        <li>総合スコア</li>
+        <li>4軸の概要</li>
+        <li>改善ポイント上位3件</li>
+        <li>業界平均との差分の簡易表示</li>
+      </ul>
+      <p>無料診断は入口商品です。継続的に改善したい場合は、Starter プランで週次診断と推移管理へ移行できます。</p>
+      <div class="campaign-note">対象は事業者限定、1ドメイン1回までです。特定のAIサービスでの掲載、引用、順位、集客成果を保証するものではありません。</div>
+    </div>
+    <div class="contact-form fade-in">
+      <div class="form-group">
+        <label>企業名・サービス名</label>
+        <input type="text" id="fs-company" placeholder="株式会社〇〇">
+      </div>
+      <div class="form-group">
+        <label>対象URL</label>
+        <input type="url" id="fs-url" placeholder="https://example.com">
+      </div>
+      <div class="form-group">
+        <label>メールアドレス</label>
+        <input type="email" id="fs-email" placeholder="your@company.com">
+      </div>
+      <div class="form-group">
+        <label>業界</label>
+        <select id="fs-industry">
+          <option value="">選択してください</option>
+          <option>ホテル・旅館</option>
+          <option>レストラン・飲食</option>
+          <option>ECサイト</option>
+          <option>企業・コーポレート</option>
+          <option>不動産</option>
+          <option>医療・クリニック</option>
+          <option>金融・保険</option>
+          <option>教育・スクール</option>
+          <option>美容・サロン</option>
+          <option>その他</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>備考</label>
+        <textarea id="fs-message" placeholder="競合比較の有無や相談したい内容があればご記入ください"></textarea>
+      </div>
+      <button class="form-submit" onclick="sendFreeScan()">無料診断を申し込む →</button>
+    </div>
+  </div>
+</section>
+
 <!-- PRICING -->
 <section class="pricing" id="pricing">
   <div class="pricing-inner">
@@ -945,7 +1033,7 @@ footer {
   <h2>自社サイトの状態を、<br>今すぐ把握する</h2>
   <p>AI時代の情報発信は、見つかることと同じくらい、正しく伝わることが重要です。</p>
   <div class="cta-btns">
-    <a href="pricing.html" class="btn-primary">レポートを購入する</a>
+    <a href="#free-scan" class="btn-primary">無料診断を申し込む</a>
     <a href="#contact" class="btn-secondary">まずは相談する</a>
   </div>
 </section>
@@ -967,6 +1055,31 @@ footer {
 
 <script>
 // ▼▼▼ メールアドレスは上部の CONTACT_EMAIL のみ変更してください ▼▼▼
+
+function sendFreeScan() {
+  const company = document.getElementById('fs-company').value.trim();
+  const url = document.getElementById('fs-url').value.trim();
+  const email = document.getElementById('fs-email').value.trim();
+  const industry = document.getElementById('fs-industry').value;
+  const message = document.getElementById('fs-message').value.trim();
+  if (!company || !url || !email) {
+    alert('企業名・対象URL・メールアドレスは必須です');
+    return;
+  }
+  const subject = encodeURIComponent('[AI Visibility Index] 無料診断申込: ' + company);
+  const body = encodeURIComponent(
+    '企業名: ' + company + '\n' +
+    '対象URL: ' + url + '\n' +
+    'メールアドレス: ' + email + '\n' +
+    '業界: ' + (industry || '未選択') + '\n\n' +
+    '備考:\n' + (message || 'なし')
+  );
+  window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + subject + '&body=' + body;
+  const btn = document.querySelector('.free-scan .form-submit');
+  btn.textContent = 'メーラーが開きます...';
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent = '無料診断を申し込む →'; btn.disabled = false; }, 3000);
+}
 
 // お問い合わせフォーム送信（mailtoリンクで開く）
 function sendContact() {
