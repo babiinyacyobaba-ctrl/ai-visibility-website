@@ -14,6 +14,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="プラン一覧 | AI Visibility Index">
 <meta name="twitter:description" content="Free診断から Starter β、Pro まで。AI時代の情報品質と可視性を継続的に改善するためのプラン一覧です。">
+<script src="config.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -332,12 +333,34 @@ footer {
 </footer>
 
 <script>
-// config.js で定義した CONTACT_EMAIL を使ってボタンを設定する
+// config.js で定義した外部フォームURLと CONTACT_EMAIL を使ってボタンを設定する
 (function () {
-  document.getElementById('btn-starter').href =
-    'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('[AI Visibility Index] Starter β 先行案内希望');
-  document.getElementById('btn-pro').href =
-    'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('[AI Visibility Index] Proプラン相談');
+  function setLeadLink(id, formKey, subjectText, fallbackBody) {
+    var btn = document.getElementById(id);
+    var cfg = LEAD_FORMS[formKey];
+    if (cfg && cfg.url && !cfg.url.includes('REPLACE_WITH')) {
+      btn.href = cfg.url;
+      btn.target = '_blank';
+      btn.rel = 'noopener';
+      return;
+    }
+    btn.href = 'mailto:' + CONTACT_EMAIL +
+      '?subject=' + encodeURIComponent(subjectText) +
+      '&body=' + encodeURIComponent(fallbackBody);
+  }
+
+  setLeadLink(
+    'btn-starter',
+    'starterBeta',
+    '[AI Visibility Index] Starter β 先行案内希望',
+    '会社名:\nURL:\nメール:\n業界:\n備考:\n'
+  );
+  setLeadLink(
+    'btn-pro',
+    'proInquiry',
+    '[AI Visibility Index] Proプラン相談',
+    '会社名:\nURL:\nメール:\n相談内容:\n'
+  );
 })();
 </script>
 

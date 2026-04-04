@@ -627,9 +627,7 @@ footer {
 </head>
 <body>
 
-<!-- ▼▼▼ 変更箇所: メールアドレスはここだけ変更してください ▼▼▼ -->
-<script>const CONTACT_EMAIL = atob('YmFiaWlueWEuY3lvYmFiYUBwcm90b25tYWlsLmNvbQ==');</script>
-<!-- ▲▲▲ -->
+<script src="config.js"></script>
 
 <nav>
   <a class="nav-logo" href="#">
@@ -903,7 +901,12 @@ footer {
         <label>備考</label>
         <textarea id="fs-message" placeholder="競合比較の有無や相談したい内容があればご記入ください"></textarea>
       </div>
+      <div class="form-group" style="display:flex;align-items:flex-start;gap:10px">
+        <input type="checkbox" id="fs-starter" style="width:auto;margin-top:4px">
+        <label for="fs-starter" style="margin:0;line-height:1.8">Starter β の先行案内も受け取りたい</label>
+      </div>
       <button class="form-submit" onclick="sendFreeScan()">無料診断を申し込む →</button>
+      <div id="fs-success" class="campaign-note" style="display:none;margin-top:16px"></div>
     </div>
   </div>
 </section>
@@ -1070,7 +1073,82 @@ footer {
 </footer>
 
 <script>
-// ▼▼▼ メールアドレスは上部の CONTACT_EMAIL のみ変更してください ▼▼▼
+function isConfiguredForm(formConfig) {
+  return formConfig && formConfig.url && !formConfig.url.includes('REPLACE_WITH');
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function submitExternalLead(formConfig, payload) {
+  if (!isConfiguredForm(formConfig)) return false;
+  const method = (formConfig.method || 'POST').toUpperCase();
+  const form = document.createElement('form');
+  form.method = method;
+  form.action = formConfig.url;
+  form.target = '_blank';
+  form.style.display = 'none';
+  Object.entries(payload).forEach(([key, value]) => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = key;
+    input.value = value;
+    form.appendChild(input);
+  });
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+  return true;
+}
+
+function openMailFallback(subjectText, payload) {
+  const body = Object.entries(payload)
+    .map(([key, value]) => key + ': ' + value)
+    .join('\n');
+  const subject = encodeURIComponent(subjectText);
+  window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + subject + '&body=' + encodeURIComponent(body);
+}
+
+function showFreeScanSuccess(payload, usedExternalForm) {
+  const success = document.getElementById('fs-success');
+  const starterButton = `<button type="button" class="btn-secondary" style="margin-top:16px;border:none;cursor:pointer" onclick="registerStarterBetaFromFreeScan()">Starter β の先行案内も登録する</button>`;
+  success.innerHTML =
+    '<strong>無料診断の受付を開始しました。</strong><br>' +
+    '受付後、24時間以内を目安に初回連絡を行います。' +
+    (usedExternalForm
+      ? '<br>外部フォームは新しいタブで開いています。送信完了後、この画面に戻ってください。'
+      : '<br>外部フォームURLが未設定のため、メール送信へ切り替えました。') +
+    '<br>次の一手として、継続改善を希望する場合は Starter β の先行案内へ登録できます。' +
+    starterButton;
+  success.style.display = 'block';
+  window.__lastFreeScanPayload = payload;
+}
+
+function registerStarterBetaFromFreeScan() {
+  const payload = window.__lastFreeScanPayload || {};
+  const starterPayload = {
+    source: 'website_free_scan_thankyou',
+    company: payload.company || '',
+    url: payload.url || '',
+    email: payload.email || '',
+    industry: payload.industry || '',
+    note: payload.note || '',
+    wants_starter: 'yes',
+    status: 'new',
+    owner: 'growth',
+    next_action: 'send starter beta 안내',
+    last_contact_at: '',
+  };
+  if (!submitExternalLead(LEAD_FORMS.starterBeta, starterPayload)) {
+    openMailFallback('[AI Visibility Index] Starter β 先行案内希望', starterPayload);
+  }
+}
 
 function sendFreeScan() {
   const company = document.getElementById('fs-company').value.trim();
@@ -1078,22 +1156,40 @@ function sendFreeScan() {
   const email = document.getElementById('fs-email').value.trim();
   const industry = document.getElementById('fs-industry').value;
   const message = document.getElementById('fs-message').value.trim();
+  const wantsStarter = document.getElementById('fs-starter').checked ? 'yes' : 'no';
   if (!company || !url || !email) {
     alert('企業名・対象URL・メールアドレスは必須です');
     return;
   }
-  const subject = encodeURIComponent('[AI Visibility Index] 無料診断申込: ' + company);
-  const body = encodeURIComponent(
-    '企業名: ' + company + '\n' +
-    '対象URL: ' + url + '\n' +
-    'メールアドレス: ' + email + '\n' +
-    '業界: ' + (industry || '未選択') + '\n\n' +
-    '備考:\n' + (message || 'なし')
-  );
-  window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + subject + '&body=' + body;
+  const payload = {
+    timestamp: new Date().toISOString(),
+    source: 'website_free_scan',
+    company: company,
+    url: url,
+    email: email,
+    industry: industry || '未選択',
+    note: message || 'なし',
+    wants_starter: wantsStarter,
+    status: 'new',
+    owner: 'growth',
+    next_action: 'send auto reply',
+    last_contact_at: '',
+  };
+  const usedExternalForm = submitExternalLead(LEAD_FORMS.freeScan, payload);
+  if (!usedExternalForm) {
+    openMailFallback('[AI Visibility Index] 無料診断申込: ' + company, payload);
+  }
+  if (wantsStarter === 'yes') {
+    submitExternalLead(LEAD_FORMS.starterBeta, {
+      ...payload,
+      source: 'website_free_scan_opt_in',
+      next_action: 'send starter beta 안내',
+    });
+  }
   const btn = document.querySelector('.free-scan .form-submit');
-  btn.textContent = 'メーラーが開きます...';
+  btn.textContent = usedExternalForm ? '外部フォームへ送信中...' : 'メールアプリを開いています...';
   btn.disabled = true;
+  showFreeScanSuccess(payload, usedExternalForm);
   setTimeout(() => { btn.textContent = '無料診断を申し込む →'; btn.disabled = false; }, 3000);
 }
 
@@ -1112,7 +1208,7 @@ function sendContact() {
     'メッセージ:\n' + (message || '（なし）')
   );
   window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + subject + '&body=' + body;
-  const btn = document.querySelector('.form-submit');
+  const btn = document.querySelector('.contact .form-submit');
   btn.textContent = 'メーラーが開きます...';
   btn.disabled = true;
   setTimeout(() => { btn.textContent = '送信する →'; btn.disabled = false; }, 3000);

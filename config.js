@@ -1,25 +1,25 @@
-// config.js — Stripe Payment Links
+// config.js — public lead capture and contact settings
 //
-// Stripe の Payment Links ページ (https://dashboard.stripe.com/payment-links)
-// で発行した URL をここに貼り付けてください。
-//
-// 例: "https://buy.stripe.com/xxxxxxxxxx"
+// 外部フォームは Google Forms / Apps Script / Formspree 等を想定しています。
+// method は "GET" または "POST" を指定してください。
+// 未設定の場合はメール問い合わせへフォールバックします。
 //
 // ※ このファイルはパブリックに配信されます。
 //    シークレットキーは絶対に記載しないでください。
-//    Payment Link URL は公開されても問題ありません。
 
-const STRIPE_LINKS = {
-  // スポット診断 ¥9,800
-// Prod
-  spot: "https://buy.stripe.com/3cIbJ14DKdkn6IGcV1aR201",
-// Test
-//  spot: "https://buy.stripe.com/test_eVq00jb9eeVRaUh6oF3ZK00",
-  
-
-  // 業界ランキング ¥49,800
-  ranking: "https://buy.stripe.com/28E14n3zGcgjeb8dZ5aR200",
-};
-
-// お問い合わせ先メールアドレス（カスタム調査プランで使用）
 const CONTACT_EMAIL = "babiinya.cyobaba@protonmail.com";
+
+const LEAD_FORMS = {
+  freeScan: {
+    url: "",
+    method: "POST",
+  },
+  starterBeta: {
+    url: "",
+    method: "POST",
+  },
+  proInquiry: {
+    url: "",
+    method: "POST",
+  },
+};
