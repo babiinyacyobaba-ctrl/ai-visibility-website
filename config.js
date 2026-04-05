@@ -11,16 +11,16 @@ const CONTACT_EMAIL = "babiinya.cyobaba@protonmail.com";
 
 const LEAD_FORMS = {
   freeScan: {
-    url: "",
-    method: "POST",
+    url: "https://forms.gle/UCBE67C5x8GdMyTE7",
+    method: "GET",
   },
   starterBeta: {
-    url: "",
-    method: "POST",
+    url: "https://forms.gle/S4bFwFQiU9LDbnFj9",
+    method: "GET",
   },
   proInquiry: {
-    url: "",
-    method: "POST",
+    url: "https://forms.gle/R3HXcUo84myV4zT18",
+    method: "GET",
   },
 };
 
