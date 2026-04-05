@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>匿名化サンプルレポート | AI Visibility Index</title>
+<meta name="description" content="AI Visibility Index の匿名化サンプルレポートです。4軸スコア、主要所見、改善優先順位、改善前後イメージを確認できます。">
+<link rel="canonical" href="https://ai-visibility-website.pages.dev/sample-report.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ai-visibility-website.pages.dev/sample-report.html">
+<meta property="og:title" content="匿名化サンプルレポート | AI Visibility Index">
+<meta property="og:description" content="4軸スコア、主要所見、改善優先順位、改善前後イメージを確認できる匿名化サンプルレポートです。">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="匿名化サンプルレポート | AI Visibility Index">
+<meta name="twitter:description" content="4軸スコア、主要所見、改善優先順位、改善前後イメージを確認できる匿名化サンプルレポートです。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=DM+Mono:wght@300;400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#c8a96e;
+  --gold-lt:#e2c99a;
+  --black:#0a0a0a;
+  --ink:#111111;
+  --dim:#1c1c1c;
+  --text:#e8e4dc;
+  --text-2:#a09880;
+  --text-3:#5a5448;
+  --accent:#23364c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--black);
+  color:var(--text);
+  font-family:'Noto Sans JP',sans-serif;
+  line-height:1.85;
+}
+nav,footer{
+  border-bottom:1px solid rgba(200,169,110,0.1);
+  padding:20px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+footer{
+  border-top:1px solid rgba(200,169,110,0.1);
+  border-bottom:none;
+  flex-wrap:wrap;
+  gap:16px;
+}
+a{color:var(--gold);text-decoration:none}
+.nav-logo,.mono{
+  font-family:'DM Mono',monospace;
+  letter-spacing:.18em;
+  font-size:11px;
+}
+main{
+  max-width:1040px;
+  margin:0 auto;
+  padding:72px 40px 120px;
+}
+.eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:.28em;
+  color:var(--gold);
+  margin-bottom:20px;
+}
+h1,h2,h3{
+  font-family:'Shippori Mincho',serif;
+  font-weight:600;
+}
+h1{
+  font-size:clamp(34px,5vw,56px);
+  line-height:1.1;
+  margin-bottom:18px;
+}
+h2{
+  font-size:28px;
+  margin-bottom:16px;
+}
+h3{
+  font-size:20px;
+  margin-bottom:10px;
+}
+p,li,td,th{
+  font-size:14px;
+}
+.lead{
+  color:var(--text-2);
+  max-width:800px;
+}
+.hero{
+  margin-bottom:52px;
+}
+.grid-2{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:24px;
+  margin-bottom:24px;
+}
+.card{
+  background:var(--dim);
+  padding:28px;
+}
+.score-total{
+  font-size:56px;
+  font-family:'Shippori Mincho',serif;
+  margin:14px 0 6px;
+}
+.subtle{
+  color:var(--text-3);
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+th,td{
+  text-align:left;
+  padding:14px 0;
+  border-bottom:1px solid rgba(200,169,110,0.08);
+  vertical-align:top;
+}
+th{
+  color:var(--text-2);
+  width:180px;
+}
+.issue-list,.check-list{
+  padding-left:18px;
+}
+.issue-list li,.check-list li{
+  margin:10px 0;
+  color:var(--text-2);
+}
+.snapshot{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+.metric{
+  background:var(--ink);
+  padding:18px;
+}
+.metric-label{
+  color:var(--text-3);
+  font-size:12px;
+}
+.metric-value{
+  font-size:28px;
+  font-family:'Shippori Mincho',serif;
+  margin-top:8px;
+}
+.before-after{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+.panel{
+  background:var(--dim);
+  padding:24px;
+  border-top:2px solid rgba(200,169,110,0.28);
+}
+.panel.before{border-top-color:rgba(201,74,58,0.55)}
+.panel.after{border-top-color:rgba(200,169,110,0.55)}
+.cta{
+  background:linear-gradient(180deg, rgba(35,54,76,0.3), rgba(17,17,17,0.8));
+  padding:32px;
+  margin-top:24px;
+}
+.cta-actions{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+.btn{
+  display:inline-block;
+  padding:14px 24px;
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  letter-spacing:.14em;
+}
+.btn-primary{
+  background:var(--gold);
+  color:var(--black);
+}
+.btn-secondary{
+  border:1px solid rgba(200,169,110,0.4);
+  color:var(--gold);
+}
+.profile{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  margin-top:24px;
+}
+@media (max-width: 880px){
+  nav,footer,main{padding-left:24px;padding-right:24px}
+  .grid-2,.before-after,.profile{grid-template-columns:1fr}
+  .snapshot{grid-template-columns:1fr 1fr}
+}
+@media (max-width: 560px){
+  .snapshot{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">AI Visibility Index</a>
+  <a href="index.html" class="subtle">← トップへ戻る</a>
+</nav>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">ANONYMIZED SAMPLE REPORT</p>
+    <h1>匿名化サンプルレポート</h1>
+    <p class="lead">実際の提供物に近い構成で、4軸スコア、主要所見、改善優先順位、改善前後イメージを公開しています。数値と社名は匿名化・サンプル化していますが、読み方と改善観点は本番運用に合わせています。</p>
+  </section>
+
+  <section class="grid-2">
+    <div class="card">
+      <div class="mono subtle">REPORT SNAPSHOT</div>
+      <div class="score-total">74 / 100</div>
+      <p class="lead">公開情報品質は中位。クロール可能性は確保されている一方で、基本メタ情報と記述整合性に改善余地があります。構造化データは実装済みですが、主要フィールドに欠落があります。</p>
+      <div class="snapshot">
+        <div class="metric">
+          <div class="metric-label">クロール可能性</div>
+          <div class="metric-value">26 / 30</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">基本メタ情報</div>
+          <div class="metric-value">17 / 25</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">構造化データ</div>
+          <div class="metric-value">19 / 25</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">記述整合性</div>
+          <div class="metric-value">12 / 20</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="mono subtle">SCOPE</div>
+      <table>
+        <tr><th>対象</th><td>匿名化した宿泊事業者サイト</td></tr>
+        <tr><th>取得時点</th><td>2026-04-05 09:20 JST</td></tr>
+        <tr><th>比較対象</th><td>同カテゴリ 12 サイト</td></tr>
+        <tr><th>主用途</th><td>初回診断、改善優先順位の把握、提案資料のたたき台</td></tr>
+      </table>
+      <p class="subtle" style="margin-top:16px">このサンプルはデモ表示ではなく、実際のレポート構成を匿名化して再編集したものです。</p>
+    </div>
+  </section>
+
+  <section class="grid-2">
+    <div class="card">
+      <h2>主要所見</h2>
+      <ul class="issue-list">
+        <li>title は存在するが、地域名とサービス名が欠落しており、検索結果やAI要約で識別しづらい。</li>
+        <li>meta description が未設定で、共有時の説明情報が不足している。</li>
+        <li>JSON-LD は存在するが、`address` と `telephone` が未入力で、構造化データの充実度が低い。</li>
+        <li>フッターと会社概要ページで営業時間の表記が不一致。記述整合性で減点。</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>改善優先順位</h2>
+      <ol class="check-list">
+        <li>title / meta description を先に整備し、ページの基本説明情報を改善する。</li>
+        <li>Organization / LocalBusiness 系の JSON-LD に主要フィールドを補完する。</li>
+        <li>営業時間と問い合わせ先の表記を全ページで統一する。</li>
+        <li>更新後に再診断し、業界平均との差分と推移を確認する。</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="card" style="margin-bottom:24px">
+    <h2>改善前後イメージ</h2>
+    <div class="before-after">
+      <div class="panel before">
+        <div class="mono subtle">BEFORE</div>
+        <h3>改善前</h3>
+        <ul class="issue-list">
+          <li>title が短く、固有名詞が弱い</li>
+          <li>meta description なし</li>
+          <li>構造化データに住所・電話が欠落</li>
+          <li>会社概要とフッターで営業時間が不一致</li>
+        </ul>
+      </div>
+      <div class="panel after">
+        <div class="mono subtle">AFTER</div>
+        <h3>改善後の想定</h3>
+        <ul class="issue-list">
+          <li>title と meta description で提供価値と地域情報が明確</li>
+          <li>Organization / LocalBusiness の必須・主要フィールドを補完</li>
+          <li>営業時間と問い合わせ先の表記を統一</li>
+          <li>再診断で、基本メタ情報と記述整合性の改善を確認</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="profile">
+    <div class="card">
+      <div class="mono subtle">METHOD</div>
+      <h2>評価の前提</h2>
+      <p class="lead">評価軸は、クロール可能性 30 点、基本メタ情報 25 点、構造化データ 25 点、記述整合性 20 点です。スキーマ型の適合性とフィールド充実度は、構造化データ軸の内訳として扱います。</p>
+      <p class="subtle" style="margin-top:14px"><a href="methodology.html">方法論ページを見る</a></p>
+    </div>
+    <div class="card">
+      <div class="mono subtle">OPERATOR</div>
+      <h2>運営者情報</h2>
+      <p class="lead">馬場靖介が個人事業として運営しています。公開Webサイト上の情報品質を評価し、事業者やWebコンサルタントが改善の優先順位を判断しやすい状態をつくることを目的としています。</p>
+      <p class="subtle" style="margin-top:14px">問い合わせ先: ai-visibility-index@protonmail.com</p>
+      <p class="subtle" style="margin-top:10px"><a href="legal.html">特定商取引法に基づく表記</a> / <a href="privacy.html">プライバシーポリシー</a></p>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="mono subtle">NEXT STEP</div>
+    <h2>まずは自社サイトの状態を把握する</h2>
+    <p class="lead">サンプルでイメージを確認したら、次は無料診断で現状を把握できます。継続改善が必要な場合は Starter β の先行案内から移行できます。</p>
+    <div class="cta-actions">
+      <a href="index.html#free-scan" class="btn btn-primary">無料診断を申し込む</a>
+      <a href="pricing.html" class="btn btn-secondary">プランを見る</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="nav-logo">AI Visibility Index</div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
+    <a href="index.html">トップ</a>
+    <a href="methodology.html">方法論</a>
+    <a href="pricing.html">料金</a>
+    <a href="privacy.html">プライバシー</a>
+    <a href="legal.html">特定商取引法に基づく表記</a>
+  </div>
+  <div class="mono subtle">© 2026 AI Visibility Index</div>
+</footer>
+</body>
+</html>
