@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方法論 | AI Visibility Index</title>
+<meta name="description" content="AI Visibility Index の採点ロジック、評価軸、対象範囲、除外条件、業界平均の考え方を説明します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c8a96e;--black:#0a0a0a;--dim:#1c1c1c;--text:#e8e4dc;--text-2:#a09880;--text-3:#5a5448}*{box-sizing:border-box;margin:0;padding:0}body{background:var(--black);color:var(--text);font-family:'Noto Sans JP',sans-serif;line-height:1.9}nav,footer{border-bottom:1px solid #1c1c1c;padding:20px 40px;display:flex;justify-content:space-between;align-items:center}footer{border-top:1px solid #1c1c1c;border-bottom:none;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-3)}main{max-width:860px;margin:0 auto;padding:80px 40px 120px}.eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--text-3);margin-bottom:16px}h1{font-size:28px;font-weight:500;margin-bottom:16px}h2{font-size:20px;font-weight:500;margin:40px 0 12px}p,li{font-size:14px;color:var(--text-2)}ul{padding-left:20px}.card{background:var(--dim);padding:24px;margin-top:20px}.nav-logo,a{color:var(--gold);text-decoration:none}.back{color:var(--text-2)}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{padding:14px 0;border-bottom:1px solid #1e1e1e;text-align:left;vertical-align:top}th{width:180px;color:var(--text)}@media(max-width:800px){nav,footer,main{padding-left:24px;padding-right:24px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">AI VISIBILITY INDEX</a>
+  <a href="/" class="back">← トップへ戻る</a>
+</nav>
+<main>
+  <p class="eyebrow">METHODOLOGY</p>
+  <h1>方法論</h1>
+  <p>AI Visibility Index は、公開Webサイト上の情報が検索エンジンやAIに理解されやすい状態かを、4軸・100点満点で評価する診断サービスです。構造化データだけを唯一の根拠とはせず、公開性、クロール可能性、基本メタ情報、記述整合性をあわせて評価します。</p>
+
+  <h2>評価対象</h2>
+  <ul>
+    <li>対象は公開Webサイトのトップページまたは指定URLです。</li>
+    <li>ログインが必要なページ、会員限定ページ、robots や noindex で制限されたページは評価対象外または減点対象になる場合があります。</li>
+    <li>診断はスキャン時点で取得可能な公開情報に基づきます。</li>
+  </ul>
+
+  <h2>4つの評価軸</h2>
+  <table>
+    <tr><th>クロール可能性</th><td>公開性、HTTP 応答、noindex、canonical、基本的な取得可否を確認します。</td></tr>
+    <tr><th>基本メタ情報</th><td>title、meta description、OGP など、ページの基本的な説明情報を確認します。</td></tr>
+    <tr><th>構造化データ</th><td>JSON-LD や schema.org の実装状況を確認します。掲載を保証するものではなく、理解しやすさを高める要素として扱います。</td></tr>
+    <tr><th>記述整合性</th><td>企業名、業種、住所、営業時間など、サイト上の主要情報が一貫しているかを確認します。</td></tr>
+  </table>
+
+  <h2>スコアの考え方</h2>
+  <div class="card">
+    <p>総合スコアは 100 点満点です。各軸の詳細な重みは今後のアップデートで見直す可能性がありますが、現時点では「取得可能性」と「基本情報の整備」を重く見ています。これは、検索エンジンやAIがページを参照する前提条件だからです。</p>
+  </div>
+
+  <h2>業界平均と比較</h2>
+  <ul>
+    <li>業界平均は、同一カテゴリ内で診断した対象群から算出します。</li>
+    <li>対象件数、除外条件、計測時点によって変動します。</li>
+    <li>比較指標は参考情報であり、順位や露出を保証するものではありません。</li>
+  </ul>
+
+  <h2>保証しないこと</h2>
+  <ul>
+    <li>特定のAIサービスでの掲載、引用、順位、流入、問い合わせ増加、売上増加</li>
+    <li>検索エンジンやAIの仕様変更後も同じ結果が続くこと</li>
+    <li>構造化データの実装のみで成果が出ること</li>
+  </ul>
+
+  <h2>更新と再診断</h2>
+  <p>Starter β では、再診断とスコア推移の把握を通じて、改善の優先順位を継続的に更新します。方法論もプロダクトの改善に伴って更新される場合があります。</p>
+</main>
+<footer>
+  <a href="/pricing.html">料金</a> &nbsp;·&nbsp;
+  <a href="/privacy.html">プライバシー</a> &nbsp;·&nbsp;
+  <a href="/legal.html">特定商取引法に基づく表記</a>
+</footer>
+</body>
+</html>
