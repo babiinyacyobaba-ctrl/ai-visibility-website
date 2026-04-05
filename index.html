@@ -921,6 +921,9 @@ footer {
         <input type="checkbox" id="fs-starter" style="width:auto;margin-top:4px">
         <label for="fs-starter" style="margin:0;line-height:1.8">Starter β の先行案内も受け取りたい</label>
       </div>
+      <p style="font-size:12px;line-height:1.8;color:var(--text-3);margin-bottom:16px">
+        現在、正式な申込受付は Google フォームで行っています。申込ボタンを押すと新しいタブでフォームが開くので、フォーム側で送信を完了してください。
+      </p>
       <button class="form-submit" onclick="sendFreeScan()">無料診断を申し込む →</button>
       <div id="fs-success" class="campaign-note" style="display:none;margin-top:16px"></div>
     </div>
@@ -1098,6 +1101,11 @@ function isConfiguredForm(formConfig) {
   return formConfig && formConfig.url && !formConfig.url.includes('REPLACE_WITH');
 }
 
+function isDirectGoogleForm(formConfig) {
+  if (!isConfiguredForm(formConfig)) return false;
+  return /forms\.gle|docs\.google\.com\/forms/i.test(formConfig.url);
+}
+
 function renderCampaignState() {
   if (typeof FREE_SCAN_CAMPAIGN === 'undefined') return;
   const remaining = Math.max((FREE_SCAN_CAMPAIGN.limit || 0) - (FREE_SCAN_CAMPAIGN.acceptedCount || 0), 0);
@@ -1136,6 +1144,10 @@ function escapeHtml(value) {
 
 function submitExternalLead(formConfig, payload) {
   if (!isConfiguredForm(formConfig)) return false;
+  if (isDirectGoogleForm(formConfig)) {
+    window.open(formConfig.url, '_blank', 'noopener');
+    return true;
+  }
   const method = (formConfig.method || 'POST').toUpperCase();
   const form = document.createElement('form');
   form.method = method;
@@ -1167,10 +1179,9 @@ function showFreeScanSuccess(payload, usedExternalForm) {
   const success = document.getElementById('fs-success');
   const starterButton = `<button type="button" class="btn-secondary" style="margin-top:16px;border:none;cursor:pointer" onclick="registerStarterBetaFromFreeScan()">Starter β の先行案内も登録する</button>`;
   success.innerHTML =
-    '<strong>無料診断の受付を開始しました。</strong><br>' +
-    '受付後、24時間以内を目安に初回連絡を行います。' +
+    '<strong>無料診断の申込導線を開きました。</strong><br>' +
     (usedExternalForm
-      ? '<br>外部フォームは新しいタブで開いています。送信完了後、この画面に戻ってください。'
+      ? '<br>Google フォームは新しいタブで開いています。申込完了にはフォーム側での送信が必要です。送信後、24時間以内を目安に初回連絡を行います。'
       : '<br>外部フォームURLが未設定のため、メール送信へ切り替えました。') +
     '<br>次の一手として、継続改善を希望する場合は Starter β の先行案内へ登録できます。' +
     starterButton;
@@ -1227,7 +1238,7 @@ function sendFreeScan() {
   if (!usedExternalForm) {
     openMailFallback('[AI Visibility Index] 無料診断申込: ' + company, payload);
   }
-  if (wantsStarter === 'yes') {
+  if (wantsStarter === 'yes' && !isDirectGoogleForm(LEAD_FORMS.starterBeta)) {
     submitExternalLead(LEAD_FORMS.starterBeta, {
       ...payload,
       source: 'website_free_scan_opt_in',
