@@ -7,7 +7,7 @@
 // ※ このファイルはパブリックに配信されます。
 //    シークレットキーは絶対に記載しないでください。
 
-const CONTACT_EMAIL = "babiinya.cyobaba@protonmail.com";
+const CONTACT_EMAIL = "ai-visibility-index@protonmail.com";
 
 const LEAD_FORMS = {
   freeScan: {

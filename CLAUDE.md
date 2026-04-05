@@ -6,7 +6,7 @@ This file provides guidance for AI assistants (Claude and others) working in thi
 
 **AI Visibility Index** is a static marketing website for a service that evaluates how "visible" a business website is to AI language models. The service analyzes structured data, meta-information, and schema.org implementation to produce a scored report.
 
-- **Contact**: babiinya.cyobaba@protonmail.com
+- **Contact**: ai-visibility-index@protonmail.com
 - **Payment provider (planned)**: Stripe
 
 ## Repository Structure
@@ -107,7 +107,7 @@ const STRIPE_LINKS = {
   spot:    "https://buy.stripe.com/...",   // スポット診断 ¥9,800
   ranking: "https://buy.stripe.com/...",   // 業界ランキング ¥49,800
 };
-const CONTACT_EMAIL = "babiinya.cyobaba@protonmail.com";
+const CONTACT_EMAIL = "ai-visibility-index@protonmail.com";
 ```
 
 **To update payment links**: Replace the placeholder URLs in `config.js` with real
