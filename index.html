@@ -577,13 +577,14 @@ section { position: relative; z-index: 1; }
     border: 1px solid rgba(200,169,110,0.18);
     border-radius: 24px;
     overflow: hidden;
-    background: rgba(255,255,255,0.9);
+    background: var(--dim);
   }
   .embedded-form-frame {
     width: 100%;
     min-height: 1220px;
     border: 0;
-    background: #fff;
+    background: transparent;
+    filter: invert(0.88) hue-rotate(180deg);
   }
 
 /* FAQ */
