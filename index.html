@@ -541,6 +541,38 @@ section { position: relative; z-index: 1; }
   transition: all .25s; width: 100%;
 }
 .form-submit:hover { background: var(--gold-lt); }
+.inline-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.form-group-full { grid-column: 1 / -1; }
+.form-help {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--text-3);
+  margin-bottom: 16px;
+}
+.checkbox-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+.checkbox-row input {
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+}
+.form-status {
+  margin-top: 14px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--gold);
+  min-height: 22px;
+}
 
 /* FAQ */
 .faq { padding: 120px 48px; }
@@ -614,15 +646,16 @@ footer {
   font-size: 28px; line-height: 1; cursor: pointer; font-family: 'DM Mono', monospace;
 }
 
-@media (max-width: 900px) {
-  nav { padding: 16px 24px; }
-  .nav-links { display: none; }
-  .nav-hamburger { display: flex; }
-  .hero, .problem, .how, .scores, .use-cases, .sample, .free-scan, .pricing, .contact, .faq, .cta-footer { padding-left: 24px; padding-right: 24px; }
-  .problem-inner { grid-template-columns: 1fr; gap: 48px; }
-  .steps, .score-grid, .case-grid, .free-scan-inner, .price-cards { grid-template-columns: 1fr; }
-  footer { padding: 24px; }
-}
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .hero, .problem, .how, .scores, .use-cases, .sample, .free-scan, .pricing, .contact, .faq, .cta-footer { padding-left: 24px; padding-right: 24px; }
+    .problem-inner { grid-template-columns: 1fr; gap: 48px; }
+    .steps, .score-grid, .case-grid, .free-scan-inner, .price-cards { grid-template-columns: 1fr; }
+    .inline-form-grid { grid-template-columns: 1fr; }
+    footer { padding: 24px; }
+  }
 </style>
 </head>
 <body>
@@ -932,23 +965,61 @@ footer {
       <div class="campaign-note" id="campaign-note">対象確認後の受付確定順で先着20社をカウントします。初期は手動レビューを含めて品質を担保するため、対応枠を限定しています。対象は事業者限定、1ドメイン1回までです。特定のAIサービスでの掲載、引用、順位、集客成果を保証するものではありません。</div>
     </div>
     <div class="contact-form fade-in">
-      <div class="section-label" style="margin-bottom:12px">申込方法</div>
-      <h3 style="font-family:'Shippori Mincho',serif;font-size:28px;font-weight:600;margin-bottom:14px">Googleフォームで1分申込</h3>
+      <div class="section-label" style="margin-bottom:12px">無料診断申込</div>
+      <h3 style="font-family:'Shippori Mincho',serif;font-size:28px;font-weight:600;margin-bottom:14px">サイト上で入力して、そのまま確認へ</h3>
       <p style="font-size:14px;line-height:1.9;color:var(--text-2);margin-bottom:18px">
-        現在の無料診断は Google フォームで正式受付しています。必須項目は <strong>対象URL</strong> と <strong>メールアドレス</strong> です。企業名、業界、備考、Starter β の希望はフォーム側で任意入力できます。
+        ここで入力した内容を引き継いだ状態で、Google フォームの確認画面を開きます。<strong>同じ情報をもう一度入力し直す必要はありません。</strong> 必須項目は URL とメールアドレスのみです。
       </p>
-      <ul class="campaign-points" style="margin-bottom:18px">
-        <li>入力は URL とメールアドレスを中心に 1 分程度</li>
-        <li>送信後、通常24時間以内を目安に初回連絡</li>
-        <li>対象確認後の受付確定順で残枠をカウント</li>
-      </ul>
-      <div class="hero-actions" style="margin-bottom:16px">
-        <a id="free-scan-link" href="https://forms.gle/UCBE67C5x8GdMyTE7" class="btn-primary" target="_blank" rel="noopener">無料診断フォームを開く</a>
+      <form onsubmit="submitFreeScanPrefill(event)">
+        <div class="inline-form-grid">
+          <div class="form-group form-group-full">
+            <label for="free-url">対象URL</label>
+            <input type="url" id="free-url" placeholder="https://example.com" required>
+          </div>
+          <div class="form-group form-group-full">
+            <label for="free-email">メールアドレス</label>
+            <input type="email" id="free-email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="free-company">会社名（任意）</label>
+            <input type="text" id="free-company" placeholder="株式会社サンプル">
+          </div>
+          <div class="form-group">
+            <label for="free-note">備考（任意）</label>
+            <input type="text" id="free-note" placeholder="競合比較も見たい、など">
+          </div>
+          <div class="form-group">
+            <label for="free-industry">業界（任意）</label>
+            <select id="free-industry">
+              <option value="">選択してください</option>
+              <option>ホテル・旅館</option>
+              <option>レストラン・飲食</option>
+              <option>ECサイト</option>
+              <option>企業・コーポレート</option>
+              <option>不動産</option>
+              <option>医療・クリニック</option>
+              <option>金融・保険</option>
+              <option>教育・スクール</option>
+              <option>美容・サロン</option>
+              <option>その他</option>
+            </select>
+          </div>
+          <div class="form-group form-group-full">
+            <label class="checkbox-row" for="free-starter-beta">
+              <input type="checkbox" id="free-starter-beta">
+              <span>Starter β の先行案内も希望する</span>
+            </label>
+          </div>
+        </div>
+        <p class="form-help">
+          ボタンを押すと、入力済みの内容を引き継いだ Google フォーム確認画面が新しいタブで開きます。最後の送信だけ Google フォーム側で行ってください。
+        </p>
+        <button class="form-submit" type="submit">入力内容を引き継いで確認する →</button>
+        <div id="free-scan-status" class="form-status" aria-live="polite"></div>
+      </form>
+      <div class="hero-actions" style="margin-top:18px;margin-bottom:16px">
         <a id="starter-beta-link" href="https://forms.gle/S4bFwFQiU9LDbnFj9" class="btn-secondary" target="_blank" rel="noopener">Starter β 先行案内</a>
       </div>
-      <p style="font-size:12px;line-height:1.8;color:var(--text-3);margin-bottom:12px">
-        ボタンを押すと新しいタブで Google フォームが開きます。正式な受付完了はフォーム側で送信した時点です。
-      </p>
       <p style="font-size:12px;line-height:1.8;color:var(--text-3)">
         送信前に <a href="privacy.html" style="color:var(--gold)">プライバシーポリシー</a> をご確認ください。
       </p>
@@ -1157,9 +1228,9 @@ function renderCampaignState() {
   unit.textContent = '1社・1URL・残り ' + remaining + '枠';
 }
 
-function setLeadButton(id, formConfig, subjectText, fallbackBody) {
-  const btn = document.getElementById(id);
-  if (!btn) return;
+  function setLeadButton(id, formConfig, subjectText, fallbackBody) {
+    const btn = document.getElementById(id);
+    if (!btn) return;
   if (isConfiguredForm(formConfig)) {
     btn.href = formConfig.url;
     btn.target = '_blank';
@@ -1171,20 +1242,69 @@ function setLeadButton(id, formConfig, subjectText, fallbackBody) {
     '&body=' + encodeURIComponent(fallbackBody);
 }
 
-function configureLeadButtons() {
-  setLeadButton(
-    'free-scan-link',
-    LEAD_FORMS.freeScan,
-    '[AI Visibility Index] 無料診断申込',
-    '対象URL:\nメール:\n企業名・サービス名（任意）:\n業界（任意）:\n備考（任意）:\nStarter β案内希望（任意）:\n'
-  );
-  setLeadButton(
-    'starter-beta-link',
-    LEAD_FORMS.starterBeta,
+  function configureLeadButtons() {
+    setLeadButton(
+      'starter-beta-link',
+      LEAD_FORMS.starterBeta,
     '[AI Visibility Index] Starter β 先行案内希望',
     '対象URL:\nメール:\n企業名・サービス名（任意）:\n業界（任意）:\n備考（任意）:\n'
-  );
-}
+    );
+  }
+
+  function buildGoogleFormPrefillUrl(formConfig, values) {
+    if (!formConfig || !formConfig.prefillUrl || !formConfig.entries) return '';
+    const params = new URLSearchParams();
+    params.set('usp', 'pp_url');
+
+    if (values.company && formConfig.entries.company) params.set('entry.' + formConfig.entries.company, values.company);
+    if (formConfig.entries.service) params.set('entry.' + formConfig.entries.service, values.service || 'フリー診断');
+    if (values.url && formConfig.entries.url) params.set('entry.' + formConfig.entries.url, values.url);
+    if (values.email && formConfig.entries.email) params.set('entry.' + formConfig.entries.email, values.email);
+    if (values.industry && formConfig.entries.industry) params.set('entry.' + formConfig.entries.industry, values.industry);
+    if (values.note && formConfig.entries.note) params.set('entry.' + formConfig.entries.note, values.note);
+    if (values.starterBeta && formConfig.entries.starterBetaOptIn) params.set('entry.' + formConfig.entries.starterBetaOptIn, 'はい');
+
+    return formConfig.prefillUrl + '?' + params.toString();
+  }
+
+  function submitFreeScanPrefill(event) {
+    event.preventDefault();
+    const formConfig = LEAD_FORMS.freeScan;
+    const status = document.getElementById('free-scan-status');
+    const values = {
+      url: document.getElementById('free-url').value.trim(),
+      email: document.getElementById('free-email').value.trim(),
+      company: document.getElementById('free-company').value.trim(),
+      service: 'フリー診断',
+      industry: document.getElementById('free-industry').value,
+      note: document.getElementById('free-note').value.trim(),
+      starterBeta: document.getElementById('free-starter-beta').checked,
+    };
+
+    if (!values.url || !values.email) {
+      status.textContent = 'URL とメールアドレスを入力してください。';
+      return;
+    }
+
+    const prefillUrl = buildGoogleFormPrefillUrl(formConfig, values);
+    if (prefillUrl) {
+      window.open(prefillUrl, '_blank', 'noopener');
+      status.textContent = '入力内容を引き継いだ確認画面を新しいタブで開きました。最後の送信だけ行ってください。';
+      return;
+    }
+
+    const fallbackBody =
+      '対象URL: ' + values.url + '\n' +
+      'メール: ' + values.email + '\n' +
+      '会社名: ' + (values.company || '未入力') + '\n' +
+      '業界: ' + (values.industry || '未入力') + '\n' +
+      '備考: ' + (values.note || '未入力') + '\n' +
+      'Starter β案内希望: ' + (values.starterBeta ? 'はい' : 'いいえ');
+    window.location.href = 'mailto:' + CONTACT_EMAIL +
+      '?subject=' + encodeURIComponent('[AI Visibility Index] 無料診断申込') +
+      '&body=' + encodeURIComponent(fallbackBody);
+    status.textContent = 'フォーム設定未完了のため、メール申込へ切り替えました。';
+  }
 
 // お問い合わせフォーム送信（mailtoリンクで開く）
 function sendContact() {

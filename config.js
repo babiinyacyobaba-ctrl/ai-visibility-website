@@ -12,7 +12,17 @@ const CONTACT_EMAIL = "ai-visibility-index@protonmail.com";
 const LEAD_FORMS = {
   freeScan: {
     url: "https://forms.gle/UCBE67C5x8GdMyTE7",
+    prefillUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeBhpdu63jZZINhCEe4Lu4pM1pZ5ip0BNC7ID5TsRl4r6cjzw/viewform",
     method: "GET",
+    entries: {
+      company: "1317056138",
+      service: "221172601",
+      url: "340436159",
+      email: "2038978171",
+      industry: "1509246321",
+      note: "1741963716",
+      starterBetaOptIn: "437044494",
+    },
   },
   starterBeta: {
     url: "https://forms.gle/S4bFwFQiU9LDbnFj9",
