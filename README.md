@@ -26,6 +26,6 @@ AI Visibility Index の Cloudflare Pages 用 Website。
 - 取得項目は `company / url / email / industry / note / wants_starter` の範囲に留める
 
 ## Google Forms
-Free診断フォーム: https://forms.gle/UCBE67C5x8GdMyTE7
-Starter βフォーム: https://forms.gle/S4bFwFQiU9LDbnFj9
-Pro相談フォーム: https://forms.gle/R3HXcUo84myV4zT18
+- Free診断フォーム: https://forms.gle/UCBE67C5x8GdMyTE7
+- Starter βフォーム: https://forms.gle/S4bFwFQiU9LDbnFj9
+- Pro相談フォーム: https://forms.gle/R3HXcUo84myV4zT18
