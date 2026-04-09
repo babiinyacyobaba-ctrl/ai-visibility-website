@@ -16,7 +16,7 @@ const LEAD_FORMS = {
     method: "GET",
   },
   starterBeta: {
-    url: "https://forms.gle/S4bFwFQiU9LDbnFj9",
+    url: "https://buy.stripe.com/8x26oHc6ceor0ki6wDaR202",
     method: "GET",
   },
   proInquiry: {
