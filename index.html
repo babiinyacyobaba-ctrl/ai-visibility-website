@@ -32,10 +32,11 @@
   "@type": ["Organization", "LocalBusiness"],
   "name": "AI Visibility Index",
   "url": "https://ai-visibility-website.pages.dev/",
-  "description": "企業の公開Web情報の品質と可視性を診断・スコアリングするサービス。クロール可能性、基本メタ情報、構造化データ、記述整合性を分析し、改善余地を整理します。",
+  "description": "公開WebサイトのAI可視性を4軸・100点満点で診断するサービス。生成AI時代にChatGPTやPerplexityに正しく読まれる状態かを診断します。",
   "logo": "https://ai-visibility-website.pages.dev/logo.png",
   "foundingDate": "2026",
   "areaServed": "JP",
+  "serviceType": "AI可視性診断",
   "numberOfEmployees": {
     "@type": "QuantitativeValue",
     "value": 1
@@ -94,10 +95,27 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "AI Visibility Index 無料診断",
+  "provider": {"@type": "Organization", "name": "AI Visibility Index"},
+  "description": "公開WebサイトのAI可視性スコアを無料で診断するサービス（先着20社）",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "AI Visibility Index",
+  "url": "https://ai-visibility-index.streamlit.app",
+  "description": "公開WebサイトのAI可視性を4軸で診断するツール。クロール可能性・基本メタ情報・構造化データ・記述整合性を100点満点でスコアリングします。",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web",
+  "featureList": ["クロール可能性診断", "基本メタ情報診断", "構造化データ診断", "記述整合性診断"],
   "offers": {
     "@type": "Offer",
     "price": "0",
