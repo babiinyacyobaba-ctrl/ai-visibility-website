@@ -29,3 +29,14 @@ jobs:
           python-version: "3.12"
       - name: Verify internal links resolve and external links reachable
         run: python .github/scripts/check_links.py
+
+  ogp-jsonld:
+    name: OGP presence and JSON-LD syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate OGP tags (warn) and JSON-LD syntax (hard)
+        run: python .github/scripts/check_ogp_jsonld.py
