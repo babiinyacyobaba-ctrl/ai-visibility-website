@@ -16,7 +16,10 @@ const LEAD_FORMS = {
     method: "GET",
   },
   starterBeta: {
-    url: "https://buy.stripe.com/8x26oHc6ceor0ki6wDaR202",
+    // Starter β 申込フォーム (Google Forms)
+    // 仕様: operations/beta_signup_form_spec.md (Mira/Sage APPROVED 2026-04-11)
+    // 導線: Founder が内容確認 → 24h 以内に Stripe 決済リンクをメール案内
+    url: "https://forms.gle/nyCsrtvaisLByAPw6",
     method: "GET",
   },
   proInquiry: {
