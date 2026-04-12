@@ -33,6 +33,20 @@
     },
     {
       "@type": "Offer",
+      "name": "Spot Detailed",
+      "price": "4980",
+      "priceCurrency": "JPY",
+      "description": "1回買い切りの詳細AI可視性レポート（PDF自動生成・メール配信）"
+    },
+    {
+      "@type": "Offer",
+      "name": "Spot Basic",
+      "price": "2980",
+      "priceCurrency": "JPY",
+      "description": "Starter加入者向け割引AI可視性レポート（PDF自動生成・メール配信）"
+    },
+    {
+      "@type": "Offer",
       "name": "Pro",
       "priceCurrency": "JPY",
       "description": "複数サイト向けの継続診断と競合比較"
@@ -335,7 +349,7 @@ footer {
 </nav>
 
 <div class="page-header">
-  <div class="page-eyebrow">FREE / STARTER / PRO</div>
+  <div class="page-eyebrow">FREE / STARTER / SPOT REPORT / PRO</div>
   <h1 class="page-title">無料診断から始めて、<br>継続改善へつなげる</h1>
 </div>
 
@@ -387,9 +401,48 @@ footer {
 
 </div>
 
+<!-- Spot Report section -->
+<div class="spot-report-section" style="position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 48px 40px;">
+  <h2 style="font-family:'Shippori Mincho',serif;font-size:24px;font-weight:600;text-align:center;margin-bottom:12px;">スポットレポート</h2>
+  <p style="font-size:13px;color:var(--text-2);text-align:center;margin-bottom:40px;line-height:1.7;">1回買い切りのAI可視性診断レポート。決済後、自動でスキャン・PDF生成し、メールでお届けします。</p>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;max-width:680px;margin:0 auto;">
+
+    <div class="plan featured" style="margin:0;">
+      <div class="plan-badge">おすすめ</div>
+      <div class="plan-name">Spot Detailed</div>
+      <div class="plan-price">¥4,980</div>
+      <div class="plan-unit">1回・税込</div>
+      <div class="plan-desc">詳細なAI可視性レポートをPDFでお届けします。スコア・改善提案・競合比較を含む完全版です。</div>
+      <ul class="plan-features">
+        <li>総合スコア＋4軸詳細</li>
+        <li>改善優先順位リスト</li>
+        <li>業界内ポジション分析</li>
+        <li>PDFレポート（自動生成）</li>
+        <li>決済後 → 自動スキャン → メール配信</li>
+      </ul>
+      <a id="btn-spot-detailed" class="btn-plan btn-plan-fill" href="https://buy.stripe.com/6oU6oH3zGdkn6IGf39aR204" target="_blank" rel="noopener">レポートを購入する →</a>
+    </div>
+
+    <div class="plan">
+      <div class="plan-name">Spot Basic</div>
+      <div class="plan-price">¥2,980</div>
+      <div class="plan-unit">1回・税込（Starter加入者価格）</div>
+      <div class="plan-desc">Starter プラン加入者向けの割引価格。基本的なAI可視性レポートをお届けします。</div>
+      <ul class="plan-features">
+        <li>総合スコア＋4軸概要</li>
+        <li>主要改善ポイント</li>
+        <li>PDFレポート（自動生成）</li>
+        <li>決済後 → 自動スキャン → メール配信</li>
+      </ul>
+      <a id="btn-spot-basic" class="btn-plan btn-plan-outline" href="https://buy.stripe.com/eVq4gzc6cdkn8QO08faR205" target="_blank" rel="noopener">Starter価格で購入する →</a>
+    </div>
+
+  </div>
+</div>
+
 <div class="note">
-  <p>Free診断は現状把握に、Starter は継続改善に、Pro は複数サイト運用に向いています。Starter の ¥9,800／月は現在のキャンペーン価格で、通常価格は ¥19,800／月（税込）です。申込時には <a href="legal.html" style="color:var(--gold)">特定商取引法に基づく表記</a> と <a href="privacy.html" style="color:var(--gold)">プライバシーポリシー</a> への同意確認が表示されます。<br>
-  詳細レポートは必要時の追加提供です。掲載・引用・集客成果等を保証するものではありません。<br>
+  <p>Free診断は現状把握に、Starter は継続改善に、スポットレポートは1回の詳細分析に、Pro は複数サイト運用に向いています。Starter の ¥9,800／月は現在のキャンペーン価格で、通常価格は ¥19,800／月（税込）です。スポットレポートは買い切り（¥4,980 / Starter加入者 ¥2,980）で、決済後に自動でPDFレポートを生成・メール配信します。申込時には <a href="legal.html" style="color:var(--gold)">特定商取引法に基づく表記</a> と <a href="privacy.html" style="color:var(--gold)">プライバシーポリシー</a> への同意確認が表示されます。<br>
+  掲載・引用・集客成果等を保証するものではありません。<br>
   採点ロジックや除外条件は <a href="methodology.html" style="color:var(--gold)">方法論ページ</a> をご確認ください。</p>
 </div>
 

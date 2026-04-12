@@ -35,6 +35,18 @@ const LEAD_FORMS = {
     url: "https://forms.gle/R3HXcUo84myV4zT18",
     method: "GET",
   },
+  // スポットレポート（1回買い切り）— Phase B (2026-04-12)
+  // Stripe Payment Link。custom_fields: URL, company, industry。
+  // 一般ユーザー向け: ¥4,980（税込）詳細レポート
+  spotDetailed: {
+    url: "https://buy.stripe.com/6oU6oH3zGdkn6IGf39aR204",
+    method: "GET",
+  },
+  // Starter加入者向け: ¥2,980（税込）ベーシックレポート
+  spotBasic: {
+    url: "https://buy.stripe.com/eVq4gzc6cdkn8QO08faR205",
+    method: "GET",
+  },
 };
 
 // Starter プランの価格（consent modal と pricing.html で表示）。
@@ -45,6 +57,16 @@ const PRICING = {
     normal:   "¥19,800",
     currency: "JPY",
     unit:     "月額・税込",
+  },
+  spotDetailed: {
+    price:    "¥4,980",
+    currency: "JPY",
+    unit:     "1回・税込",
+  },
+  spotBasic: {
+    price:    "¥2,980",
+    currency: "JPY",
+    unit:     "1回・税込（Starter加入者価格）",
   },
 };
 
