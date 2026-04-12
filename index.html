@@ -1672,7 +1672,7 @@ if (document.readyState === 'loading') {
     status.style.display = 'none';
 
     try {
-      var resp = await fetch('https://ai-visibility-automation.babiinya-cyobaba.workers.dev/api/free-diagnosis', {
+      var resp = await fetch('https://api.ai-visibility-index.com/api/free-diagnosis', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ company: company, url: url, email: email, industry: industry })
