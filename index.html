@@ -1687,7 +1687,7 @@ if (document.readyState === 'loading') {
       e.target.reset();
     } catch(err) {
       status.className = 'form-status error';
-      status.textContent = '送信に失敗しました。もう一度お試しください。';
+      status.textContent = '送信に失敗しました。もう一度お試しください。(' + (err.message || err) + ')';
       status.style.display = 'block';
     }
     btn.disabled = false;
