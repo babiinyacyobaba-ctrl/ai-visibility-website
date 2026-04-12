@@ -1532,7 +1532,11 @@ renderCampaignState();
 configureLeadButtons();
 
 // ----- Consent modal wiring (Sage §4) -----
-(function () {
+// NOTE: The consent modal <div> is placed AFTER this <script> in the DOM.
+// We must wait for DOMContentLoaded before calling getElementById('consent-modal'),
+// otherwise the internal listeners (checkbox change / cancel / confirm / backdrop)
+// never attach and the modal becomes a dead end. See: hotfix-consent-modal-domcontentloaded.
+function __initConsentModal() {
   var starterUrl = (typeof LEAD_FORMS !== 'undefined'
       && LEAD_FORMS.starter
       && LEAD_FORMS.starter.url) || null;
@@ -1618,7 +1622,12 @@ configureLeadButtons();
     if (backdrop) backdrop.addEventListener('click', closeConsentModal);
     updateConfirmState();
   }
-})();
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', __initConsentModal);
+} else {
+  __initConsentModal();
+}
   </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f5be82665aa344939482d544f2c8985a"}'></script><!-- End Cloudflare Web Analytics -->
 
