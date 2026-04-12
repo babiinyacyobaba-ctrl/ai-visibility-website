@@ -1671,19 +1671,18 @@ if (document.readyState === 'loading') {
     btn.textContent = '送信中...';
     status.style.display = 'none';
 
-    var formData = new FormData();
-    formData.append('entry.836482165', company);
-    formData.append('entry.1924851603', 'フリー診断');
-    formData.append('entry.440798442', url);
-    formData.append('entry.1963057071', email);
-    formData.append('entry.1639062168', industry);
-    
     try {
-      await fetch('https://docs.google.com/forms/d/e/1FAIpQLSeBhpdu63jZZINhCEe4Lu4pM1pZ5ip0BNC7ID5TsRl4r6cjzw/formResponse', {
-        method: 'POST', body: formData, mode: 'no-cors'
+      var resp = await fetch('https://ai-visibility-automation.babiinya-cyobaba.workers.dev/api/free-diagnosis', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ company: company, url: url, email: email, industry: industry })
       });
+      if (!resp.ok) {
+        var errData = await resp.json().catch(function() { return {}; });
+        throw new Error(errData.error || 'Server error');
+      }
       status.className = 'form-status success';
-      status.textContent = '送信完了しました。診断結果をメールでお送りします。';
+      status.textContent = '送信完了しました。確認メールをお送りしましたのでご確認ください。';
       status.style.display = 'block';
       e.target.reset();
     } catch(err) {
