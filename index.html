@@ -1636,16 +1636,47 @@ if (document.readyState === 'loading') {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     const status = document.getElementById('formStatus');
+
+    // --- Validation ---
+    var company = document.getElementById('company').value.trim();
+    var url = document.getElementById('url').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var industry = document.getElementById('industry').value;
+    var errors = [];
+    if (!company) errors.push('会社名');
+    if (!url) errors.push('診断したいURL');
+    if (!email) errors.push('メールアドレス');
+    if (!industry) errors.push('業界');
+    if (errors.length > 0) {
+      status.className = 'form-status error';
+      status.textContent = errors.join('、') + ' を入力してください。';
+      status.style.display = 'block';
+      return;
+    }
+    if (!/^https?:\/\/.+\..+/.test(url)) {
+      status.className = 'form-status error';
+      status.textContent = 'URLは https://example.com の形式で入力してください。';
+      status.style.display = 'block';
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      status.className = 'form-status error';
+      status.textContent = '有効なメールアドレスを入力してください。';
+      status.style.display = 'block';
+      return;
+    }
+    // --- End Validation ---
+
     btn.disabled = true;
     btn.textContent = '送信中...';
     status.style.display = 'none';
-    
-    const formData = new FormData();
-    formData.append('entry.836482165', document.getElementById('company').value);
+
+    var formData = new FormData();
+    formData.append('entry.836482165', company);
     formData.append('entry.1924851603', 'フリー診断');
-    formData.append('entry.440798442', document.getElementById('url').value);
-    formData.append('entry.1963057071', document.getElementById('email').value);
-    formData.append('entry.1639062168', document.getElementById('industry').value);
+    formData.append('entry.440798442', url);
+    formData.append('entry.1963057071', email);
+    formData.append('entry.1639062168', industry);
     
     try {
       await fetch('https://docs.google.com/forms/d/e/1FAIpQLSeBhpdu63jZZINhCEe4Lu4pM1pZ5ip0BNC7ID5TsRl4r6cjzw/formResponse', {
