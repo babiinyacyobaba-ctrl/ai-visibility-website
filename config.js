@@ -15,16 +15,36 @@ const LEAD_FORMS = {
     embeddedUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeBhpdu63jZZINhCEe4Lu4pM1pZ5ip0BNC7ID5TsRl4r6cjzw/viewform?embedded=true",
     method: "GET",
   },
+  // Starter プラン (旧 Starter β) — 2026-04-12 に Stripe Payment Link 直結へ切替。
+  // - キャンペーン価格: ¥9,800／月（税込）
+  // - 通常価格: ¥19,800／月（税込）
+  // - 決済完了 → Cloudflare Worker webhook → 10 分以内にパスコードメール
+  // - LP 側は consent modal 経由でのみ遷移（Sage §4 同意取得要件）
+  // 旧 Payment Link (¥3,980/月) は Stripe Dashboard で Archive 済 (Founder 対応)。
+  starter: {
+    url: "https://buy.stripe.com/eVq7sL0nugwzd747AHaR203",
+    method: "GET",
+  },
+  // 後方互換: 旧 starterBeta キーを残して、万一のキャッシュ済み古い HTML でも壊れないようにする。
+  // 次回クリーンアップ PR で削除する。
   starterBeta: {
-    // Starter β 申込フォーム (Google Forms)
-    // 仕様: operations/beta_signup_form_spec.md (Mira/Sage APPROVED 2026-04-11)
-    // 導線: Founder が内容確認 → 24h 以内に Stripe 決済リンクをメール案内
-    url: "https://forms.gle/nyCsrtvaisLByAPw6",
+    url: "https://buy.stripe.com/eVq7sL0nugwzd747AHaR203",
     method: "GET",
   },
   proInquiry: {
     url: "https://forms.gle/R3HXcUo84myV4zT18",
     method: "GET",
+  },
+};
+
+// Starter プランの価格（consent modal と pricing.html で表示）。
+// キャンペーン期間終了時は PRICING.starter.campaign を null にする。
+const PRICING = {
+  starter: {
+    campaign: "¥9,800",
+    normal:   "¥19,800",
+    currency: "JPY",
+    unit:     "月額・税込",
   },
 };
 

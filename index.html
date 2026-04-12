@@ -118,9 +118,10 @@
     },
     {
       "@type": "Offer",
-      "name": "Starter β",
-      "price": "3980",
-      "priceCurrency": "JPY"
+      "name": "Starter",
+      "price": "9800",
+      "priceCurrency": "JPY",
+      "description": "月額サブスクリプション（キャンペーン価格 ¥9,800／月、通常価格 ¥19,800／月・税込）"
     }
   ]
 }
@@ -208,10 +209,10 @@
     },
     {
       "@type": "Question",
-      "name": "Starter β はすぐに使い始められますか？",
+      "name": "Starter はすぐに使い始められますか？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "お申し込みを受付中です。受付内容と対象条件を確認のうえ、通常24時間以内を目安に初回連絡を行います。"
+        "text": "はい。申込ボタンから同意確認モーダルを経由して Stripe 決済に進むと、決済完了後10分以内にアクセス用パスコードをメールでお送りします。"
       }
     },
     {
@@ -802,6 +803,99 @@ footer {
     color: rgba(255,255,255,0.55);
     max-width: 760px; margin-top: 8px;
   }
+
+/* ----- Consent modal (Sage §4 同意取得要件) ----- */
+#consent-modal[hidden] { display: none; }
+#consent-modal {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.consent-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(4px);
+}
+.consent-dialog {
+  position: relative;
+  background: var(--dim);
+  border: 1px solid rgba(200,169,110,0.3);
+  max-width: 520px; width: 100%;
+  padding: 40px 36px 32px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+}
+.consent-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: .2em;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.consent-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 22px; font-weight: 600;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.consent-summary {
+  background: var(--muted);
+  border-left: 2px solid var(--gold);
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.8;
+}
+.consent-summary strong { color: var(--text); font-weight: 500; }
+.consent-summary .consent-price-main {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 20px; color: var(--gold);
+  display: block; margin-top: 4px;
+}
+.consent-summary .consent-price-normal {
+  font-size: 11px; color: var(--text-3);
+}
+.consent-checks { margin-bottom: 28px; }
+.consent-check {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 0;
+  font-size: 13px; color: var(--text-2); line-height: 1.7;
+}
+.consent-check input[type="checkbox"] {
+  margin-top: 4px; flex-shrink: 0;
+  accent-color: var(--gold);
+  width: 16px; height: 16px;
+}
+.consent-check a { color: var(--gold); text-decoration: underline; }
+.consent-actions {
+  display: flex; gap: 12px; justify-content: flex-end;
+  border-top: 1px solid rgba(200,169,110,0.1);
+  padding-top: 20px;
+}
+.consent-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: .1em;
+  padding: 12px 22px;
+  border: 1px solid rgba(200,169,110,0.4);
+  background: transparent; color: var(--gold);
+  cursor: pointer;
+  transition: all .2s;
+}
+.consent-btn:hover { border-color: var(--gold); background: rgba(200,169,110,0.06); }
+.consent-btn-primary {
+  background: var(--gold); color: var(--black); border-color: var(--gold);
+}
+.consent-btn-primary:hover:not([disabled]) { background: var(--gold-lt); border-color: var(--gold-lt); }
+.consent-btn[disabled], .consent-btn-primary[disabled] {
+  opacity: 0.4; cursor: not-allowed;
+}
+@media (max-width: 560px) {
+  .consent-dialog { padding: 32px 24px 24px; }
+  .consent-title { font-size: 18px; }
+  .consent-actions { flex-direction: column-reverse; }
+  .consent-btn { width: 100%; }
+}
 </style>
 </head>
 <body>
@@ -1107,7 +1201,7 @@ footer {
         <li>改善ポイント上位3件</li>
         <li>業界平均との差分の簡易表示</li>
       </ul>
-      <p>継続的に改善したい場合は、Starter β で週次診断と推移管理へ移行できます。</p>
+      <p>継続的に改善したい場合は、Starter（月額 ¥9,800／キャンペーン価格）で週次診断と推移管理へ移行できます。</p>
       <div class="campaign-note" id="campaign-note">事業者限定・1ドメイン1回まで。お申し込み後、対象確認のうえ診断を開始します。</div>
     </div>
       <div class="contact-form fade-in">
@@ -1152,7 +1246,7 @@ footer {
           </form>
         
         <div class="hero-actions" style="margin-top:18px;margin-bottom:16px">
-          <a id="starter-beta-link" href="https://forms.gle/nyCsrtvaisLByAPw6" class="btn-secondary" target="_blank" rel="noopener">Starter β に申し込む</a>
+          <a id="starter-link" href="legal.html#consent-required-message" class="btn-secondary starter-cta">Starter に申し込む（¥9,800／月）</a>
         </div>
       <p style="font-size:12px;line-height:1.8;color:var(--text-3)">
         送信前に <a href="privacy.html" style="color:var(--gold)">プライバシーポリシー</a> をご確認ください。
@@ -1186,18 +1280,19 @@ footer {
         <p class="cta-sub">原則24時間以内に初回連絡 ・ 先着20社限定・1ドメイン1回</p>
       </div>
       <div class="price-card featured fade-in">
-        <div class="price-name">Starter β</div>
-        <div class="price-amount">¥3,980</div>
-        <div class="price-unit">月額・1サイト・受付中</div>
+        <div class="price-name">Starter</div>
+        <div class="price-amount">¥9,800</div>
+        <div class="price-unit">月額・1サイト（税込、キャンペーン価格）<br><span style="font-size:11px;color:var(--text-3)">通常 ¥19,800／月</span></div>
         <ul class="price-features">
           <li>週次の再診断</li>
           <li>スコア推移の把握</li>
           <li>改善優先順位の更新</li>
           <li>メールサマリー</li>
-          <li>お申し込み受付中</li>
+          <li>決済完了 → 10分以内にパスコード</li>
         </ul>
         <div class="price-btns">
-          <a href="pricing.html" class="btn-primary" style="text-align:center">Starter β を見る</a>
+          <a href="legal.html#consent-required-message" class="btn-primary starter-cta" style="text-align:center">Starter を申し込む</a>
+          <a href="pricing.html" class="btn-ghost" style="text-align:center;padding:8px 0">詳細を見る</a>
         </div>
       </div>
       <div class="price-card fade-in">
@@ -1240,7 +1335,7 @@ footer {
         <select id="f-service">
           <option value="">選択してください</option>
           <option>Free診断（¥0）</option>
-          <option>Starter β（月額 ¥3,980）</option>
+          <option>Starter（月額 ¥9,800 キャンペーン / ¥19,800 通常）</option>
           <option>Pro（要相談）</option>
           <option>詳細レポート追加（要相談）</option>
           <option>その他・まずは相談したい</option>
@@ -1279,8 +1374,8 @@ footer {
         <div class="faq-a">現在、ホテル・旅館、レストラン・飲食、ECサイト、大手企業（コーポレートサイト）、汎用（メディア・不動産・求人等）の5業界に対応しています。</div>
       </div>
       <div class="faq-item fade-in">
-        <div class="faq-q">Starter β はすぐに使い始められますか？</div>
-        <div class="faq-a">現在は先行案内受付中です。受付内容と対象条件を確認のうえ、通常24時間以内を目安に初回連絡を行います。正式な即時申込フローは準備中です。</div>
+        <div class="faq-q">Starter はすぐに使い始められますか？</div>
+        <div class="faq-a">はい。申込ボタンから同意確認モーダルを経由して Stripe 決済に進むと、決済完了後10分以内にアクセス用パスコードをメールでお送りします。</div>
       </div>
       <div class="faq-item fade-in">
         <div class="faq-q">診断対象の企業に通知されますか？</div>
@@ -1378,12 +1473,8 @@ function renderCampaignState() {
 }
 
   function configureLeadButtons() {
-    setLeadButton(
-      'starter-beta-link',
-      LEAD_FORMS.starterBeta,
-    '[AI Visibility Index] Starter β 先行案内希望',
-    '対象URL:\nメール:\n企業名・サービス名（任意）:\n業界（任意）:\n備考（任意）:\n'
-    );
+    // Starter CTA は consent modal 経由のため、ここでは直接リンクを差し込まない。
+    // Payment Link URL は consent modal の confirm ハンドラが LEAD_FORMS.starter.url から読む。
   }
 
 
@@ -1439,6 +1530,95 @@ const scoreObs = new IntersectionObserver(entries => {
 document.querySelectorAll('.scores-inner').forEach(el => scoreObs.observe(el));
 renderCampaignState();
 configureLeadButtons();
+
+// ----- Consent modal wiring (Sage §4) -----
+(function () {
+  var starterUrl = (typeof LEAD_FORMS !== 'undefined'
+      && LEAD_FORMS.starter
+      && LEAD_FORMS.starter.url) || null;
+
+  function openConsentModal() {
+    var modal = document.getElementById('consent-modal');
+    if (!modal) return;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    var firstCheckbox = modal.querySelector('input[type="checkbox"]');
+    if (firstCheckbox) firstCheckbox.focus();
+  }
+  function closeConsentModal() {
+    var modal = document.getElementById('consent-modal');
+    if (!modal) return;
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    var boxes = modal.querySelectorAll('input[type="checkbox"]');
+    for (var i = 0; i < boxes.length; i++) { boxes[i].checked = false; }
+    updateConfirmState();
+  }
+  function updateConfirmState() {
+    var modal = document.getElementById('consent-modal');
+    if (!modal) return;
+    var boxes = modal.querySelectorAll('input[type="checkbox"]');
+    var allChecked = boxes.length > 0;
+    for (var i = 0; i < boxes.length; i++) {
+      if (!boxes[i].checked) { allChecked = false; break; }
+    }
+    var confirmBtn = document.getElementById('consent-confirm');
+    if (confirmBtn) {
+      confirmBtn.disabled = !allChecked;
+      confirmBtn.setAttribute('aria-disabled', allChecked ? 'false' : 'true');
+    }
+  }
+  function handleConfirm() {
+    if (!starterUrl) {
+      window.location.href = 'mailto:' + CONTACT_EMAIL +
+        '?subject=' + encodeURIComponent('[AI Visibility Index] Starter 申込');
+      return;
+    }
+    window.location.href = starterUrl;
+  }
+
+  var ctas = document.querySelectorAll('.starter-cta');
+  for (var i = 0; i < ctas.length; i++) {
+    ctas[i].addEventListener('click', function (e) {
+      e.preventDefault();
+      openConsentModal();
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    var modal = document.getElementById('consent-modal');
+    if (!modal || modal.hidden) return;
+    if (e.key === 'Escape') { closeConsentModal(); return; }
+    if (e.key === 'Tab') {
+      var focusables = modal.querySelectorAll(
+        'input, button, a[href], [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+  });
+
+  var modalEl = document.getElementById('consent-modal');
+  if (modalEl) {
+    var boxes = modalEl.querySelectorAll('input[type="checkbox"]');
+    for (var j = 0; j < boxes.length; j++) {
+      boxes[j].addEventListener('change', updateConfirmState);
+    }
+    var cancelBtn = document.getElementById('consent-cancel');
+    if (cancelBtn) cancelBtn.addEventListener('click', closeConsentModal);
+    var confirmBtn = document.getElementById('consent-confirm');
+    if (confirmBtn) confirmBtn.addEventListener('click', handleConfirm);
+    var backdrop = modalEl.querySelector('.consent-backdrop');
+    if (backdrop) backdrop.addEventListener('click', closeConsentModal);
+    updateConfirmState();
+  }
+})();
   </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f5be82665aa344939482d544f2c8985a"}'></script><!-- End Cloudflare Web Analytics -->
 
@@ -1475,5 +1655,33 @@ configureLeadButtons();
     btn.textContent = '無料診断を申込する';
   });
   </script>
+
+<!-- Consent modal (Sage §4 同意取得要件) -->
+<div id="consent-modal" role="dialog" aria-modal="true" aria-labelledby="consent-title" hidden>
+  <div class="consent-backdrop" aria-hidden="true"></div>
+  <div class="consent-dialog">
+    <p class="consent-eyebrow">STARTER プラン 申込確認</p>
+    <h2 id="consent-title" class="consent-title">Starter プランへのお申し込み</h2>
+    <div class="consent-summary">
+      <strong>プラン：</strong>Starter（月額サブスクリプション・1サイト）
+      <span class="consent-price-main">¥9,800／月（税込、キャンペーン価格）</span>
+      <span class="consent-price-normal">通常価格 ¥19,800／月（税込）</span>
+    </div>
+    <div class="consent-checks">
+      <label class="consent-check">
+        <input type="checkbox" id="consent-terms">
+        <span><a href="legal.html" target="_blank" rel="noopener">特定商取引法に基づく表記</a> の内容を確認し、同意します。</span>
+      </label>
+      <label class="consent-check">
+        <input type="checkbox" id="consent-privacy">
+        <span><a href="privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a> の内容を確認し、同意します。</span>
+      </label>
+    </div>
+    <div class="consent-actions">
+      <button type="button" class="consent-btn" id="consent-cancel">キャンセル</button>
+      <button type="button" class="consent-btn consent-btn-primary" id="consent-confirm" disabled aria-disabled="true">決済に進む →</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
