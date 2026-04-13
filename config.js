@@ -44,9 +44,10 @@ const LEAD_FORMS = {
     method: "GET",
   },
   // Spot Basic: 4/30まで無料キャンペーン（通常 ¥2,980）— 2026-04-13 改定
-  // TODO: Founder — Stripe で ¥0 キャンペーン Payment Link 作成後に URL を差し替え
+  // 方針A: 無料期間中は Free 診断フォーム経由で PDF 自動配信（決済不要）
+  // キャンペーン終了後に ¥2,980 Payment Link を作成して差し替え
   spotBasic: {
-    url: "https://buy.stripe.com/eVq4gzc6cdkn8QO08faR205",
+    url: "#free-scan",
     method: "GET",
   },
 };
