@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#111118;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c8a96e;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e2c99a;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03" stroke="#c8a96e" stroke-width="0.5">
+    <line x1="0" y1="0" x2="1200" y2="0"/>
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="500" x2="1200" y2="500"/>
+    <line x1="0" y1="630" x2="1200" y2="630"/>
+    <line x1="0" y1="0" x2="0" y2="630"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+    <line x1="1200" y1="0" x2="1200" y2="630"/>
+  </g>
+
+  <!-- Accent lines -->
+  <line x1="80" y1="80" x2="80" y2="550" stroke="#c8a96e" stroke-width="1" opacity="0.15"/>
+  <line x1="1120" y1="80" x2="1120" y2="550" stroke="#c8a96e" stroke-width="1" opacity="0.15"/>
+
+  <!-- Top bar -->
+  <rect x="80" y="80" width="1040" height="1" fill="#c8a96e" opacity="0.3"/>
+
+  <!-- Logo text -->
+  <text x="600" y="140" text-anchor="middle" font-family="monospace" font-size="12" letter-spacing="6" fill="#c8a96e" opacity="0.7">AI VISIBILITY INDEX</text>
+
+  <!-- Campaign badge -->
+  <rect x="440" y="160" width="320" height="32" rx="0" fill="#c8a96e"/>
+  <text x="600" y="182" text-anchor="middle" font-family="monospace" font-size="12" letter-spacing="4" fill="#0a0a0f" font-weight="bold">CAMPAIGN 2026.04</text>
+
+  <!-- Main title -->
+  <text x="600" y="260" text-anchor="middle" font-family="serif" font-size="48" fill="#e8e4dc" font-weight="600">スポットレポート</text>
+  <text x="600" y="310" text-anchor="middle" font-family="serif" font-size="36" fill="#e8e4dc" font-weight="400">キャンペーン実施中</text>
+
+  <!-- Divider -->
+  <line x1="500" y1="340" x2="700" y2="340" stroke="#c8a96e" stroke-width="1" opacity="0.5"/>
+
+  <!-- Two pricing boxes -->
+  <!-- Spot Detailed -->
+  <rect x="160" y="375" width="400" height="160" rx="0" fill="#1c1c1c" stroke="#c8a96e" stroke-width="1" opacity="0.8"/>
+  <text x="360" y="410" text-anchor="middle" font-family="monospace" font-size="11" letter-spacing="3" fill="#c8a96e">SPOT DETAILED</text>
+  <text x="360" y="460" text-anchor="middle" font-family="serif" font-size="44" fill="#e8e4dc" font-weight="600" filter="url(#glow)">¥3,980</text>
+  <text x="360" y="485" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#a09880">1回・税込・キャンペーン価格</text>
+  <text x="360" y="510" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#5a5448"><tspan text-decoration="line-through">通常 ¥6,980</tspan></text>
+
+  <!-- Spot Basic -->
+  <rect x="640" y="375" width="400" height="160" rx="0" fill="#1c1c1c" stroke="#c8a96e" stroke-width="1" opacity="0.8"/>
+  <text x="840" y="410" text-anchor="middle" font-family="monospace" font-size="11" letter-spacing="3" fill="#c8a96e">SPOT BASIC</text>
+  <text x="840" y="460" text-anchor="middle" font-family="serif" font-size="44" fill="#e8e4dc" font-weight="600" filter="url(#glow)">¥0</text>
+  <text x="840" y="485" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#a09880">4/30まで無料キャンペーン</text>
+  <text x="840" y="510" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#5a5448"><tspan text-decoration="line-through">通常 ¥2,980</tspan></text>
+
+  <!-- Bottom bar -->
+  <rect x="80" y="550" width="1040" height="1" fill="#c8a96e" opacity="0.3"/>
+
+  <!-- Footer -->
+  <text x="600" y="590" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#a09880">ai-visibility-index.com/campaign.html</text>
+  <text x="600" y="612" text-anchor="middle" font-family="monospace" font-size="10" letter-spacing="2" fill="#5a5448">期間: 2026年4月30日まで</text>
+</svg>
