@@ -38,9 +38,9 @@ const LEAD_FORMS = {
   // スポットレポート（1回買い切り）— Phase B (2026-04-12)
   // Stripe Payment Link。custom_fields: URL, company, industry。
   // キャンペーン価格 ¥3,980（通常 ¥6,980）— 2026-04-13 改定
-  // TODO: Founder — Stripe で ¥3,980 Payment Link 作成後に URL を差し替え
+  // ¥3,980 Payment Link 作成済 (2026-04-13)
   spotDetailed: {
-    url: "https://buy.stripe.com/6oU6oH3zGdkn6IGf39aR204",
+    url: "https://buy.stripe.com/28E3cvb28bcf2sq2gnaR206",
     method: "GET",
   },
   // Spot Basic: 4/30まで無料キャンペーン（通常 ¥2,980）— 2026-04-13 改定
