@@ -37,14 +37,17 @@ const LEAD_FORMS = {
   },
   // スポットレポート（1回買い切り）— Phase B (2026-04-12)
   // Stripe Payment Link。custom_fields: URL, company, industry。
-  // 一般ユーザー向け: ¥4,980（税込）詳細レポート
+  // キャンペーン価格 ¥3,980（通常 ¥6,980）— 2026-04-13 改定
+  // ¥3,980 Payment Link 作成済 (2026-04-13)
   spotDetailed: {
-    url: "https://buy.stripe.com/6oU6oH3zGdkn6IGf39aR204",
+    url: "https://buy.stripe.com/28E3cvb28bcf2sq2gnaR206",
     method: "GET",
   },
-  // Starter加入者向け: ¥2,980（税込）ベーシックレポート
+  // Spot Basic: 4/30まで無料キャンペーン（通常 ¥2,980）— 2026-04-13 改定
+  // 方針A: 無料期間中は Free 診断フォーム経由で PDF 自動配信（決済不要）
+  // キャンペーン終了後に ¥2,980 Payment Link を作成して差し替え
   spotBasic: {
-    url: "https://buy.stripe.com/eVq4gzc6cdkn8QO08faR205",
+    url: "#free-scan",
     method: "GET",
   },
 };
@@ -59,14 +62,17 @@ const PRICING = {
     unit:     "月額・税込",
   },
   spotDetailed: {
-    price:    "¥4,980",
+    price:    "¥3,980",
+    normal:   "¥6,980",
     currency: "JPY",
-    unit:     "1回・税込",
+    unit:     "1回・税込・キャンペーン価格",
   },
   spotBasic: {
-    price:    "¥2,980",
+    price:    "¥0",
+    normal:   "¥2,980",
     currency: "JPY",
-    unit:     "1回・税込（Starter加入者価格）",
+    unit:     "4/30まで無料キャンペーン",
+    campaignEnd: "2026-04-30",
   },
 };
 
