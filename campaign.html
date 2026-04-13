@@ -30,6 +30,15 @@
   --text:    #e8e4dc;
   --text-2:  #a09880;
   --text-3:  #5a5448;
+  --green-bg:  #E1F5EE;
+  --green-txt: #085041;
+  --info-bg:   #2563eb;
+  --info-txt:  #ffffff;
+  --info-border: #3b82f6;
+  --red-bg:    #FCEBEB;
+  --red-txt:   #A32D2D;
+  --sec-bg:    #374151;
+  --sec-txt:   #e8e4dc;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -67,105 +76,141 @@ nav {
 }
 .nav-back:hover { color: var(--gold); }
 
-/* Hero */
+/* Hero / Countdown */
 .hero {
   position: relative; z-index: 1;
-  padding: 160px 48px 80px;
+  padding: 120px 48px 60px;
   text-align: center;
-  border-bottom: 1px solid rgba(200,169,110,0.08);
 }
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: .3em; color: var(--gold);
-  text-transform: uppercase; margin-bottom: 24px;
+.hero-deadline-badge {
+  display: inline-block;
+  font-size: 14px; font-weight: 500;
+  color: var(--red-txt); background: var(--red-bg);
+  padding: 6px 20px; border-radius: 20px;
+  margin-bottom: 20px;
 }
 .hero-title {
   font-family: 'Shippori Mincho', serif;
-  font-size: clamp(36px, 5vw, 64px);
-  font-weight: 600; line-height: 1.1;
-  margin-bottom: 20px;
+  font-size: 26px; font-weight: 600;
+  color: var(--gold); line-height: 1.4;
+  margin-bottom: 32px;
 }
-.hero-sub {
-  font-size: 15px; color: var(--text-2); line-height: 1.8;
-  max-width: 560px; margin: 0 auto;
+.countdown {
+  display: flex; justify-content: center; align-items: center;
+  gap: 8px; margin-bottom: 16px;
 }
-.hero-deadline {
-  display: inline-block;
+.countdown-unit {
+  text-align: center;
+}
+.countdown-num {
   font-family: 'DM Mono', monospace;
-  font-size: 13px; letter-spacing: .1em;
-  color: var(--gold);
-  border: 1px solid rgba(200,169,110,0.4);
-  padding: 8px 20px;
-  margin-top: 28px;
+  font-size: 32px; font-weight: 500;
+  background: var(--dim); border: 1px solid rgba(200,169,110,0.2);
+  padding: 12px 18px; min-width: 72px;
+  display: block; border-radius: 6px;
+}
+.countdown-label {
+  font-size: 11px; color: var(--text-3); margin-top: 6px;
+  display: block;
+}
+.countdown-sep {
+  font-size: 24px; color: var(--text-3); padding-top: 0;
 }
 
-/* Campaign Cards */
-.campaign-cards {
+/* Campaign Cards Grid */
+.campaign-section {
   position: relative; z-index: 1;
-  max-width: 760px; margin: 0 auto;
-  padding: 80px 48px;
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: 2px;
+  max-width: 900px; margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+.campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
 }
 .card {
   background: var(--dim);
-  padding: 48px 36px;
-  position: relative;
+  border: 1px solid rgba(200,169,110,0.1);
+  border-radius: 10px;
+  padding: 1.5rem;
   display: flex; flex-direction: column;
+  position: relative;
 }
-.card.featured {
-  background: var(--muted);
-  border: 1px solid rgba(200,169,110,0.25);
+.card.card-info {
+  border: 2px solid var(--info-border);
 }
-.card-badge {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: .2em;
-  color: var(--black); background: var(--gold);
-  padding: 4px 12px; text-transform: uppercase;
-  position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
-  white-space: nowrap;
+.card-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 12px;
 }
 .card-name {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; letter-spacing: .2em; color: var(--gold);
-  text-transform: uppercase; margin-bottom: 20px;
+  font-size: 16px; font-weight: 500; color: var(--text);
+}
+.card-badge {
+  font-size: 12px; font-weight: 500;
+  padding: 3px 10px; border-radius: 12px;
+  white-space: nowrap;
+}
+.badge-free { background: var(--green-bg); color: var(--green-txt); }
+.badge-campaign { background: rgba(200,169,110,0.15); color: var(--gold); }
+.badge-recommended { background: var(--info-border); color: #fff; }
+.badge-continuous { background: var(--sec-bg); color: var(--sec-txt); }
+
+.card-price-row {
+  display: flex; align-items: baseline; gap: 10px;
+  margin-bottom: 4px;
 }
 .card-price {
   font-family: 'Shippori Mincho', serif;
-  font-size: 44px; font-weight: 600; line-height: 1;
-  margin-bottom: 6px;
+  font-size: 38px; font-weight: 500; line-height: 1.1;
 }
-.card-unit { font-size: 13px; color: var(--text-2); margin-bottom: 4px; }
+.card-price-suffix {
+  font-size: 14px; color: var(--text-2);
+}
 .card-normal {
-  font-size: 12px; color: var(--text-3);
+  font-size: 14px; color: var(--text-3);
   text-decoration: line-through;
-  margin-bottom: 24px;
 }
-.card-desc { font-size: 13px; color: var(--text-2); line-height: 1.7; margin-bottom: 28px; }
-.card-features { list-style: none; flex: 1; margin-bottom: 36px; }
+.card-savings {
+  display: inline-block;
+  font-size: 12px; font-weight: 500;
+  color: var(--red-txt); background: var(--red-bg);
+  padding: 2px 8px; border-radius: 4px;
+  margin-top: 6px; margin-bottom: 16px;
+}
+.card-divider {
+  border: none; border-top: 1px solid rgba(200,169,110,0.1);
+  margin: 0 0 16px 0;
+}
+.card-features {
+  list-style: none; flex: 1; margin-bottom: 20px;
+}
 .card-features li {
-  font-size: 13px; line-height: 1.7; color: var(--text-2);
-  padding: 8px 0; border-bottom: 1px solid rgba(200,169,110,0.06);
-  display: flex; gap: 10px; align-items: flex-start;
+  font-size: 14px; line-height: 1.9; color: var(--text-2);
 }
-.card-features li::before { content: '--'; color: var(--gold); flex-shrink: 0; }
+.card-btn {
+  display: block; text-align: center; text-decoration: none;
+  font-size: 15px; font-weight: 500;
+  padding: 14px 20px; border-radius: 8px;
+  transition: opacity .2s;
+}
+.card-btn:hover { opacity: 0.85; }
+.btn-green { background: var(--green-bg); color: var(--green-txt); }
+.btn-info  { background: var(--info-bg); color: var(--info-txt); }
+.btn-sec   { background: var(--sec-bg); color: var(--sec-txt); }
 
-.btn-cta {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px; letter-spacing: .15em;
-  padding: 14px 24px; text-align: center;
-  text-decoration: none; display: block;
-  transition: all .25s;
+/* Disclaimer footer */
+.disclaimer {
+  position: relative; z-index: 1;
+  max-width: 900px; margin: 0 auto;
+  padding: 0 24px 60px;
 }
-.btn-fill {
-  color: var(--black); background: var(--gold);
-}
-.btn-fill:hover { background: var(--gold-lt); }
-.btn-outline {
-  color: var(--gold); border: 1px solid rgba(200,169,110,0.4);
-}
-.btn-outline:hover {
-  border-color: var(--gold); background: rgba(200,169,110,0.06);
+.disclaimer-box {
+  background: var(--ink);
+  border: 1px solid rgba(200,169,110,0.1);
+  border-radius: 8px;
+  padding: 20px 24px;
+  font-size: 13px; color: var(--text-3); line-height: 1.8;
 }
 
 /* How It Works */
@@ -270,12 +315,16 @@ footer {
 /* Responsive */
 @media (max-width: 800px) {
   nav { padding: 16px 24px; }
-  .hero { padding: 120px 24px 60px; }
-  .campaign-cards { grid-template-columns: 1fr; padding: 48px 24px; }
+  .hero { padding: 100px 24px 40px; }
+  .hero-title { font-size: 22px; }
+  .countdown-num { font-size: 24px; padding: 10px 12px; min-width: 56px; }
+  .campaign-section { padding: 24px 16px 40px; }
+  .campaign-grid { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; }
   .how-it-works { padding: 60px 24px; }
   .faq-section { padding: 60px 24px; }
   .compare-section { padding: 0 24px 60px; }
+  .disclaimer { padding: 0 16px 40px; }
   footer { padding: 24px; }
 }
 </style>
@@ -287,49 +336,125 @@ footer {
   <a class="nav-back" href="index.html">← トップに戻る</a>
 </nav>
 
-<!-- Hero -->
+<!-- Hero + Countdown -->
 <section class="hero">
-  <div class="hero-eyebrow">SPOT REPORT CAMPAIGN</div>
-  <h1 class="hero-title">キャンペーン実施中</h1>
-  <p class="hero-sub">AI Visibility Index スポットレポートを特別価格でご提供中。あなたのサイトがAIにどう見えているか、1回のレポートで把握できます。</p>
-  <div class="hero-deadline">DEADLINE: 2026.04.30</div>
+  <div class="hero-deadline-badge">4月30日（水）23:59まで限定</div>
+  <h1 class="hero-title">キャンペーン価格でご提供中</h1>
+  <div class="countdown" id="countdown">
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-days">--</span>
+      <span class="countdown-label">日</span>
+    </div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-hours">--</span>
+      <span class="countdown-label">時間</span>
+    </div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-mins">--</span>
+      <span class="countdown-label">分</span>
+    </div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit">
+      <span class="countdown-num" id="cd-secs">--</span>
+      <span class="countdown-label">秒</span>
+    </div>
+  </div>
 </section>
 
 <!-- Campaign Cards -->
-<section class="campaign-cards">
+<section class="campaign-section">
+  <div class="campaign-grid">
 
-  <div class="card featured">
-    <div class="card-badge">おすすめ</div>
-    <div class="card-name">Spot Detailed</div>
-    <div class="card-price">¥3,980</div>
-    <div class="card-unit">1回・税込・キャンペーン価格</div>
-    <div class="card-normal">通常 ¥6,980</div>
-    <div class="card-desc">詳細なAI可視性レポートをPDFでお届けします。スコア・改善提案・業界内ポジション分析を含む完全版です。</div>
-    <ul class="card-features">
-      <li>総合スコア + 4軸詳細</li>
-      <li>改善優先順位リスト</li>
-      <li>業界内ポジション分析</li>
-      <li>PDFレポート（自動生成）</li>
-      <li>決済後 → 自動スキャン → メール配信</li>
-    </ul>
-    <a class="btn-cta btn-fill" href="https://buy.stripe.com/28E3cvb28bcf2sq2gnaR206" target="_blank" rel="noopener">レポートを購入する →</a>
+    <!-- Free診断 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-name">Free診断</div>
+        <span class="card-badge badge-free">無料</span>
+      </div>
+      <div class="card-price-row">
+        <div class="card-price">¥0</div>
+      </div>
+      <div style="font-size:13px;color:var(--text-3);margin-bottom:16px">通常価格 ¥0</div>
+      <hr class="card-divider">
+      <ul class="card-features">
+        <li>総合スコア・4軸概要</li>
+        <li>改善ポイント上位3件</li>
+        <li>業界平均との差分</li>
+      </ul>
+      <a class="card-btn btn-green" href="index.html#free-scan">無料で受け取る</a>
+    </div>
+
+    <!-- Spot Basic -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-name">Spot Basic</div>
+        <span class="card-badge badge-campaign">4/30まで無料</span>
+      </div>
+      <div class="card-price-row">
+        <div class="card-price">¥0</div>
+        <span class="card-normal">¥2,980</span>
+      </div>
+      <div class="card-savings">¥2,980 お得</div>
+      <hr class="card-divider">
+      <ul class="card-features">
+        <li>改善提案（全件）</li>
+        <li>PDFレポート自動配信</li>
+        <li>30分以内にメール届く</li>
+      </ul>
+      <a class="card-btn btn-green" href="index.html#free-scan">無料で受け取る</a>
+    </div>
+
+    <!-- Spot Detailed -->
+    <div class="card card-info">
+      <div class="card-header">
+        <div class="card-name">Spot Detailed</div>
+        <span class="card-badge badge-recommended">おすすめ</span>
+      </div>
+      <div class="card-price-row">
+        <div class="card-price">¥3,980</div>
+        <span class="card-normal">¥6,980</span>
+      </div>
+      <div class="card-savings">¥3,000 お得（43% OFF）</div>
+      <hr class="card-divider">
+      <ul class="card-features">
+        <li>改善提案（全件）+ 業界平均比較</li>
+        <li>期待スコア予測</li>
+        <li>PDFレポート自動配信</li>
+      </ul>
+      <a class="card-btn btn-info" href="https://buy.stripe.com/28E3cvb28bcf2sq2gnaR206" target="_blank" rel="noopener">¥3,980 で購入する</a>
+    </div>
+
+    <!-- Starter -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-name">Starter</div>
+        <span class="card-badge badge-continuous">継続改善</span>
+      </div>
+      <div class="card-price-row">
+        <div class="card-price">¥9,800</div>
+        <span class="card-price-suffix">/ 月</span>
+        <span class="card-normal">¥19,800</span>
+      </div>
+      <div class="card-savings">¥10,000/月 お得（50% OFF）</div>
+      <hr class="card-divider">
+      <ul class="card-features">
+        <li>週次再診断・スコア推移</li>
+        <li>Spot Detailed込み（登録URL）</li>
+        <li>10分以内にパスコード</li>
+      </ul>
+      <a class="card-btn btn-sec" href="legal.html#consent-required-message">¥9,800 で購入する</a>
+    </div>
+
   </div>
+</section>
 
-  <div class="card">
-    <div class="card-name">Spot Basic</div>
-    <div class="card-price">¥0</div>
-    <div class="card-unit">4/30まで無料キャンペーン</div>
-    <div class="card-normal">通常 ¥2,980</div>
-    <div class="card-desc">基本的なAI可視性レポートをお届けします。まずは無料で、あなたのサイトの現状を把握できます。</div>
-    <ul class="card-features">
-      <li>総合スコア + 4軸概要</li>
-      <li>主要改善ポイント</li>
-      <li>PDFレポート（自動生成）</li>
-      <li>申込後 → 自動スキャン → メール配信</li>
-    </ul>
-    <a class="btn-cta btn-outline" href="index.html#free-scan">無料で受け取る →</a>
+<!-- Disclaimer -->
+<section class="disclaimer">
+  <div class="disclaimer-box">
+    キャンペーン価格は2026年4月30日（水）23:59まで。終了後は通常価格に戻ります。スポットレポートはデジタルコンテンツのため配信後の返金不可。
   </div>
-
 </section>
 
 <!-- How It Works -->
@@ -395,6 +520,34 @@ footer {
 </footer>
 
 <script src="config.js"></script>
+<script>
+// Countdown Timer — deadline: 2026-04-30T23:59:00+09:00
+(function() {
+  const deadline = new Date('2026-04-30T23:59:00+09:00').getTime();
+  const $d = document.getElementById('cd-days');
+  const $h = document.getElementById('cd-hours');
+  const $m = document.getElementById('cd-mins');
+  const $s = document.getElementById('cd-secs');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    const now = Date.now();
+    const diff = Math.max(0, deadline - now);
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    const secs = Math.floor((diff % 60000) / 1000);
+    $d.textContent = pad(days);
+    $h.textContent = pad(hours);
+    $m.textContent = pad(mins);
+    $s.textContent = pad(secs);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f5be82665aa344939482d544f2c8985a"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
