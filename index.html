@@ -1264,94 +1264,91 @@ footer {
   <div class="pricing-inner">
     <div class="fade-in">
       <div class="section-label">プラン</div>
-      <h2 class="section-title">入口から継続改善までの<br>4つのプラン</h2>
+      <h2 class="section-title">入口から継続改善までの<br>5つのプラン</h2>
     </div>
-    <div class="price-cards">
-      <div class="price-card fade-in">
-        <div class="price-name">Free診断</div>
-        <div class="price-amount">¥0</div>
-        <div class="price-unit" id="free-plan-unit">1社・1URL・先着20社</div>
-        <ul class="price-features">
-          <li>総合スコア</li>
-          <li>4軸の概要</li>
-          <li>改善ポイント上位3件</li>
-          <li>業界平均との差分の簡易表示</li>
-        </ul>
-        <div class="price-btns">
-          <a href="#free-scan" class="btn-secondary" style="text-align:center">無料で1URL診断（上位3改善点つき）を依頼する</a>
-          <a href="pricing.html" class="btn-ghost" style="text-align:center;padding:8px 0">詳細を見る</a>
+    <div class="price-cards" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;max-width:860px;margin:0 auto;">
+      <!-- Free診断 -->
+      <div class="price-card fade-in" style="display:flex;flex-direction:column;padding:1.5rem;border-radius:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div class="price-name" style="font-size:16px;font-weight:500">Free診断</div>
+          <span style="font-size:12px;font-weight:500;padding:3px 10px;border-radius:12px;background:#E1F5EE;color:#085041">無料</span>
         </div>
-        <p class="cta-sub">原則24時間以内に初回連絡 ・ 先着20社限定・1ドメイン1回</p>
+        <div class="price-amount" style="font-size:38px;font-weight:500">¥0</div>
+        <div style="font-size:13px;color:var(--text-3);margin-bottom:16px">通常価格 ¥0</div>
+        <hr style="border:none;border-top:1px solid rgba(200,169,110,0.1);margin:0 0 16px 0">
+        <ul class="price-features" style="flex:1;margin-bottom:20px">
+          <li style="font-size:14px;line-height:1.9">総合スコア・4軸概要</li>
+          <li style="font-size:14px;line-height:1.9">改善ポイント上位3件</li>
+          <li style="font-size:14px;line-height:1.9">業界平均との差分</li>
+        </ul>
+        <a href="#free-scan" class="btn-secondary" style="text-align:center;font-size:15px;font-weight:500;padding:14px 20px;border-radius:8px;background:#E1F5EE;color:#085041;border:none">無料で受け取る</a>
       </div>
-      <div class="price-card featured fade-in">
-        <div class="price-name">Starter</div>
-        <div class="price-amount">¥9,800</div>
-        <div class="price-unit">月額・1サイト（税込、キャンペーン価格）<br><span style="font-size:11px;color:var(--text-3)">通常 ¥19,800／月</span></div>
-        <ul class="price-features">
-          <li>週次の再診断</li>
-          <li>スコア推移の把握</li>
-          <li>改善優先順位の更新</li>
-          <li>メールサマリー</li>
-          <li>決済完了 → 10分以内にパスコード</li>
-        </ul>
-        <div class="price-btns">
-          <a href="legal.html#consent-required-message" class="btn-primary starter-cta" style="text-align:center">Starter を申し込む</a>
-          <a href="pricing.html" class="btn-ghost" style="text-align:center;padding:8px 0">詳細を見る</a>
+      <!-- Spot Basic -->
+      <div class="price-card fade-in" style="display:flex;flex-direction:column;padding:1.5rem;border-radius:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div class="price-name" style="font-size:16px;font-weight:500">Spot Basic</div>
+          <span style="font-size:12px;font-weight:500;padding:3px 10px;border-radius:12px;background:rgba(200,169,110,0.15);color:var(--gold)">4/30まで無料</span>
         </div>
+        <div style="display:flex;align-items:baseline;gap:10px">
+          <div class="price-amount" style="font-size:38px;font-weight:500">¥0</div>
+          <span style="font-size:14px;color:var(--text-3);text-decoration:line-through">¥2,980</span>
+        </div>
+        <span style="display:inline-block;font-size:12px;font-weight:500;color:#A32D2D;background:#FCEBEB;padding:2px 8px;border-radius:4px;margin:6px 0 16px 0;width:fit-content">¥2,980 お得</span>
+        <hr style="border:none;border-top:1px solid rgba(200,169,110,0.1);margin:0 0 16px 0">
+        <ul class="price-features" style="flex:1;margin-bottom:20px">
+          <li style="font-size:14px;line-height:1.9">改善提案（全件）</li>
+          <li style="font-size:14px;line-height:1.9">PDFレポート自動配信</li>
+          <li style="font-size:14px;line-height:1.9">30分以内にメール届く</li>
+        </ul>
+        <a href="#free-scan" class="btn-secondary" style="text-align:center;font-size:15px;font-weight:500;padding:14px 20px;border-radius:8px;background:#E1F5EE;color:#085041;border:none">無料で受け取る</a>
       </div>
-      <div class="price-card fade-in">
-        <div class="price-name">Pro</div>
-        <div class="price-amount">要相談</div>
-        <div class="price-unit">複数サイト・チーム向け</div>
-        <ul class="price-features">
-          <li>複数サイトの継続診断</li>
-          <li>競合比較</li>
-          <li>月次レビュー</li>
-          <li>詳細レポート追加作成</li>
-        </ul>
-        <div class="price-btns">
-          <a href="pricing.html" class="btn-secondary" style="text-align:center">Proを見る</a>
+      <!-- Spot Detailed -->
+      <div class="price-card featured fade-in" style="display:flex;flex-direction:column;padding:1.5rem;border-radius:10px;border:2px solid #3b82f6;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div class="price-name" style="font-size:16px;font-weight:500">Spot Detailed</div>
+          <span style="font-size:12px;font-weight:500;padding:3px 10px;border-radius:12px;background:#3b82f6;color:#fff">おすすめ</span>
         </div>
+        <div style="display:flex;align-items:baseline;gap:10px">
+          <div class="price-amount" style="font-size:38px;font-weight:500">¥3,980</div>
+          <span style="font-size:14px;color:var(--text-3);text-decoration:line-through">¥6,980</span>
+        </div>
+        <span style="display:inline-block;font-size:12px;font-weight:500;color:#A32D2D;background:#FCEBEB;padding:2px 8px;border-radius:4px;margin:6px 0 16px 0;width:fit-content">¥3,000 お得（43% OFF）</span>
+        <hr style="border:none;border-top:1px solid rgba(200,169,110,0.1);margin:0 0 16px 0">
+        <ul class="price-features" style="flex:1;margin-bottom:20px">
+          <li style="font-size:14px;line-height:1.9">改善提案（全件）+ 業界平均比較</li>
+          <li style="font-size:14px;line-height:1.9">期待スコア予測</li>
+          <li style="font-size:14px;line-height:1.9">PDFレポート自動配信</li>
+        </ul>
+        <a href="https://buy.stripe.com/28E3cvb28bcf2sq2gnaR206" class="btn-primary" style="text-align:center;font-size:15px;font-weight:500;padding:14px 20px;border-radius:8px;background:#2563eb;color:#fff;border:none" target="_blank" rel="noopener">¥3,980 で購入する</a>
+      </div>
+      <!-- Starter -->
+      <div class="price-card fade-in" style="display:flex;flex-direction:column;padding:1.5rem;border-radius:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div class="price-name" style="font-size:16px;font-weight:500">Starter</div>
+          <span style="font-size:12px;font-weight:500;padding:3px 10px;border-radius:12px;background:#374151;color:#e8e4dc">継続改善</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px">
+          <div class="price-amount" style="font-size:38px;font-weight:500">¥9,800</div>
+          <span style="font-size:14px;color:var(--text-2)">/ 月</span>
+          <span style="font-size:14px;color:var(--text-3);text-decoration:line-through">¥19,800</span>
+        </div>
+        <span style="display:inline-block;font-size:12px;font-weight:500;color:#A32D2D;background:#FCEBEB;padding:2px 8px;border-radius:4px;margin:6px 0 16px 0;width:fit-content">¥10,000/月 お得（50% OFF）</span>
+        <hr style="border:none;border-top:1px solid rgba(200,169,110,0.1);margin:0 0 16px 0">
+        <ul class="price-features" style="flex:1;margin-bottom:20px">
+          <li style="font-size:14px;line-height:1.9">週次再診断・スコア推移</li>
+          <li style="font-size:14px;line-height:1.9">Spot Detailed込み（登録URL）</li>
+          <li style="font-size:14px;line-height:1.9">10分以内にパスコード</li>
+        </ul>
+        <a href="legal.html#consent-required-message" class="btn-primary starter-cta" style="text-align:center;font-size:15px;font-weight:500;padding:14px 20px;border-radius:8px;background:#374151;color:#e8e4dc;border:none">¥9,800 で購入する</a>
       </div>
     </div>
-
-    <!-- Spot Report Cards -->
-    <div class="spot-section-header fade-in">
-      <h3>スポットレポート</h3>
-      <p>1回買い切りのAI可視性診断レポート。決済後、自動でスキャン・PDF生成し、メールでお届けします。</p>
-    </div>
-    <div class="price-cards-spot">
-      <div class="price-card featured fade-in" style="margin:0;">
-        <div class="price-badge">おすすめ</div>
-        <div class="price-name">Spot Detailed</div>
-        <div class="price-amount">¥3,980</div>
-        <div class="price-unit">1回・税込・キャンペーン価格<br><span style="font-size:11px;color:var(--text-3);text-decoration:line-through;">通常 ¥6,980</span></div>
-        <ul class="price-features">
-          <li>総合スコア＋4軸詳細</li>
-          <li>改善優先順位リスト</li>
-          <li>業界内ポジション分析</li>
-          <li>PDFレポート（自動生成）</li>
-          <li>決済後 → 自動スキャン → メール配信</li>
-        </ul>
-        <div class="price-btns">
-          <a href="https://buy.stripe.com/28E3cvb28bcf2sq2gnaR206" class="btn-primary" style="text-align:center" target="_blank" rel="noopener">レポートを購入する</a>
-          <a href="pricing.html" class="btn-ghost" style="text-align:center;padding:8px 0">詳細を見る</a>
-        </div>
-      </div>
-      <div class="price-card fade-in">
-        <div class="price-name">Spot Basic</div>
-        <div class="price-amount">¥0</div>
-        <div class="price-unit">4/30まで無料キャンペーン<br><span style="font-size:11px;color:var(--text-3);text-decoration:line-through;">通常 ¥2,980</span></div>
-        <ul class="price-features">
-          <li>総合スコア＋4軸概要</li>
-          <li>主要改善ポイント</li>
-          <li>PDFレポート（自動生成）</li>
-          <li>決済後 → 自動スキャン → メール配信</li>
-        </ul>
-        <div class="price-btns">
-          <a href="#free-scan" class="btn-secondary" style="text-align:center" target="_blank" rel="noopener">無料で受け取る</a>
-          <a href="pricing.html" class="btn-ghost" style="text-align:center;padding:8px 0">詳細を見る</a>
-        </div>
+    <!-- Pro (別行) -->
+    <div style="max-width:420px;margin:20px auto 0;">
+      <div class="price-card fade-in" style="display:flex;flex-direction:column;padding:1.5rem;border-radius:10px;text-align:center;">
+        <div class="price-name" style="font-size:16px;font-weight:500;margin-bottom:8px">Pro</div>
+        <div class="price-amount" style="font-size:28px;font-weight:500">要相談</div>
+        <div style="font-size:13px;color:var(--text-2);margin-bottom:16px">複数サイト・チーム向け</div>
+        <a href="pricing.html" class="btn-secondary" style="text-align:center;font-size:14px;padding:12px 20px;border-radius:8px">Proを見る</a>
       </div>
     </div>
   </div>
