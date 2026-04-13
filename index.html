@@ -555,6 +555,10 @@ section { position: relative; z-index: 1; }
 .pricing { padding: 120px 48px; }
 .pricing-inner { max-width: 900px; margin: 0 auto; }
 .price-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 60px; }
+.price-cards-spot { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; max-width: 680px; margin: 0 auto; }
+.spot-section-header { text-align: center; margin: 60px 0 24px; }
+.spot-section-header h3 { font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+.spot-section-header p { font-size: 13px; color: var(--text-2); line-height: 1.7; }
 .price-card { background: var(--dim); padding: 48px 40px; position: relative; display: flex; flex-direction: column; }
 .price-card.featured { background: var(--muted); border: 1px solid rgba(200,169,110,0.3); }
 .price-badge {
@@ -793,7 +797,7 @@ footer {
     .nav-hamburger { display: flex; }
     .hero, .problem, .how, .scores, .use-cases, .sample, .free-scan, .pricing, .contact, .faq, .cta-footer { padding-left: 24px; padding-right: 24px; }
     .problem-inner { grid-template-columns: 1fr; gap: 48px; }
-    .steps, .score-grid, .case-grid, .free-scan-inner, .price-cards { grid-template-columns: 1fr; }
+    .steps, .score-grid, .case-grid, .free-scan-inner, .price-cards, .price-cards-spot { grid-template-columns: 1fr; }
     .inline-form-grid { grid-template-columns: 1fr; }
     footer { padding: 24px; }
   }
@@ -1260,7 +1264,7 @@ footer {
   <div class="pricing-inner">
     <div class="fade-in">
       <div class="section-label">プラン</div>
-      <h2 class="section-title">入口から継続改善までの<br>3つのプラン</h2>
+      <h2 class="section-title">入口から継続改善までの<br>4つのプラン</h2>
     </div>
     <div class="price-cards">
       <div class="price-card fade-in">
@@ -1307,6 +1311,46 @@ footer {
         </ul>
         <div class="price-btns">
           <a href="pricing.html" class="btn-secondary" style="text-align:center">Proを見る</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spot Report Cards -->
+    <div class="spot-section-header fade-in">
+      <h3>スポットレポート</h3>
+      <p>1回買い切りのAI可視性診断レポート。決済後、自動でスキャン・PDF生成し、メールでお届けします。</p>
+    </div>
+    <div class="price-cards-spot">
+      <div class="price-card featured fade-in" style="margin:0;">
+        <div class="price-badge">おすすめ</div>
+        <div class="price-name">Spot Detailed</div>
+        <div class="price-amount">¥4,980</div>
+        <div class="price-unit">1回・税込</div>
+        <ul class="price-features">
+          <li>総合スコア＋4軸詳細</li>
+          <li>改善優先順位リスト</li>
+          <li>業界内ポジション分析</li>
+          <li>PDFレポート（自動生成）</li>
+          <li>決済後 → 自動スキャン → メール配信</li>
+        </ul>
+        <div class="price-btns">
+          <a href="https://buy.stripe.com/6oU6oH3zGdkn6IGf39aR204" class="btn-primary" style="text-align:center" target="_blank" rel="noopener">レポートを購入する</a>
+          <a href="pricing.html" class="btn-ghost" style="text-align:center;padding:8px 0">詳細を見る</a>
+        </div>
+      </div>
+      <div class="price-card fade-in">
+        <div class="price-name">Spot Basic</div>
+        <div class="price-amount">¥2,980</div>
+        <div class="price-unit">1回・税込（Starter加入者価格）</div>
+        <ul class="price-features">
+          <li>総合スコア＋4軸概要</li>
+          <li>主要改善ポイント</li>
+          <li>PDFレポート（自動生成）</li>
+          <li>決済後 → 自動スキャン → メール配信</li>
+        </ul>
+        <div class="price-btns">
+          <a href="https://buy.stripe.com/eVq4gzc6cdkn8QO08faR205" class="btn-secondary" style="text-align:center" target="_blank" rel="noopener">Starter価格で購入する</a>
+          <a href="pricing.html" class="btn-ghost" style="text-align:center;padding:8px 0">詳細を見る</a>
         </div>
       </div>
     </div>
