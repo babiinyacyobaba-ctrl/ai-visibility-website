@@ -5,8 +5,9 @@
 # =====================================================
 
 $repoPath = "C:\Users\babii\AI Visibility Index\codex\Company\cloned-website"
-$token    = "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"
-$remoteUrl = "https://$token@github.com/babiinyacyobaba-ctrl/ai-visibility-website.git"
+$remoteUrl = "https://github.com/babiinyacyobaba-ctrl/ai-visibility-website.git"
+# Authentication: configure once via `gh auth login` or Git Credential Manager.
+# NEVER embed a PAT in this file — it is committed to the repository.
 
 Write-Host "=== CSP修正 Push (Google Forms iframe) ===" -ForegroundColor Cyan
 Write-Host "対象フォルダ: $repoPath" -ForegroundColor Yellow
@@ -17,7 +18,7 @@ Set-Location $repoPath
 git config user.email "babiinya.cyobaba@gmail.com"
 git config user.name  "babiinyacyobaba-ctrl"
 
-# リモートURLをトークン付きに設定
+# リモートURLを設定（認証は gh auth login または Credential Manager 経由）
 git remote set-url origin $remoteUrl
 
 # 変更をステージング
