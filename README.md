@@ -1,5 +1,9 @@
 # ai-visibility-website
 
+> **Sunset 2026-05-06**: このプロジェクトは 2026年5月6日にサービス休止（mothball）状態に移行しました。
+> 詳細・撤退理由・再利用可能資産については `wellbeing-infrastructure-ops/logs/sunset_2026-05-06.md` を参照してください。
+> LP 全ページに休止バナーを追加し、Cloudflare Pages 上で表示されています。
+
 AI Visibility Index の Cloudflare Pages 用 Website。
 
 ## Current Funnel
