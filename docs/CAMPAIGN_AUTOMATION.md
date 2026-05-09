@@ -106,9 +106,21 @@ git revert <commit-sha>
 
 ## 既知の制限
 
-1. HTML 内に **`data-*` markup されていない 4/30 / 5/31 の文字列** は自動切替されない（手動 markup が必要）。Phase 2 で全 HTML をマークアップ予定。
-2. SEO meta タグ・JSON-LD・OGP は静的なのでクローラーは古い日付を見る可能性。月次手動更新で対応。
+1. ~~HTML 内に **`data-*` markup されていない 4/30 / 5/31 の文字列** は自動切替されない~~ → **Phase 2 完了 (PR #45)**: 主要4 LPs の date 参照は全て data-* markup 済
+2. ~~SEO meta タグ・JSON-LD・OGP は静的なのでクローラーは古い日付を見る可能性~~ → **Phase 3 完了**: GHA cron auto-extend 時に HTML ファイル群（meta/JSON-LD含む）を regex 自動書き換え + コミット → Cloudflare Pages 再デプロイ → クローラーは新日付を取得
 3. `config.js` regex パースは形式変更に脆弱。フィールド追加時は `.github/scripts/campaign_state_check.js` の `readConfig()` も更新が必要。
+4. SVG asset (`assets/campaign_banner_spot_updated.svg`) の date 文字列は自動更新対象外（OGP は PNG `campaign_banner.png` 使用のため影響軽微）。
+
+## Phase 3 実装詳細（2026-05-10）
+
+GHA cron が auto-extend で `endDate` を更新する際、以下も同時に書き換え + コミット:
+
+| 対象 | 書き換え内容 |
+|------|------------|
+| `campaign.html` / `pricing.html` / `legal.html` / `index.html` | data-* span 内テキスト + meta description/og/twitter + JSON-LD 内の "M/Dまで" / "M月D日まで" パターン |
+| `config.js` | `endDate` + `extensionsUsed` |
+
+これにより、JS 非対応の静的クローラー（archive.org、旧 Bingbot、SNS unfurler の一部）も最新日付を取得できる。
 
 ## 参考
 

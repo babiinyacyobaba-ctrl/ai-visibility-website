@@ -129,6 +129,126 @@ function sendEmail(to, subject, html) {
   });
 }
 
+// ----- HTML 書き換え (Phase 3: 静的クローラー対応) -----
+const HTML_FILES = [
+  'campaign.html',
+  'pricing.html',
+  'legal.html',
+  'index.html',
+];
+
+function formatJp(iso) {
+  const parts = iso.split('-');
+  return parseInt(parts[1], 10) + '月' + parseInt(parts[2], 10) + '日';
+}
+function formatShort(iso) {
+  const parts = iso.split('-');
+  return parseInt(parts[1], 10) + '/' + parseInt(parts[2], 10);
+}
+function formatJpDay(iso) {
+  const days = ['日', '月', '火', '水', '木', '金', '土'];
+  const d = new Date(iso + 'T00:00:00+09:00');
+  return formatJp(iso) + '（' + days[d.getDay()] + '）';
+}
+
+/**
+ * HTML ファイルを新 endDate で書き換える。
+ * - data-* markup された span 内のテキスト
+ * - meta description / og:description / twitter:description の "M/Dまで" / "M月D日まで"
+ * - JSON-LD ブロック内の同パターン
+ * 戻り値: { changed: bool, content: string }
+ */
+function rewriteHtmlForCampaign(filepath, endDateIso) {
+  const fullPath = path.join(REPO_ROOT, filepath);
+  if (!fs.existsSync(fullPath)) {
+    return { changed: false, content: null, missing: true };
+  }
+  const original = fs.readFileSync(fullPath, 'utf8');
+  let html = original;
+
+  const short = formatShort(endDateIso);
+  const jp = formatJp(endDateIso);
+  const jpDay = formatJpDay(endDateIso);
+
+  // 1. data-* span 内のテキスト書き換え
+  html = html.replace(
+    /(<span\s+data-campaign-end-date-short[^>]*>)[^<]*(<\/span>)/g,
+    '$1' + short + '$2'
+  );
+  html = html.replace(
+    /(<span\s+data-campaign-end-date-jp-day[^>]*>)[^<]*(<\/span>)/g,
+    '$1' + jpDay + '$2'
+  );
+  html = html.replace(
+    /(<span\s+data-campaign-end-iso[^>]*>)[^<]*(<\/span>)/g,
+    '$1' + endDateIso + '$2'
+  );
+  // data-campaign-end-date は -short / -jp-day / -iso と被らないよう負の lookahead
+  html = html.replace(
+    /(<span\s+data-campaign-end-date(?!-)[^>]*>)[^<]*(<\/span>)/g,
+    '$1' + jp + '$2'
+  );
+
+  // 2. meta description 系
+  ['name="description"', 'property="og:description"', 'name="twitter:description"'].forEach(function (sel) {
+    const re = new RegExp(
+      '(<meta[^>]*\\s' + sel.replace(/"/g, '"').replace(/=/g, '=') + '[^>]*\\scontent=")([^"]*)(")',
+      'gi'
+    );
+    html = html.replace(re, function (_m, p1, content, p3) {
+      let c = content;
+      c = c.replace(/\b\d{1,2}\/\d{1,2}まで/g, short + 'まで');
+      c = c.replace(/\b\d{1,2}月\d{1,2}日まで/g, jp + 'まで');
+      return p1 + c + p3;
+    });
+  });
+  // 順序違いの content="" pattern も吸収（content の前に sel が来るパターン）
+  html = html.replace(
+    /(<meta[^>]*\bcontent=")([^"]*)("\s+(?:name|property)="(?:description|og:description|twitter:description)")/gi,
+    function (_m, p1, content, p3) {
+      let c = content;
+      c = c.replace(/\b\d{1,2}\/\d{1,2}まで/g, short + 'まで');
+      c = c.replace(/\b\d{1,2}月\d{1,2}日まで/g, jp + 'まで');
+      return p1 + c + p3;
+    }
+  );
+
+  // 3. JSON-LD ブロック
+  html = html.replace(
+    /(<script\s+type="application\/ld\+json"[^>]*>)([\s\S]*?)(<\/script>)/g,
+    function (_m, p1, body, p3) {
+      let b = body;
+      b = b.replace(/\b\d{1,2}\/\d{1,2}まで/g, short + 'まで');
+      b = b.replace(/\b\d{1,2}月\d{1,2}日まで/g, jp + 'まで');
+      return p1 + b + p3;
+    }
+  );
+
+  return { changed: html !== original, content: html, missing: false };
+}
+
+function applyHtmlRewrites(endDateIso) {
+  const summary = [];
+  HTML_FILES.forEach(function (f) {
+    const result = rewriteHtmlForCampaign(f, endDateIso);
+    if (result.missing) {
+      summary.push({ file: f, status: 'missing' });
+      return;
+    }
+    if (!result.changed) {
+      summary.push({ file: f, status: 'no_change' });
+      return;
+    }
+    if (DRY_RUN) {
+      summary.push({ file: f, status: 'would_update' });
+    } else {
+      fs.writeFileSync(path.join(REPO_ROOT, f), result.content, 'utf8');
+      summary.push({ file: f, status: 'updated' });
+    }
+  });
+  return summary;
+}
+
 // ----- メイン処理 -----
 async function main() {
   const cfg = readConfig();
@@ -153,6 +273,12 @@ async function main() {
       if (!DRY_RUN) {
         writeConfig(cfg.src, { endDate: newEndDate, extensionsUsed: newExtCount });
       }
+      // Phase 3: 静的クローラー対応 — HTML ファイル群も新 endDate で書き換え
+      const htmlSummary = applyHtmlRewrites(newEndDate);
+      console.log('[campaign_check] HTML rewrite summary:', JSON.stringify(htmlSummary, null, 2));
+      const htmlSummaryHtml = '<ul>' + htmlSummary.map(function (s) {
+        return '<li>' + s.file + ': ' + s.status + '</li>';
+      }).join('') + '</ul>';
       await sendEmail(
         cfg.notifyEmail,
         '[AI Visibility Index] キャンペーン自動延長: ' + newEndDate + ' まで',
@@ -163,7 +289,9 @@ async function main() {
           '<li>延長日数: ' + cfg.autoExtendDays + '</li>' +
           '<li>延長回数: ' + newExtCount + ' / ' + cfg.maxExtensions + '</li>' +
         '</ul>' +
-        '<p>config.js が自動コミットされ、Cloudflare Pages が再デプロイされます。</p>'
+        '<p>config.js + HTML ファイルが自動コミットされ、Cloudflare Pages が再デプロイされます。</p>' +
+        '<p><strong>HTML 書き換え結果:</strong></p>' +
+        htmlSummaryHtml
       );
       return;
     } else {
