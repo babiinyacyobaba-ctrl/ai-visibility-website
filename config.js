@@ -81,3 +81,80 @@ const FREE_SCAN_CAMPAIGN = {
   acceptedCount: 0,
   status: "active", // active | waitlist | closed
 };
+
+// ============================================================
+// CAMPAIGN STATE — Single Source of Truth (Lv.2 SSOT)
+// ============================================================
+// このオブジェクトがキャンペーン日付・価格表示の唯一の真実です。
+// HTML 側は data-* 属性で参照し、campaign_renderer.js が動的に注入します。
+// 期限到達時の自動延長／自動切替は GHA cron (campaign-state-check.yml) が担当。
+//
+// 編集ルール:
+//  - endDate を変更したら他の場所は触らない（cron が SSOT を維持）
+//  - 延長したい場合は autoExtendDays > 0 に事前設定して放置
+//  - 即時終了したい場合は endDate を過去日に変更
+//
+// 編集ログ:
+//  - 2026-04-13: 初版（4/14〜4/30）
+//  - 2026-05-10: 5/31 まで延長、Lv.2 SSOT 化（Issue #42 hotfix）
+const CAMPAIGN = {
+  // 期間
+  startDate: "2026-04-14",
+  endDate:   "2026-05-31",
+
+  // 自動延長（事前設定）
+  autoExtendDays:   0,    // 0 = 延長しない / 31 = 1ヶ月延長 / 7 = 1週間延長
+  maxExtensions:   12,    // 延長回数上限（暴走防止、12回 ≈ 1年）
+  extensionsUsed:   0,    // cron が自動加算
+
+  // 終了時動作
+  autoRevertOnEnd: true,  // true = endDate 経過後は通常価格表示に自動切替
+
+  // 通知（Resend）
+  notifyDaysBefore: [7, 3, 1, 0],
+  notifyEmail: "ai-visibility-index@protonmail.com",
+};
+
+// キャンペーン期間中の価格（HTML から data-price 等で参照）
+const PRICING_CAMPAIGN = {
+  spotBasic: {
+    price:    "¥0",
+    normal:   "¥2,980",
+    suffix:   "5/31まで無料",
+    unit:     "1回・税込・キャンペーン価格",
+  },
+  spotDetailed: {
+    price:    "¥3,980",
+    normal:   "¥6,980",
+    suffix:   "キャンペーン価格",
+    unit:     "1回・税込・キャンペーン価格",
+  },
+  starter: {
+    price:    "¥9,800",
+    normal:   "¥19,800",
+    suffix:   "/月（キャンペーン価格）",
+    unit:     "月額・税込・キャンペーン価格",
+  },
+};
+
+// キャンペーン終了後の通常価格（自動切替先）
+const PRICING_NORMAL = {
+  spotBasic: {
+    price:    "¥2,980",
+    normal:   null,
+    suffix:   "1回・税込",
+    unit:     "1回・税込",
+  },
+  spotDetailed: {
+    price:    "¥6,980",
+    normal:   null,
+    suffix:   "1回・税込",
+    unit:     "1回・税込",
+  },
+  starter: {
+    price:    "¥19,800",
+    normal:   null,
+    suffix:   "/月",
+    unit:     "月額・税込",
+  },
+};

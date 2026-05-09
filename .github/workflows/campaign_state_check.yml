@@ -1,0 +1,56 @@
+name: campaign-state-check
+
+# Campaign State 自動チェック (Lv.2 SSOT)
+# - 毎日 00:00 JST (15:00 UTC) に config.js の CAMPAIGN.endDate をチェック
+# - 期限到達時:
+#     autoExtendDays > 0 かつ extensionsUsed < maxExtensions → 延長 + commit + notify
+#     autoExtendDays = 0 かつ autoRevertOnEnd = true → notify のみ（HTML 側 JS が自動切替）
+# - notifyDaysBefore に該当する日 → 事前通知メール送信
+# - 自動コミットは [skip ci] で他 cron を発火させない
+
+on:
+  schedule:
+    - cron: '0 15 * * *'   # 00:00 JST
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no commit, no email)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run campaign state check
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: node .github/scripts/campaign_state_check.js
+
+      - name: Auto-commit config.js if changed
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          if [[ -n "$(git status --porcelain config.js)" ]]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email 'github-actions[bot]@users.noreply.github.com'
+            git add config.js
+            git commit -m "auto(campaign): state update $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST') [skip ci]"
+            git push
+          else
+            echo "No changes to commit."
+          fi
