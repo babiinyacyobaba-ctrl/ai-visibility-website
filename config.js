@@ -43,7 +43,7 @@ const LEAD_FORMS = {
     url: "https://buy.stripe.com/28E3cvb28bcf2sq2gnaR206",
     method: "GET",
   },
-  // Spot Basic: 4/30まで無料キャンペーン（通常 ¥2,980）— 2026-04-13 改定
+  // Spot Basic: 5/31まで無料キャンペーン（通常 ¥2,980）— 2026-05-10 改定
   // 方針A: 無料期間中は Free 診断フォーム経由で PDF 自動配信（決済不要）
   // キャンペーン終了後に ¥2,980 Payment Link を作成して差し替え
   spotBasic: {
@@ -71,8 +71,8 @@ const PRICING = {
     price:    "¥0",
     normal:   "¥2,980",
     currency: "JPY",
-    unit:     "4/30まで無料キャンペーン",
-    campaignEnd: "2026-04-30",
+    unit:     "5/31まで無料キャンペーン",
+    campaignEnd: "2026-05-31",
   },
 };
 
