@@ -343,7 +343,7 @@ footer {
 
 <!-- Hero + Countdown -->
 <section class="hero">
-  <div class="hero-deadline-badge">5月31日（日）23:59まで限定</div>
+  <div class="hero-deadline-badge"><span data-campaign-end-date-jp-day>5月31日（日）</span>23:59まで限定</div>
   <h1 class="hero-title">キャンペーン価格でご提供中</h1>
   <div class="countdown" id="countdown">
     <div class="countdown-unit">
@@ -395,7 +395,7 @@ footer {
     <div class="card">
       <div class="card-header">
         <div class="card-name">Spot Basic</div>
-        <span class="card-badge badge-campaign">5/31まで無料</span>
+        <span class="card-badge badge-campaign"><span data-campaign-end-date-short>5/31</span>まで無料</span>
       </div>
       <div class="card-price-row">
         <div class="card-price">¥0</div>
@@ -458,7 +458,7 @@ footer {
 <!-- Disclaimer -->
 <section class="disclaimer">
   <div class="disclaimer-box">
-    キャンペーン価格は2026年5月31日（日）23:59まで。終了後は通常価格に戻ります。スポットレポートはデジタルコンテンツのため配信後の返金不可。
+    キャンペーン価格は2026年<span data-campaign-end-date-jp-day>5月31日（日）</span>23:59まで。終了後は通常価格に戻ります。スポットレポートはデジタルコンテンツのため配信後の返金不可。
   </div>
 </section>
 
@@ -492,7 +492,7 @@ footer {
 
   <div class="faq-item">
     <h3 class="faq-q">キャンペーンはいつまでですか？</h3>
-    <p class="faq-a">2026年5月31日までです。Spot Basic の無料提供、Spot Detailed のキャンペーン価格（¥3,980）ともに、5月31日を過ぎると通常価格に戻ります。</p>
+    <p class="faq-a">2026年<span data-campaign-end-date>5月31日</span>までです。Spot Basic の無料提供、Spot Detailed のキャンペーン価格（¥3,980）ともに、<span data-campaign-end-date>5月31日</span>を過ぎると通常価格に戻ります。</p>
   </div>
 
   <div class="faq-item">
@@ -526,9 +526,11 @@ footer {
 
 <script src="config.js"></script>
 <script>
-// Countdown Timer — deadline: 2026-05-31T23:59:59+09:00
+// Countdown Timer — deadline read from window.CAMPAIGN.endDate (SSOT, config.js)
+// Falls back to 2026-05-31 if config.js not loaded.
 (function() {
-  const deadline = new Date('2026-05-31T23:59:59+09:00').getTime();
+  const _endIso = (typeof CAMPAIGN !== 'undefined' && CAMPAIGN.endDate) ? CAMPAIGN.endDate : '2026-05-31';
+  const deadline = new Date(_endIso + 'T23:59:59+09:00').getTime();
   const $d = document.getElementById('cd-days');
   const $h = document.getElementById('cd-hours');
   const $m = document.getElementById('cd-mins');
