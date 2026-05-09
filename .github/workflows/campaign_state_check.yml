@@ -42,14 +42,16 @@ jobs:
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: node .github/scripts/campaign_state_check.js
 
-      - name: Auto-commit config.js if changed
+      - name: Auto-commit config.js + HTML if changed
         if: github.event.inputs.dry_run != 'true'
         run: |
-          if [[ -n "$(git status --porcelain config.js)" ]]; then
+          # Phase 3: config.js + 静的書き換え対象 HTML をまとめてコミット
+          CHANGED=$(git status --porcelain config.js campaign.html pricing.html legal.html index.html 2>/dev/null || true)
+          if [[ -n "$CHANGED" ]]; then
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
-            git add config.js
-            git commit -m "auto(campaign): state update $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST') [skip ci]"
+            git add config.js campaign.html pricing.html legal.html index.html
+            git commit -m "auto(campaign): state + HTML update $(TZ=Asia/Tokyo date +'%Y-%m-%d %H:%M JST') [skip ci]"
             git push
           else
             echo "No changes to commit."
