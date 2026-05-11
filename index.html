@@ -807,7 +807,7 @@ footer {
     max-width: 760px; margin-top: 8px;
   }
 
-/* ----- Consent modal (Sage §4 同意取得要件) ----- */
+/* ----- Consent modal ----- */
 #consent-modal[hidden] { display: none; }
 #consent-modal {
   position: fixed; inset: 0; z-index: 9999;
@@ -1576,7 +1576,7 @@ document.querySelectorAll('.scores-inner').forEach(el => scoreObs.observe(el));
 renderCampaignState();
 configureLeadButtons();
 
-// ----- Consent modal wiring (Sage §4) -----
+// ----- Consent modal wiring -----
 // NOTE: The consent modal <div> is placed AFTER this <script> in the DOM.
 // We must wait for DOMContentLoaded before calling getElementById('consent-modal'),
 // otherwise the internal listeners (checkbox change / cancel / confirm / backdrop)
@@ -1740,7 +1740,7 @@ if (document.readyState === 'loading') {
   });
   </script>
 
-<!-- Consent modal (Sage §4 同意取得要件) -->
+<!-- Consent modal -->
 <div id="consent-modal" role="dialog" aria-modal="true" aria-labelledby="consent-title" hidden>
   <div class="consent-backdrop" aria-hidden="true"></div>
   <div class="consent-dialog">

@@ -245,7 +245,7 @@ footer {
   footer { padding: 24px; }
 }
 
-/* ----- Consent modal (Sage §4 同意取得要件) ----- */
+/* ----- Consent modal ----- */
 #consent-modal[hidden] { display: none; }
 #consent-modal {
   position: fixed; inset: 0; z-index: 9999;
@@ -370,7 +370,8 @@ footer {
   <div class="plan featured">
     <div class="plan-badge">本命</div>
     <div class="plan-name">Starter</div>
-    <div class="plan-price">先行案内</div>`r`n    <div class="plan-unit">1サイト・提供条件は個別案内</div>
+    <div class="plan-price">先行案内</div>
+    <div class="plan-unit">1サイト・提供条件は個別案内</div>
     <div class="plan-desc">継続的に状態を追い、改善のPDCAを回したい方向け。現在は先行案内を受付中で、正式価格と提供条件は対象確認後に個別に案内します。</div>
     <ul class="plan-features">
       <li>週次の再診断</li>
@@ -407,7 +408,8 @@ footer {
     <div class="plan featured" style="margin:0;">
       <div class="plan-badge">おすすめ</div>
       <div class="plan-name">Spot Detailed</div>
-      <div class="plan-price">個別案内</div>`r`n      <div class="plan-unit">1回・提供条件は個別案内</div>
+      <div class="plan-price">個別案内</div>
+      <div class="plan-unit">1回・提供条件は個別案内</div>
       <div class="plan-desc">詳細なAI可視性レポートをPDFでお届けします。スコア・改善提案・競合比較を含む完全版です。</div>
       <ul class="plan-features">
         <li>総合スコア＋4軸詳細</li>
@@ -422,7 +424,8 @@ footer {
     <div class="plan">
       <div class="plan-name">Spot Basic</div>
       <div class="plan-price">¥0</div>
-      <div class="plan-unit">1サイト・1回</div>`r`n      <div class="plan-desc">基本的なAI可視性レポートを無料診断としてお届けします。</div>
+      <div class="plan-unit">1サイト・1回</div>
+      <div class="plan-desc">基本的なAI可視性レポートを無料診断としてお届けします。</div>
       <ul class="plan-features">
         <li>総合スコア＋4軸概要</li>
         <li>主要改善ポイント</li>
@@ -502,7 +505,7 @@ footer {
     '会社名:\nURL:\nメール:\n相談内容:\n'
   );
 
-  // Starter の申込ボタンは consent modal を開く（Sage §4 同意取得要件）
+  // Starter の申込ボタンは consent modal を開く（同意取得要件）
   // JS 無効時は href="legal.html#consent-required-message" に自然フォールバック。
   var starterUrl = (typeof LEAD_FORMS !== 'undefined'
       && LEAD_FORMS.starter
@@ -597,7 +600,7 @@ footer {
 })();
 </script>
 
-<!-- Consent modal (Sage §4 同意取得要件) -->
+<!-- Consent modal -->
 <div id="consent-modal" role="dialog" aria-modal="true" aria-labelledby="consent-title" hidden>
   <div class="consent-backdrop" aria-hidden="true"></div>
   <div class="consent-dialog">
