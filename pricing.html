@@ -27,23 +27,21 @@
     {
       "@type": "Offer",
       "name": "Starter",
-      "price": "9800",
-      "priceCurrency": "JPY",
-      "description": "1サイトの継続診断と改善優先順位の更新（キャンペーン価格 ¥9,800／月、通常価格 ¥19,800／月）"
+      "availability": "https://schema.org/PreOrder",
+      "description": "Starter の先行案内。正式価格と提供条件は対象確認後に個別に案内します。"
     },
     {
       "@type": "Offer",
       "name": "Spot Detailed",
-      "price": "3980",
-      "priceCurrency": "JPY",
-      "description": "1回買い切りの詳細AI可視性レポート（PDF自動生成・メール配信）"
+      "availability": "https://schema.org/PreOrder",
+      "description": "1回買い切りの詳細AI可視性レポート。提供条件は個別に案内します。"
     },
     {
       "@type": "Offer",
       "name": "Spot Basic",
       "price": "0",
       "priceCurrency": "JPY",
-      "description": "5/31まで無料キャンペーン（通常¥2,980）。AI可視性レポート（PDF自動生成・メール配信）"
+      "description": "無料診断としてAI可視性レポートを生成し、メール配信します。"
     },
     {
       "@type": "Offer",
@@ -372,17 +370,16 @@ footer {
   <div class="plan featured">
     <div class="plan-badge">本命</div>
     <div class="plan-name">Starter</div>
-    <div class="plan-price">¥9,800</div>
-    <div class="plan-unit">月額・1サイト（税込）</div>
-    <div class="plan-desc">継続的に状態を追い、改善のPDCAを回したい方向け。キャンペーン価格 ¥9,800／月（通常 ¥19,800／月）で提供中です。決済完了後、10分以内にパスコードをメールでお届けします。</div>
+    <div class="plan-price">先行案内</div>`r`n    <div class="plan-unit">1サイト・提供条件は個別案内</div>
+    <div class="plan-desc">継続的に状態を追い、改善のPDCAを回したい方向け。現在は先行案内を受付中で、正式価格と提供条件は対象確認後に個別に案内します。</div>
     <ul class="plan-features">
       <li>週次の再診断</li>
       <li>スコア推移の確認</li>
       <li>改善優先順位の更新</li>
       <li>メールサマリー</li>
-      <li>決済完了 → 10分以内にパスコード</li>
+      <li>提供条件は対象確認後に案内</li>
     </ul>
-    <a id="btn-starter" href="legal.html#consent-required-message" class="btn-plan btn-plan-fill starter-cta">申し込む →</a>
+    <a id="btn-starter" href="index.html#contact" class="btn-plan btn-plan-fill">先行案内を受ける →</a>
   </div>
 
   <div class="plan">
@@ -410,9 +407,7 @@ footer {
     <div class="plan featured" style="margin:0;">
       <div class="plan-badge">おすすめ</div>
       <div class="plan-name">Spot Detailed</div>
-      <div class="plan-price">¥3,980</div>
-      <div class="plan-unit">1回・税込・キャンペーン価格</div>
-      <div class="plan-normal-price" style="font-size:12px;color:var(--text-3);text-decoration:line-through;margin-top:2px;">通常 ¥6,980</div>
+      <div class="plan-price">個別案内</div>`r`n      <div class="plan-unit">1回・提供条件は個別案内</div>
       <div class="plan-desc">詳細なAI可視性レポートをPDFでお届けします。スコア・改善提案・競合比較を含む完全版です。</div>
       <ul class="plan-features">
         <li>総合スコア＋4軸詳細</li>
@@ -421,29 +416,27 @@ footer {
         <li>PDFレポート（自動生成）</li>
         <li>決済後 → 自動スキャン → メール配信</li>
       </ul>
-      <a id="btn-spot-detailed" class="btn-plan btn-plan-fill" href="https://buy.stripe.com/28E3cvb28bcf2sq2gnaR206" target="_blank" rel="noopener">レポートを購入する →</a>
+      <a id="btn-spot-detailed" class="btn-plan btn-plan-fill" href="index.html#contact">詳細を相談する →</a>
     </div>
 
     <div class="plan">
       <div class="plan-name">Spot Basic</div>
       <div class="plan-price">¥0</div>
-      <div class="plan-unit"><span data-campaign-end-date-short>5/31</span>まで無料キャンペーン</div>
-      <div class="plan-normal-price" style="font-size:12px;color:var(--text-3);text-decoration:line-through;margin-top:2px;">通常 ¥2,980</div>
-      <div class="plan-desc">基本的なAI可視性レポートをお届けします。<span data-campaign-end-date>5月31日</span>までの無料キャンペーン中です。</div>
+      <div class="plan-unit">1サイト・1回</div>`r`n      <div class="plan-desc">基本的なAI可視性レポートを無料診断としてお届けします。</div>
       <ul class="plan-features">
         <li>総合スコア＋4軸概要</li>
         <li>主要改善ポイント</li>
         <li>PDFレポート（自動生成）</li>
         <li>決済後 → 自動スキャン → メール配信</li>
       </ul>
-      <a id="btn-spot-basic" class="btn-plan btn-plan-outline" href="#free-scan" target="_blank" rel="noopener">無料で受け取る →</a>
+      <a id="btn-spot-basic" class="btn-plan btn-plan-outline" href="index.html#free-scan">無料で受け取る →</a>
     </div>
 
   </div>
 </div>
 
 <div class="note">
-  <p>Free診断は現状把握に、Starter は継続改善に、スポットレポートは1回の詳細分析に、Pro は複数サイト運用に向いています。Starter の ¥9,800／月は現在のキャンペーン価格で、通常価格は ¥19,800／月（税込）です。スポットレポートは買い切り（Spot Detailed キャンペーン価格 ¥3,980、通常 ¥6,980 / Spot Basic <span data-campaign-end-date-short>5/31</span>まで ¥0、通常 ¥2,980）で、決済後に自動でPDFレポートを生成・メール配信します。申込時には <a href="legal.html" style="color:var(--gold)">特定商取引法に基づく表記</a> と <a href="privacy.html" style="color:var(--gold)">プライバシーポリシー</a> への同意確認が表示されます。<br>
+  <p>Free診断は現状把握に、Starter は継続改善に、スポットレポートは1回の詳細分析に、Pro は複数サイト運用に向いています。Starter と Spot Detailed の正式価格・提供条件は、対象確認後に個別に案内します。申込時には <a href="legal.html" style="color:var(--gold)">特定商取引法に基づく表記</a> と <a href="privacy.html" style="color:var(--gold)">プライバシーポリシー</a> をご確認ください。<br>
   掲載・引用・集客成果等を保証するものではありません。<br>
   採点ロジックや除外条件は <a href="methodology.html" style="color:var(--gold)">方法論ページ</a> をご確認ください。</p>
 </div>
@@ -612,8 +605,8 @@ footer {
     <h2 id="consent-title" class="consent-title">Starter プランへのお申し込み</h2>
     <div class="consent-summary">
       <strong>プラン：</strong>Starter（月額サブスクリプション・1サイト）
-      <span class="consent-price-main">¥9,800／月（税込、キャンペーン価格）</span>
-      <span class="consent-price-normal">通常価格 ¥19,800／月（税込）</span>
+      <span class="consent-price-main">先行案内受付中</span>
+      <span class="consent-price-normal">正式価格と提供条件は個別に案内します。</span>
     </div>
     <div class="consent-checks">
       <label class="consent-check">
