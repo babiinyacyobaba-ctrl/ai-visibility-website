@@ -9,7 +9,7 @@ AI Visibility Index の Cloudflare Pages 用 Website。
 ## Current Funnel
 
 - 主入口: 無料診断
-- 次の一手: Starter（月額 ¥9,800 キャンペーン / ¥19,800 通常、Stripe Payment Link 直結）
+- 次の一手: Starter 先行案内（正式価格と提供条件は個別案内）
 - 高単価導線: Pro 相談
 
 ## Required Public Settings
@@ -34,5 +34,5 @@ AI Visibility Index の Cloudflare Pages 用 Website。
 
 ## External links
 - Free診断フォーム: https://forms.gle/UCBE67C5x8GdMyTE7
-- Starter 決済 (Stripe Payment Link): https://buy.stripe.com/eVq7sL0nugwzd747AHaR203
+- Starter: 先行案内フォームまたは個別案内
 - Pro相談フォーム: https://forms.gle/R3HXcUo84myV4zT18
